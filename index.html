@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>PT Academy</title>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Libre+Franklin:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+<script>document.documentElement.classList.add('js');</script>
+</head>
+<body>
+
+<nav class="nav">
+  <a href="/" class="nav__logo">PT<span class="nav__logo-dot">·</span>ACADEMY</a>
+
+  <ul class="nav__links">
+    <li><a class="nav__link" href="#inicio">Início</a></li>
+    <li><a class="nav__link" href="#sobre">Sobre nós</a></li>
+    <li><a class="nav__link" href="#modalidades">Modalidades</a></li>
+    <li><a class="nav__link" href="#instalacoes">Instalações</a></li>
+    <li><a class="nav__link" href="#equipa">Equipa</a></li>
+    <li><a class="nav__link" href="#contactos">Contactos</a></li>
+  </ul>
+
+  <button type="button" class="nav__toggle" id="nav-toggle"
+          aria-label="Abrir menu" aria-expanded="false" aria-controls="menu">
+    <span class="nav__toggle-bar"></span>
+    <span class="nav__toggle-bar"></span>
+    <span class="nav__toggle-bar"></span>
+  </button>
+</nav>
+
+<!-- Menu em ecrã inteiro -->
+<div class="menu" id="menu">
+  <ul class="menu__list">
+    <li class="menu__item"><a class="menu__link" href="#inicio">Início</a></li>
+    <li class="menu__item"><a class="menu__link" href="#sobre">Sobre nós</a></li>
+    <li class="menu__item"><a class="menu__link" href="#modalidades">Modalidades</a></li>
+    <li class="menu__item"><a class="menu__link" href="#instalacoes">Instalações</a></li>
+    <li class="menu__item"><a class="menu__link" href="#equipa">Equipa</a></li>
+    <li class="menu__item"><a class="menu__link" href="#contactos">Contactos</a></li>
+  </ul>
+</div>
+
+<!-- Hero -->
+<header class="hero">
+  <div class="hero__photo"></div>
+  <canvas class="hero__reveal" aria-hidden="true"></canvas>
+  <div class="hero__scrim"></div>
+
+  <div class="hero__content">
+    <p class="hero__eyebrow">Vila Real · desde 2010</p>
+    <h1 class="hero__title">A tua jornada<br>começa <em>aqui</em></h1>
+    <a href="#inscricao" class="button button--red">Começar hoje</a>
+  </div>
+</header>
+
+<!-- Campaign -->
+<section class="campaign">
+  <p class="campaign__eyebrow">Inscreve-te agora e aproveita</p>
+  <h2 class="campaign__title">Novas inscrições 3 meses grátis</h2>
+  <a href="#inscricao" class="button button--dark">Saber mais</a>
+</section>
+
+<!-- About ("Sobre nós") -->
+<section class="about">
+  <div class="about__text" data-reveal-group>
+    <p class="about__eyebrow reveal reveal--slide">Sobre a academia</p>
+    <h2 class="about__title reveal reveal--slide">UM ESPAÇO FAMILIAR</h2>
+    <p class="about__body reveal reveal--slide">Além da Musculação, do Crossfit, da Dança e das modalidades de Fitness que oferecemos, temos orgulho no sentimento de familiaridade que a PT Academy consegue proporcionar a cada sócio.</p>
+    <div class="about__actions reveal reveal--slide">
+      <a href="#academia" class="button button--red">Ver academia</a>
+      <a href="#equipa" class="button button--outline">Ver equipa</a>
+    </div>
+  </div>
+  <div class="about__gallery" data-reveal-group>
+    <div class="about__photo about__photo--tall">
+      <div class="about__photo-img about__photo--rowing reveal"></div>
+    </div>
+    <div class="about__photo">
+      <div class="about__photo-img about__photo--aulas reveal"></div>
+    </div>
+    <div class="about__photo">
+      <div class="about__photo-img about__photo--pilates reveal"></div>
+    </div>
+  </div>
+</section>
+
+<!-- Modalities -->
+<section class="modalities">
+  <div class="modality modality--musculacao">
+    <div class="modality__photo"></div>
+    <div class="modality__scrim"></div>
+    <p class="modality__title">Musculação</p>
+  </div>
+  <div class="modality modality--crossfit">
+    <div class="modality__photo"></div>
+    <div class="modality__scrim"></div>
+    <p class="modality__title">Crossfit</p>
+  </div>
+  <div class="modality modality--fitness">
+    <div class="modality__photo"></div>
+    <div class="modality__scrim"></div>
+    <p class="modality__title">Fitness</p>
+  </div>
+  <div class="modality modality--danca">
+    <div class="modality__photo"></div>
+    <div class="modality__scrim"></div>
+    <p class="modality__title">Dança</p>
+  </div>
+</section>
+
+<!-- Planos -->
+<section class="plans" id="planos">
+  <div class="plans__head" data-reveal-group>
+    <p class="plans__eyebrow reveal reveal--slide">Planos</p>
+    <h2 class="plans__title reveal reveal--slide">Escolhe o teu ritmo</h2>
+    <p class="plans__lead reveal reveal--slide">Sem fidelização e sem custos de inscrição. Mudas de plano ou cancelas quando quiseres — basta avisares até ao fim do mês.</p>
+  </div>
+
+  <div class="plans__grid" data-reveal-group>
+  <article class="plan reveal reveal--rise">
+    <p class="plan__name">Base</p>
+    <p class="plan__price"><span class="plan__currency">€</span>24,90<span class="plan__period">/mês</span></p>
+    <p class="plan__pitch">Para quem já sabe o que anda a fazer.</p>
+    <ul class="plan__features">
+      <li>Sala de musculação e cardio</li>
+      <li>Livre trânsito, todo o horário</li>
+      <li>Avaliação física inicial</li>
+      <li>Plano de treino revisto a cada 3 meses</li>
+    </ul>
+    <a class="button button--outline plan__cta" href="tel:+351000000000">Ligar e inscrever</a>
+  </article>
+
+  <article class="plan plan--featured reveal reveal--rise">
+    <p class="plan__flag">Mais escolhido</p>
+    <p class="plan__name">Total</p>
+    <p class="plan__price"><span class="plan__currency">€</span>34,90<span class="plan__period">/mês</span></p>
+    <p class="plan__pitch">Musculação e todas as aulas, sem exceção.</p>
+    <ul class="plan__features">
+      <li>Tudo o que o plano Base inclui</li>
+      <li>Todas as aulas de grupo e de dança</li>
+      <li>Pilates e Yoga</li>
+      <li>Acompanhamento mensal com personal trainer</li>
+    </ul>
+    <a class="button button--red plan__cta" href="tel:+351000000000">Ligar e inscrever</a>
+  </article>
+
+  <article class="plan reveal reveal--rise">
+    <p class="plan__name">Crossfit</p>
+    <p class="plan__price"><span class="plan__currency">€</span>44,90<span class="plan__period">/mês</span></p>
+    <p class="plan__pitch">A box, os WODs e a comunidade.</p>
+    <ul class="plan__features">
+      <li>WODs diários com coach</li>
+      <li>Open gym fora dos horários de aula</li>
+      <li>Sala de musculação incluída</li>
+      <li>Escalonamento para todos os níveis</li>
+    </ul>
+    <a class="button button--outline plan__cta" href="tel:+351000000000">Ligar e inscrever</a>
+  </article>
+
+  <article class="plan reveal reveal--rise">
+    <p class="plan__name">Estudante</p>
+    <p class="plan__price"><span class="plan__currency">€</span>19,90<span class="plan__period">/mês</span></p>
+    <p class="plan__pitch">Cartão de estudante, preço de estudante.</p>
+    <ul class="plan__features">
+      <li>Até aos 23 anos</li>
+      <li>Sala de musculação e cardio</li>
+      <li>Aulas de grupo até às 17h</li>
+      <li>Suspensão gratuita em época de exames</li>
+    </ul>
+    <a class="button button--outline plan__cta" href="tel:+351000000000">Ligar e inscrever</a>
+  </article>
+  </div>
+
+  <p class="plans__note reveal reveal--slide">Todos os planos incluem avaliação física inicial e acesso aos balneários. Novas inscrições têm os primeiros 3 meses grátis.</p>
+</section>
+
+<script src="nav.js"></script>
+<script src="reveal.js"></script>
+<script src="hero-reveal.js"></script>
+
+</body>
+</html>

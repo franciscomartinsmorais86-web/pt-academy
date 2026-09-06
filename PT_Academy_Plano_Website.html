@@ -1,0 +1,690 @@
+<!DOCTYPE html>
+<html lang="pt-PT">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Plano do Website — PT Academy</title>
+<style>
+  :root{
+    --bg:#F6F9FC;
+    --surface:#FFFFFF;
+    --primary:#635BFF;
+    --primary-soft:#EEEDFF;
+    --text:#0A2540;
+    --muted:#425466;
+    --border:#E3E8EE;
+    --success:#00D924;
+    --amber-bg:#FFF8E6;
+    --amber-border:#E9C46A;
+    --amber-text:#6B4E00;
+    --shadow:0 1px 2px rgba(10,37,64,.06), 0 8px 24px rgba(10,37,64,.05);
+    --serif:"Iowan Old Style", Palatino, "Palatino Linotype", Georgia, serif;
+    --sans:ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    --mono:ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace;
+  }
+
+  @media (prefers-color-scheme: dark){
+    :root{
+      --bg:#0A1526;
+      --surface:#0F1E33;
+      --primary:#9A94FF;
+      --primary-soft:#1B2547;
+      --text:#E6EDF7;
+      --muted:#A3B2C7;
+      --border:#22344F;
+      --amber-bg:#33280C;
+      --amber-border:#8A6D2B;
+      --amber-text:#F2D89A;
+      --shadow:0 1px 2px rgba(0,0,0,.4), 0 8px 24px rgba(0,0,0,.35);
+    }
+  }
+
+  *{box-sizing:border-box;}
+  html{-webkit-text-size-adjust:100%;}
+  body{
+    margin:0;
+    background:var(--bg);
+    color:var(--text);
+    font-family:var(--serif);
+    font-size:17px;
+    line-height:1.65;
+  }
+  .wrap{max-width:860px;margin:0 auto;padding:56px 28px 72px;}
+
+  /* ---------- Masthead ---------- */
+  .masthead{
+    border-bottom:3px solid var(--primary);
+    padding-bottom:24px;
+    margin-bottom:36px;
+  }
+  .brand{
+    font-family:var(--sans);
+    font-size:12px;
+    font-weight:700;
+    letter-spacing:.16em;
+    text-transform:uppercase;
+    color:var(--primary);
+    margin:0 0 18px;
+    display:flex;
+    align-items:center;
+    gap:9px;
+  }
+  .brand .dot{
+    width:9px;height:9px;border-radius:50%;
+    background:var(--primary);display:inline-block;
+  }
+  h1{
+    font-family:var(--sans);
+    font-size:2.15rem;
+    line-height:1.15;
+    font-weight:700;
+    letter-spacing:-.022em;
+    margin:0 0 10px;
+  }
+  .subtitle{
+    font-family:var(--sans);
+    font-size:1.02rem;
+    color:var(--muted);
+    margin:0 0 22px;
+  }
+  .meta{
+    font-family:var(--sans);
+    font-size:.83rem;
+    color:var(--muted);
+    display:flex;
+    flex-wrap:wrap;
+    gap:8px 30px;
+    margin:0;
+    padding:0;
+    list-style:none;
+  }
+  .meta b{
+    display:block;
+    font-size:.7rem;
+    letter-spacing:.1em;
+    text-transform:uppercase;
+    color:var(--muted);
+    opacity:.75;
+    font-weight:700;
+    margin-bottom:1px;
+  }
+  .meta span{color:var(--text);font-weight:500;}
+
+  /* ---------- Índice ---------- */
+  nav.toc{
+    background:var(--surface);
+    border:1px solid var(--border);
+    border-radius:10px;
+    padding:20px 24px;
+    margin:0 0 44px;
+    box-shadow:var(--shadow);
+  }
+  nav.toc h2{
+    font-family:var(--sans);
+    font-size:.7rem;
+    letter-spacing:.14em;
+    text-transform:uppercase;
+    color:var(--muted);
+    margin:0 0 12px;
+    border:0;
+    padding:0;
+  }
+  nav.toc ol{
+    font-family:var(--sans);
+    font-size:.93rem;
+    margin:0;
+    padding-left:20px;
+    columns:2;
+    column-gap:32px;
+  }
+  nav.toc li{margin:0 0 7px;break-inside:avoid;}
+  nav.toc a{color:var(--text);text-decoration:none;border-bottom:1px solid transparent;}
+  nav.toc a:hover{color:var(--primary);border-bottom-color:var(--primary);}
+
+  /* ---------- Títulos ---------- */
+  h2{
+    font-family:var(--sans);
+    font-size:1.42rem;
+    font-weight:700;
+    letter-spacing:-.015em;
+    margin:52px 0 6px;
+    padding-bottom:10px;
+    border-bottom:1px solid var(--border);
+    scroll-margin-top:20px;
+  }
+  h2 .num{
+    color:var(--primary);
+    font-variant-numeric:tabular-nums;
+    margin-right:10px;
+  }
+  h3{
+    font-family:var(--sans);
+    font-size:1.06rem;
+    font-weight:700;
+    letter-spacing:-.008em;
+    margin:34px 0 8px;
+  }
+  h4{
+    font-family:var(--sans);
+    font-size:.76rem;
+    font-weight:700;
+    letter-spacing:.12em;
+    text-transform:uppercase;
+    color:var(--muted);
+    margin:26px 0 8px;
+  }
+  p{margin:0 0 16px;}
+  .lead{font-size:1.06rem;color:var(--muted);}
+  a{color:var(--primary);}
+
+  /* ---------- Tabelas ---------- */
+  .table-wrap{
+    overflow-x:auto;
+    border:1px solid var(--border);
+    border-radius:10px;
+    background:var(--surface);
+    margin:18px 0 24px;
+    box-shadow:var(--shadow);
+  }
+  table{
+    border-collapse:collapse;
+    width:100%;
+    font-family:var(--sans);
+    font-size:.88rem;
+    min-width:520px;
+  }
+  th{
+    text-align:left;
+    font-size:.68rem;
+    letter-spacing:.11em;
+    text-transform:uppercase;
+    color:var(--muted);
+    font-weight:700;
+    padding:12px 16px;
+    border-bottom:1px solid var(--border);
+    white-space:nowrap;
+  }
+  td{
+    padding:11px 16px;
+    border-bottom:1px solid var(--border);
+    vertical-align:middle;
+    color:var(--muted);
+  }
+  tr:last-child td{border-bottom:0;}
+  td.name{color:var(--text);font-weight:600;white-space:nowrap;}
+  code, .hex{
+    font-family:var(--mono);
+    font-size:.83em;
+    background:var(--primary-soft);
+    color:var(--primary);
+    padding:2px 6px;
+    border-radius:4px;
+    white-space:nowrap;
+  }
+  .swatch{
+    display:inline-block;
+    width:22px;height:22px;
+    border-radius:5px;
+    border:1px solid var(--border);
+    vertical-align:-6px;
+    margin-right:9px;
+  }
+  .swatch.split{
+    background-image:linear-gradient(135deg,#232323 0 50%,#2B2B2B 50% 100%);
+  }
+
+  /* ---------- Blocos ---------- */
+  blockquote{
+    margin:22px 0;
+    padding:16px 22px;
+    background:var(--primary-soft);
+    border-left:3px solid var(--primary);
+    border-radius:0 8px 8px 0;
+    font-size:1.12rem;
+    font-style:italic;
+    color:var(--text);
+  }
+  blockquote p{margin:0;}
+  blockquote cite{
+    display:block;
+    font-family:var(--sans);
+    font-style:normal;
+    font-size:.76rem;
+    letter-spacing:.06em;
+    text-transform:uppercase;
+    color:var(--muted);
+    margin-top:8px;
+  }
+
+  .action{
+    background:var(--amber-bg);
+    border:1px solid var(--amber-border);
+    border-radius:9px;
+    padding:16px 20px;
+    margin:22px 0;
+    font-family:var(--sans);
+    font-size:.93rem;
+    color:var(--amber-text);
+  }
+  .action p{margin:0;}
+  .action .tag{
+    display:block;
+    font-size:.67rem;
+    font-weight:700;
+    letter-spacing:.13em;
+    text-transform:uppercase;
+    margin-bottom:6px;
+    opacity:.85;
+  }
+
+  .callout{
+    background:var(--surface);
+    border:1px solid var(--border);
+    border-radius:10px;
+    padding:18px 22px;
+    margin:22px 0;
+    box-shadow:var(--shadow);
+  }
+  .callout p:last-child{margin-bottom:0;}
+
+  /* ---------- Cartões ---------- */
+  .cards{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(230px,1fr));
+    gap:14px;
+    margin:20px 0 26px;
+  }
+  .svc{
+    background:var(--surface);
+    border:1px solid var(--border);
+    border-radius:10px;
+    padding:16px 18px;
+    box-shadow:var(--shadow);
+  }
+  .svc h5{
+    font-family:var(--sans);
+    font-size:.95rem;
+    font-weight:700;
+    margin:0 0 5px;
+    color:var(--text);
+  }
+  .svc p{
+    font-family:var(--sans);
+    font-size:.85rem;
+    line-height:1.5;
+    color:var(--muted);
+    margin:0;
+  }
+
+  /* ---------- Passos ---------- */
+  ol.steps{
+    list-style:none;
+    counter-reset:step;
+    padding:0;
+    margin:22px 0 26px;
+  }
+  ol.steps > li{
+    counter-increment:step;
+    position:relative;
+    padding:0 0 22px 52px;
+    border-left:1px solid var(--border);
+    margin-left:15px;
+  }
+  ol.steps > li:last-child{border-left-color:transparent;padding-bottom:0;}
+  ol.steps > li::before{
+    content:counter(step);
+    position:absolute;
+    left:-15px;top:-2px;
+    width:30px;height:30px;
+    border-radius:50%;
+    background:var(--primary);
+    color:#fff;
+    font-family:var(--sans);
+    font-size:.82rem;
+    font-weight:700;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+  }
+  ol.steps h5{
+    font-family:var(--sans);
+    font-size:.98rem;
+    font-weight:700;
+    margin:3px 0 5px;
+    color:var(--text);
+  }
+  ol.steps p{margin:0;font-size:.97rem;}
+
+  /* ---------- Lista de verificação ---------- */
+  ul.check{
+    list-style:none;
+    padding:0;
+    margin:18px 0 24px;
+    font-family:var(--sans);
+    font-size:.95rem;
+  }
+  ul.check li{
+    position:relative;
+    padding:0 0 12px 32px;
+    color:var(--muted);
+  }
+  ul.check li::before{
+    content:"";
+    position:absolute;
+    left:0;top:3px;
+    width:16px;height:16px;
+    border:2px solid var(--primary);
+    border-radius:4px;
+  }
+  ul.check li b{color:var(--text);font-weight:600;}
+
+  ul.plain{padding-left:22px;margin:0 0 18px;}
+  ul.plain li{margin-bottom:8px;}
+
+  /* ---------- Rodapé ---------- */
+  footer{
+    margin-top:60px;
+    padding-top:22px;
+    border-top:1px solid var(--border);
+    font-family:var(--sans);
+    font-size:.8rem;
+    color:var(--muted);
+    display:flex;
+    justify-content:space-between;
+    flex-wrap:wrap;
+    gap:8px;
+  }
+  footer .nk{font-weight:600;color:var(--text);}
+
+  /* ---------- Ecrãs pequenos ---------- */
+  @media (max-width:620px){
+    body{font-size:16px;}
+    .wrap{padding:36px 18px 52px;}
+    h1{font-size:1.7rem;}
+    h2{font-size:1.22rem;}
+    nav.toc ol{columns:1;}
+    .meta{gap:12px 20px;}
+    .cards{grid-template-columns:1fr;}
+  }
+
+  /* ---------- Impressão ---------- */
+  @media print{
+    :root{
+      --bg:#FFFFFF;--surface:#FFFFFF;--text:#0A2540;--muted:#425466;
+      --border:#D5DCE5;--primary:#4B45C6;--primary-soft:#F1F0FF;
+      --shadow:none;
+    }
+    body{font-size:11.5pt;}
+    .wrap{max-width:none;padding:0;}
+    nav.toc{display:none;}
+    h1,h2,h3,h4,h5{page-break-after:avoid;break-after:avoid;}
+    table,tr,.svc,.action,blockquote,ol.steps > li,.callout{
+      page-break-inside:avoid;break-inside:avoid;
+    }
+    .table-wrap{overflow:visible;box-shadow:none;}
+    a{color:inherit;text-decoration:none;}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header class="masthead">
+    <p class="brand"><span class="dot"></span>NK Web Design</p>
+    <h1>Plano do Website — PT Academy</h1>
+    <p class="subtitle">Estratégia de posicionamento, identidade visual e arquitetura das páginas.</p>
+    <ul class="meta">
+      <li><b>Cliente</b><span>PT Academy · Vila Real</span></li>
+      <li><b>Preparado por</b><span>Francisco Morais</span></li>
+      <li><b>Data</b><span>2 de setembro de 2026</span></li>
+      <li><b>Estado</b><span>Versão para revisão</span></li>
+    </ul>
+  </header>
+
+  <nav class="toc">
+    <h2>Índice</h2>
+    <ol>
+      <li><a href="#seo">Estratégia de SEO</a></li>
+      <li><a href="#cores">Paleta de cores</a></li>
+      <li><a href="#tipografia">Tipografia</a></li>
+      <li><a href="#home">Página inicial</a></li>
+      <li><a href="#equipa">Página da equipa</a></li>
+      <li><a href="#instalacoes">Página das instalações</a></li>
+      <li><a href="#informativas">Sobre o ginásio e Modalidades</a></li>
+      <li><a href="#confirmar">Pontos por confirmar</a></li>
+    </ol>
+  </nav>
+
+  <p class="lead">Este documento reúne as decisões de estratégia, identidade e estrutura que orientam o desenvolvimento do novo website da PT Academy. Serve de referência de trabalho ao longo do projeto e será atualizado à medida que os pontos em aberto forem fechados.</p>
+
+  <!-- ============ 1. SEO ============ -->
+  <h2 id="seo"><span class="num">01</span>Estratégia de SEO</h2>
+
+  <p>A página inicial é otimizada para um nicho amplo e fortemente disputado em Vila Real. As palavras-chave principais são:</p>
+
+  <div class="cards">
+    <div class="svc">
+      <h5>ginásio</h5>
+      <p>Termo central do nicho. Elevada concorrência local.</p>
+    </div>
+    <div class="svc">
+      <h5>vila real</h5>
+      <p>Âncora geográfica presente em praticamente todas as pesquisas com intenção local.</p>
+    </div>
+    <div class="svc">
+      <h5>academia</h5>
+      <p>Variante usada sobretudo pelo público brasileiro, com menor concorrência — oportunidade real de primeiro lugar.</p>
+    </div>
+    <div class="svc">
+      <h5>fitness</h5>
+      <p>Termo de suporte, útil para captar pesquisas mais genéricas.</p>
+    </div>
+  </div>
+
+  <p>A dança aparenta ser um nicho com menos concorrência do que os restantes. Continua a ser importante posicionar a PT Academy nessas pesquisas, mas exige um esforço de otimização consideravelmente menor — o que liberta atenção para os termos verdadeiramente competitivos.</p>
+
+  <div class="action">
+    <span class="tag">Por confirmar</span>
+    <p>A menor concorrência no nicho da dança é uma leitura preliminar. Confirmar com uma análise de pesquisa antes de fixar a distribuição de esforço entre os vários termos.</p>
+  </div>
+
+  <!-- ============ 2. CORES ============ -->
+  <h2 id="cores"><span class="num">02</span>Paleta de cores</h2>
+
+  <p>A paleta assenta num fundo escuro contrastado por um vermelho de marca, com uma família de bordôs para os blocos destacados. Cada cor tem uma função definida — não há tons decorativos sem propósito.</p>
+
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr><th>Cor</th><th>Código</th><th>Onde é usada</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="name"><span class="swatch" style="background:#C11D26"></span>Vermelho de marca</td>
+          <td><span class="hex">#C11D26</span></td>
+          <td>CTAs, sublinhados, o «·» do logótipo, <i>badges</i> e destaques</td>
+        </tr>
+        <tr>
+          <td class="name"><span class="swatch" style="background:#0A0A0A"></span>Preto de fundo</td>
+          <td><span class="hex">#0A0A0A</span></td>
+          <td>Fundo principal da página</td>
+        </tr>
+        <tr>
+          <td class="name"><span class="swatch" style="background:#070707"></span>Preto mais escuro</td>
+          <td><span class="hex">#070707</span></td>
+          <td>Secções alternadas</td>
+        </tr>
+        <tr>
+          <td class="name"><span class="swatch" style="background:#141414"></span>Cinzento escuro</td>
+          <td><span class="hex">#141414</span></td>
+          <td>Cartões de preços e de aulas</td>
+        </tr>
+        <tr>
+          <td class="name"><span class="swatch split"></span>Riscas decorativas</td>
+          <td><span class="hex">#232323</span> <span class="hex">#2B2B2B</span></td>
+          <td><code>repeating-linear-gradient(45deg, …)</code></td>
+        </tr>
+        <tr>
+          <td class="name"><span class="swatch" style="background:#1A1112"></span>Bordô escuro</td>
+          <td><span class="hex">#1A1112</span></td>
+          <td>Fundos de blocos com tom avermelhado</td>
+        </tr>
+        <tr>
+          <td class="name"><span class="swatch" style="background:#2A1215"></span>Bordô escuro 2</td>
+          <td><span class="hex">#2A1215</span></td>
+          <td>Variante mais quente do anterior</td>
+        </tr>
+        <tr>
+          <td class="name"><span class="swatch" style="background:#5C2B2E"></span>Borda bordô</td>
+          <td><span class="hex">#5C2B2E</span></td>
+          <td><code>1px solid</code> em blocos destacados</td>
+        </tr>
+        <tr>
+          <td class="name"><span class="swatch" style="background:#FF8A80"></span>Vermelho claro</td>
+          <td><span class="hex">#FF8A80</span></td>
+          <td>Texto de destaque sobre fundo bordô</td>
+        </tr>
+        <tr>
+          <td class="name"><span class="swatch" style="background:#FFFFFF"></span>Branco</td>
+          <td><span class="hex">#FFFFFF</span></td>
+          <td>Texto principal e botões <i>outline</i> (<code>2px solid #fff</code>)</td>
+        </tr>
+        <tr>
+          <td class="name"><span class="swatch" style="background:#999999"></span>Cinzento de texto</td>
+          <td><span class="hex">#999999</span></td>
+          <td>Texto secundário</td>
+        </tr>
+        <tr>
+          <td class="name"><span class="swatch" style="background:#666666"></span>Cinzento de texto 2</td>
+          <td><span class="hex">#666666</span></td>
+          <td>Texto terciário e legendas</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- ============ 3. TIPOGRAFIA ============ -->
+  <h2 id="tipografia"><span class="num">03</span>Tipografia</h2>
+
+  <p>Para o <i>hero</i> e os títulos de secção estão em cima da mesa dois pares de fontes. Ambos privilegiam carácter e impacto; a decisão final depende do tom que a PT Academy quiser projetar.</p>
+
+  <div class="cards">
+    <div class="svc">
+      <h5>Opção A — Shadow Light + Balboa</h5>
+      <p>Combinação com mais textura e personalidade, de leitura mais informal.</p>
+    </div>
+    <div class="svc">
+      <h5>Opção B — Athenas + Vanguard</h5>
+      <p>Combinação mais angular e desportiva, com maior peso visual nos títulos.</p>
+    </div>
+  </div>
+
+  <p>O corpo de texto usa uma <i>sans serif</i> neutra, escolhida para manter a legibilidade em blocos longos e em ecrãs pequenos.</p>
+
+  <div class="action">
+    <span class="tag">Decisão em aberto</span>
+    <p>Escolher um dos dois pares antes de arrancar o desenho do <i>hero</i> — a fonte de título condiciona o enquadramento da imagem e o comprimento do texto.</p>
+  </div>
+
+  <!-- ============ 4. HOME ============ -->
+  <h2 id="home"><span class="num">04</span>Página inicial</h2>
+
+  <p>É a página mais importante do site: cerca de 95&nbsp;% dos potenciais clientes entram por aqui. Toda a estrutura está desenhada para converter, encaminhando o visitante das páginas de detalhe até ao contacto.</p>
+
+  <ol class="steps">
+    <li>
+      <h5>Hero</h5>
+      <p>A primeira secção visível. Tem de ser apelativa e prender o visitante nos primeiros segundos. No caso de um ginásio, mostra-se exatamente aquilo que o visitante quer ver: um corpo de sonho. O texto acompanha essa direção — frio e direto.</p>
+      <blockquote>
+        <p>A tua jornada começa aqui.</p>
+        <cite>Proposta de texto para o hero</cite>
+      </blockquote>
+    </li>
+    <li>
+      <h5>Campanha ativa</h5>
+      <p>Se houver campanha a decorrer, entra logo a seguir ao <i>hero</i>, num bloco visualmente destacado do resto da página. Não contém os detalhes: encaminha para a página dedicada à campanha.</p>
+    </li>
+    <li>
+      <h5>Sobre o ginásio</h5>
+      <p>Secção breve, com algumas fotografias — possivelmente uma da proprietária — a encaminhar para a página das instalações.</p>
+    </li>
+    <li>
+      <h5>Modalidades</h5>
+      <p>Apresentação sumária das modalidades, com ligação para a página que as detalha na totalidade.</p>
+    </li>
+    <li>
+      <h5>Planos</h5>
+      <p>Os planos apresentados em detalhe, cada um com um botão que permite ligar diretamente para o ginásio a partir do telemóvel.</p>
+    </li>
+    <li>
+      <h5>Chamada à ação final (CTA)</h5>
+      <p>Imediatamente antes do rodapé. Quem fez <i>scroll</i> até aqui está interessado e precisa de um próximo passo claro e simples.</p>
+    </li>
+  </ol>
+
+  <h3>Imagem do hero — decisão pendente</h3>
+  <p>Falta decidir entre um casal atlético ou apenas uma mulher.</p>
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr><th>Opção</th><th>Leitura</th><th>Risco</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="name">Apenas uma mulher</td>
+          <td>Aposta mais segura. Imagens de mulheres em anúncios tendem a converter mais em ambos os géneros.</td>
+          <td>Impacto visual menos forte.</td>
+        </tr>
+        <tr>
+          <td class="name">Casal atlético</td>
+          <td>Aposta mais arrojada, causa uma impressão mais forte.</td>
+          <td>Pode gerar uma sensação de inferioridade em parte do público masculino.</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- ============ 5. EQUIPA ============ -->
+  <h2 id="equipa"><span class="num">05</span>Página da equipa</h2>
+
+  <p>As restantes páginas servem sobretudo para informar, não para converter, pelo que a estrutura é deliberadamente mais simples. Ainda assim, há espaço para as tornar mais interessantes.</p>
+
+  <p>Cada colaborador é apresentado num cartão com uma fotografia de busto, o nome e a função — uma linguagem próxima da dos vídeos de equipa publicados todos os anos. Ao passar o rato sobre um cartão, um pequeno vídeo entra em reprodução com os gestos que essa pessoa faz no vídeo de apresentação principal.</p>
+
+  <!-- ============ 6. INSTALAÇÕES ============ -->
+  <h2 id="instalacoes"><span class="num">06</span>Página das instalações</h2>
+
+  <p>Além de uma galeria simples, a intenção é implementar uma visita navegável ao estilo do Google Street View: o visitante começa à porta do ginásio e percorre livremente todas as zonas públicas.</p>
+
+  <div class="callout">
+    <p>É a funcionalidade mais exigente do projeto, tanto na captação de imagem como na implementação. Convém validar cedo o esforço envolvido e o material necessário.</p>
+  </div>
+
+  <!-- ============ 7. INFORMATIVAS ============ -->
+  <h2 id="informativas"><span class="num">07</span>Sobre o ginásio e Modalidades</h2>
+
+  <p>São páginas maioritariamente informativas. O trabalho concentra-se nas animações, que tornam a experiência mais imersiva e fluida sem acrescentar complexidade desnecessária.</p>
+
+  <!-- ============ 8. POR CONFIRMAR ============ -->
+  <h2 id="confirmar"><span class="num">08</span>Pontos por confirmar</h2>
+
+  <p>As afirmações abaixo ainda não estão validadas e não devem ser tratadas como decisões fechadas.</p>
+
+  <ul class="check">
+    <li><b>Concorrência no nicho da dança</b> — confirmar que é efetivamente inferior à dos restantes termos antes de reduzir o esforço de otimização.</li>
+    <li><b>Imagem do hero</b> — escolher entre casal atlético e apenas uma mulher.</li>
+    <li><b>Par tipográfico</b> — Shadow Light + Balboa ou Athenas + Vanguard.</li>
+    <li><b>Fotografia da proprietária</b> — confirmar a disponibilidade e a autorização para a incluir na secção «Sobre o ginásio».</li>
+    <li><b>Vídeos da equipa</b> — confirmar o acesso ao material existente para os cartões com reprodução em <i>hover</i>.</li>
+    <li><b>Visita ao estilo Street View</b> — validar a viabilidade técnica e a captação de imagem das zonas públicas.</li>
+    <li><b>Campanhas</b> — confirmar se há campanhas previstas, para decidir se a secção correspondente entra já na primeira versão.</li>
+  </ul>
+
+  <footer>
+    <span><span class="nk">NK Web Design</span> · Francisco Morais · nkwebdesign.pt</span>
+    <span>2 de setembro de 2026</span>
+  </footer>
+
+</div>
+</body>
+</html>
