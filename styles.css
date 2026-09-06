@@ -72,6 +72,57 @@ a:hover {
   color: var(--color-red);
 }
 
+/* ---------- Tela de entrada ---------- */
+
+/* Só existe com JS: sem ele o overlay nunca seria retirado e a página
+   ficava preta. O intro.js mede o logo do nav e leva este até lá. */
+.intro {
+  display: none;
+}
+
+.js .intro {
+  position: fixed;
+  inset: 0;
+  z-index: 200;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+}
+
+/* O fundo preto é uma camada à parte para poder desvanecer sozinho,
+   sem levar o logo atrás. */
+.intro::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: var(--color-black);
+  transition: opacity var(--intro-fundo, 450ms) ease-out var(--intro-fundo-atraso, 0ms);
+}
+
+.intro__logo {
+  position: relative;
+  font: clamp(46px, 11vw, 132px) var(--font-display);
+  letter-spacing: .06em;
+  transform-origin: 0 0;
+  will-change: transform;
+}
+
+/* Enquanto a tela está de pé, o logo do nav fica reservado (ocupa o
+   espaço, invisível) — é a posição de chegada. */
+.is-intro .nav__logo {
+  visibility: hidden;
+}
+.is-intro,
+.is-intro body {
+  overflow: hidden;
+}
+
+/* Saída: o fundo apaga-se e o logo viaja para o nav. */
+.intro.is-out::before {
+  opacity: 0;
+}
+
 /* ---------- Hero ---------- */
 
 .hero {
@@ -279,7 +330,7 @@ a:hover {
 .hero__title {
   margin: 0 0 clamp(24px, 4vh, 64px);
   pointer-events: none;
-  font: 400 clamp(56px, 13vw, 220px)/0.9 var(--font-display);
+  font: 400 clamp(56px, 10vw, 220px)/0.9 var(--font-display);
   letter-spacing: .01em;
   text-transform: uppercase;
   text-wrap: balance;
