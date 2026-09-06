@@ -8,8 +8,8 @@
    anima-se a diferença com um transform (nada de reflows por frame). */
 var INTRO_ESPERA = 1000;         /* quanto tempo o logo fica parado ao centro */
 var INTRO_VIAGEM = 1200;         /* duração da viagem até ao nav */
-var INTRO_FUNDO = 1300;         /* duração do fade do preto */
-var INTRO_FUNDO_ATRASO = 300;   /* atraso do fade do preto, contado do arranque */
+var INTRO_FUNDO = 900;          /* duração da subida do preto */
+var INTRO_FUNDO_ATRASO = 300;   /* atraso da subida do preto, contado do arranque */
 /* Quase linear, com um ease-in-out muito ténue só para tirar o arranque
    e a paragem secos — a viagem deve ler-se a velocidade constante. */
 var INTRO_CURVA = 'cubic-bezier(.4,.15,.6,.85)';

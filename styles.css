@@ -90,14 +90,16 @@ a:hover {
   pointer-events: none;
 }
 
-/* O fundo preto é uma camada à parte para poder desvanecer sozinho,
-   sem levar o logo atrás. */
+/* O fundo preto é uma camada à parte para poder sair sozinho, sem
+   levar o logo atrás. */
 .intro::before {
   content: '';
   position: absolute;
   inset: 0;
   background: var(--color-black);
-  transition: opacity var(--intro-fundo, 450ms) ease-out var(--intro-fundo-atraso, 0ms);
+  /* ease-in suave: começa a andar logo e acelera sem disparar no fim */
+  transition: transform var(--intro-fundo, 450ms) cubic-bezier(.35, .05, .65, .6) var(--intro-fundo-atraso, 0ms);
+  will-change: transform;
 }
 
 .intro__logo {
@@ -118,9 +120,9 @@ a:hover {
   overflow: hidden;
 }
 
-/* Saída: o fundo apaga-se e o logo viaja para o nav. */
+/* Saída: o preto sobe e sai do ecrã enquanto o logo viaja para o nav. */
 .intro.is-out::before {
-  opacity: 0;
+  transform: translateY(-100%);
 }
 
 /* ---------- Hero ---------- */

@@ -1,0 +1,91 @@
+# Notas — animações e histórico
+
+Registo do que já foi feito no site e de todo o movimento que lá está.
+Atualizar sempre que uma animação for acrescentada, afinada ou retirada.
+
+## Histórico de commits
+
+| Commit | O quê |
+|---|---|
+| `d9345c0` | Estado inicial do repositório (homepage estática completa) + o primeiro efeito de revelação do hero. `gallery/` ficou fora do controlo de versões — 517 MB de originais e RAW. |
+| `d0574d6` | Retira o efeito de revelação do hero: sai o `<canvas class="hero__reveal">`, o CSS da camada e o `hero-reveal.js`. Fica o `pointer-events: none` no título e no eyebrow do hero, que foi pedido à parte. |
+| `7488625` | Remove `assets/pt-academy-fachada.jpg`, sem uso depois da remoção acima. O original continua em `gallery/PT Academy-42.jpg`. |
+| `5f430a9` | Tela de entrada: ecrã preto com o logo grande que viaja para a posição do logo no nav. |
+
+Por commitar à data desta nota: a saída da tela de entrada passou de fade
+a deslizar para cima, e o afinamento da curva dessa subida.
+
+## Animações no site
+
+### Tela de entrada — `intro.js` + `.intro` no `styles.css`
+
+O único movimento com script dedicado. Ecrã preto por cima de tudo
+(`z-index: 200`) com o logo em texto ao centro; passado `INTRO_ESPERA` o
+preto sai a deslizar para cima e o logo viaja até ao logo do nav, que
+esteve `visibility: hidden` a reservar o lugar.
+
+- **Medição FLIP**: mede-se o retângulo do logo grande e o do logo do
+  nav e anima-se a diferença num `transform` (translate + scale). Só
+  depois de `document.fonts.ready` — medir em fonte de fallback dá uma
+  aterragem ao lado. Timeout de 2s como rede de segurança.
+- **Caminho curvo**: Bézier quadrática amostrada em `INTRO_PASSOS` (30)
+  quadros e animada com a Web Animations API. O easing global trata do
+  tempo, as amostras tratam da forma. Sem `element.animate` cai numa
+  transição em linha reta.
+- **Saída do preto**: camada `::before` à parte, para poder sair sem
+  levar o logo atrás. `translateY(-100%)` com ease-in.
+- Constantes todas no topo do `intro.js`: `INTRO_ESPERA` (1000ms parado
+  ao centro), `INTRO_VIAGEM` (1200ms), `INTRO_FUNDO` (900ms de subida),
+  `INTRO_FUNDO_ATRASO` (300ms), `INTRO_CURVA` (quase linear, ease-in-out
+  ténue), `INTRO_ARCO` (0.16 — negativo inverte o lado da curva).
+- O overlay só existe com `.js` no `<html>`: sem JS nunca seria retirado
+  e a página ficava preta. Com `prefers-reduced-motion` não há viagem,
+  só o preto a sair.
+
+### Nav ao scroll — `nav.js`
+
+O fundo preto, o padding e a troca do hamburger pela lista são todos
+**interpolados** ao longo do scroll através da custom property
+`--nav-progress` (0 → 1), escrita a cada frame. Não há `transition`
+nenhuma a disparar num ponto: a transição corre entre 0.55 e 1.05 da
+altura do ecrã (acaba à saída do hero) e passa por um smoothstep para
+tirar as pontas secas.
+
+### Entradas ao scroll — `reveal.js` + `@keyframes reveal-*`
+
+`IntersectionObserver` a 20% de visibilidade acrescenta `.is-revealed`.
+Elementos dentro de um `[data-reveal-group]` entram escalonados a 100ms
+(`--reveal-delay`). Três variantes, todas em
+`cubic-bezier(.22, .61, .36, 1)`:
+
+- `reveal-in` — fotos: fade + `scale(1.12) → 1`, 1.1s.
+- `reveal-slide-in` — texto: fade + entrada de 32px pela esquerda, .8s.
+- `reveal-rise-in` — cartões de plano: fade + subida de 28px, .8s.
+
+Bloco `prefers-reduced-motion` no fim do `styles.css` desliga estas
+animações e transições.
+
+### Menu em ecrã inteiro
+
+Overlay em fade (`opacity` + `visibility`, .35s); cada item entra em
+`opacity`/`translateY(18px)` com delays escalonados de 60ms por
+`:nth-child`; as barras do hamburger rodam para X com `transform .3s`.
+
+### Hovers
+
+- `.modality__photo` — `scale(1.08)` em .5s ao passar na modalidade.
+- `.button--outline` — inverte fundo/texto em .25s.
+- `.button--red` — só a cor do texto, .2s (o `a:hover` global punha
+  vermelho sobre vermelho).
+- `.plan` — a borda acende a vermelho esbatido em .25s.
+
+## Experiências abandonadas
+
+**Revelação do hero com o rato** (`hero-reveal.js`, commits `d9345c0` →
+`d0574d6`). A foto da fachada por cima e a foto de treino por baixo,
+revelada à volta do cursor: o centro perseguia o rato com mola, deixava
+rasto e o raio crescia com a velocidade. Teve duas versões — rasto que
+desvanecia, e depois raspagem permanente acumulada num canvas de máscara
+fora do ecrã, com a fachada por cima de todo o hero (era preciso raspar
+para ver o título). O código está no commit `d9345c0` se algum dia
+voltarmos à ideia.
