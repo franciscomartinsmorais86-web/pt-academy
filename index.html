@@ -152,7 +152,6 @@
     <div class="galeria__peca galeria__peca--texto galeria__peca--cta" data-peca="texto-2">
       <h2 class="galeria__titulo">Não fiques <em>pasmado</em></h2>
       <p class="galeria__corpo">Vem ver com os teus olhos.</p>
-      <a class="button button--outline" href="#inscricao">Marcar visita</a>
     </div>
 
    </div>
@@ -178,7 +177,7 @@
       <li>Avaliação física inicial</li>
       <li>Plano de treino revisto a cada 3 meses</li>
     </ul>
-    <a class="button button--outline plan__cta" href="tel:+351000000000">Ligar</a>
+    <a class="button button--outline2 plan__cta" href="tel:+351000000000">Ligar</a>
   </article>
 
   <article class="plan plan--featured reveal reveal--rise">
@@ -205,7 +204,7 @@
       <li>Sala de musculação incluída</li>
       <li>Escalonamento para todos os níveis</li>
     </ul>
-    <a class="button button--outline plan__cta" href="tel:+351000000000">Ligar</a>
+    <a class="button button--outline2 plan__cta" href="tel:+351000000000">Ligar</a>
   </article>
 
   <article class="plan reveal reveal--rise">
@@ -218,18 +217,18 @@
       <li>Aulas de grupo até às 17h</li>
       <li>Suspensão gratuita em época de exames</li>
     </ul>
-    <a class="button button--outline plan__cta" href="tel:+351000000000">Ligar</a>
+    <a class="button button--outline2 plan__cta" href="tel:+351000000000">Ligar</a>
   </article>
   </div>
 </section>
 
 <!-- Faixa de fecho -->
 <section class="closer">
-  <p class="closer__eyebrow">A primeira aula é por nossa conta</p>
-  <h2 class="closer__title">Passa cá<br>e experimenta</h2>
+  <p class="closer__eyebrow">Do que continuas à espera?</p>
+  <h2 class="closer__title">Chega de desculpas<br>começa hoje.</h2>
   <div class="closer__actions">
-    <a class="button button--red" href="#inscricao">Marcar visita</a>
-    <a class="button button--outline" href="tel:+351259322108">259 322 108</a>
+    <a class="button button--red" href="tel:+351259322108">Marcar visita</a>
+    <button type="button" class="button button--outline" data-modal-abrir>Enviar questão</button>
   </div>
 </section>
 
@@ -320,10 +319,113 @@
     </ul>
   </div>
 </footer>
+<!-- Modal de contacto -->
+<div class="modal" id="modal-contacto" role="dialog" aria-modal="true"
+     aria-labelledby="modal-titulo" hidden>
+  <div class="modal__fundo" data-modal-fechar></div>
+
+  <div class="modal__caixa" role="document">
+    <button type="button" class="modal__fechar" data-modal-fechar aria-label="Fechar">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor"
+           stroke-width="2" stroke-linecap="square" aria-hidden="true">
+        <path d="M5 5l14 14M19 5L5 19"/>
+      </svg>
+    </button>
+
+    <p class="modal__eyebrow">Fala connosco</p>
+    <h2 class="modal__titulo" id="modal-titulo">Tens dúvidas?</h2>
+    <p class="modal__lead">Respondemos em menos de 24h, dias úteis.</p>
+
+    <form class="form" id="form-contacto" novalidate>
+
+      <div class="form__linha">
+        <div class="campo">
+          <label class="campo__label" for="campo-nome">Nome</label>
+          <input class="campo__input" id="campo-nome" name="nome" type="text"
+                 autocomplete="name" required>
+          <p class="campo__erro" data-erro="nome"></p>
+        </div>
+      </div>
+
+      <fieldset class="form__grupo">
+        <legend class="campo__label">Como preferes ser contactado?</legend>
+        <div class="opcoes">
+          <label class="opcao">
+            <input type="radio" name="contacto" value="telefone" checked>
+            <span>Telefone</span>
+          </label>
+          <label class="opcao">
+            <input type="radio" name="contacto" value="email">
+            <span>Email</span>
+          </label>
+          <label class="opcao">
+            <input type="radio" name="contacto" value="mensagem">
+            <span>Mensagem</span>
+          </label>
+        </div>
+      </fieldset>
+
+      <div class="form__linha">
+        <div class="campo">
+          <label class="campo__label" for="campo-telefone">Telemóvel</label>
+          <input class="campo__input" id="campo-telefone" name="telefone" type="tel"
+                 autocomplete="tel" inputmode="tel" placeholder="9xx xxx xxx">
+          <p class="campo__erro" data-erro="telefone"></p>
+        </div>
+        <div class="campo">
+          <label class="campo__label" for="campo-email">Email</label>
+          <input class="campo__input" id="campo-email" name="email" type="email"
+                 autocomplete="email" placeholder="nome@exemplo.pt">
+          <p class="campo__erro" data-erro="email"></p>
+        </div>
+      </div>
+
+      <div class="campo">
+        <label class="campo__label" for="campo-questao">A tua questão</label>
+        <textarea class="campo__input campo__input--area" id="campo-questao"
+                  name="questao" rows="4" required
+                  placeholder="Horários, planos, aulas experimentais…"></textarea>
+        <p class="campo__erro" data-erro="questao"></p>
+      </div>
+
+      <label class="consentimento">
+        <input type="checkbox" name="consentimento" required>
+        <span>Autorizo a PT Academy a usar os meus contactos para responder a esta questão.</span>
+      </label>
+      <p class="campo__erro" data-erro="consentimento"></p>
+
+      <!-- Armadilha para bots: invisível e fora da ordem de tabulação. -->
+      <div class="pote-de-mel" aria-hidden="true">
+        <label for="campo-empresa">Empresa</label>
+        <input id="campo-empresa" name="empresa" type="text" tabindex="-1" autocomplete="off">
+      </div>
+
+      <button type="submit" class="button button--red form__enviar">
+        <span class="form__enviar-texto">Enviar questão</span>
+      </button>
+
+      <p class="form__estado" data-estado role="status" aria-live="polite"></p>
+    </form>
+
+    <div class="modal__sucesso" data-sucesso hidden>
+      <div class="modal__visto" aria-hidden="true">
+        <svg viewBox="0 0 24 24" width="34" height="34" fill="none" stroke="currentColor"
+             stroke-width="2.2" stroke-linecap="square">
+          <path d="M4 12.5l5.5 5.5L20 7"/>
+        </svg>
+      </div>
+      <h3 class="modal__titulo">Recebemos</h3>
+      <p class="modal__lead">Damos notícias em breve pelo meio que escolheste.</p>
+      <button type="button" class="button button--outline" data-modal-fechar>Fechar</button>
+    </div>
+  </div>
+</div>
+
 <script src="intro.js"></script>
 <script src="nav.js"></script>
 <script src="reveal.js"></script>
 <script src="galeria.js"></script>
+<script src="modal.js"></script>
 
 </body>
 </html>

@@ -1,3 +1,6 @@
 # Arquivo em bruto das fotografias (~517 MB, inclui RAW .CR3).
 # O site só consome de assets/ — ver CLAUDE.md.
 gallery/
+
+# Segredos do servidor (Resend). Ver .env.exemplo.
+.env

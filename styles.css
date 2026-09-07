@@ -15,6 +15,11 @@
 
 * { box-sizing: border-box; }
 
+/* Um display: flex ou grid ganha ao display: none que o browser dá ao
+   atributo [hidden] — sem isto o modal nunca chega a estar escondido e
+   fica a tapar a página toda. */
+[hidden] { display: none !important; }
+
 html {
   scrollbar-gutter: stable;
   scroll-padding-top: 96px;
@@ -27,9 +32,11 @@ html, body {
   overflow-x: clip;
 }
 
-/* Menu aberto: trava o scroll da página por trás do overlay. */
+/* Menu ou modal abertos: travam o scroll da página por trás do overlay. */
 html.is-menu-open,
-html.is-menu-open body {
+html.is-menu-open body,
+html.is-modal-open,
+html.is-modal-open body {
   overflow: hidden;
 }
 
@@ -369,11 +376,24 @@ a:hover {
 .button--outline {
   padding: 16px 38px;
   border: 2px solid #fff;
-  transition: background-color .25s ease, color .25s ease;
+  transition: all .25s ease, color .25s ease;
+  color: var(--color-black);
 }
 .button--outline:hover {
   background: #fff;
+  color: var(--color-red)
+}
+
+.button--outline2 {
+  padding: 16px 38px;
+  border: 2px solid #fff;
+  transition: all .25s ease, color .25s ease;
   color: var(--color-black);
+  background: #ddd;
+}
+.button--outline2:hover {
+  background: #fff;
+  color: var(--color-red)
 }
 
 /* ---------- Campaign ---------- */
@@ -620,6 +640,7 @@ a:hover {
   letter-spacing: .01em;
   text-transform: uppercase;
   text-wrap: balance;
+  width: clamp(430px, 80%, 800px)
 }
 
 .galeria__titulo em{
@@ -1010,6 +1031,282 @@ a:hover {
   white-space: nowrap;
 }
 
+/* ---------- Modal de contacto ---------- */
+
+/* z-index 150: por cima do nav (100) e do menu (90), por baixo da tela
+   de entrada (200). */
+.modal {
+  position: fixed;
+  inset: 0;
+  z-index: 150;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: clamp(16px, 4vh, 48px) clamp(16px, 4vw, 32px);
+  overflow-y: auto;
+}
+
+.modal__fundo {
+  position: fixed;
+  inset: 0;
+  background: rgba(5, 5, 5, .82);
+  opacity: 0;
+  transition: opacity .3s ease;
+}
+
+.modal__caixa {
+  position: relative;
+  width: 100%;
+  max-width: 620px;
+  margin: auto;
+  padding: clamp(32px, 5vw, 56px);
+  background: var(--color-card);
+  border: 1px solid var(--color-maroon-border);
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity .35s ease, transform .35s cubic-bezier(.22, .61, .36, 1);
+}
+
+/* A risca de marca no topo da caixa, como a do rodapé. */
+.modal__caixa::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: var(--color-red);
+}
+
+.is-modal-open .modal__fundo {
+  opacity: 1;
+}
+.is-modal-open .modal__caixa {
+  opacity: 1;
+  transform: none;
+}
+
+.modal__fechar {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  display: flex;
+  padding: 8px;
+  background: none;
+  border: 0;
+  color: rgba(255, 255, 255, .5);
+  cursor: pointer;
+  transition: color .2s ease;
+}
+.modal__fechar:hover {
+  color: var(--color-red);
+}
+
+.modal__eyebrow {
+  margin: 0;
+  color: var(--color-red);
+  font: 600 12px var(--font-body);
+  letter-spacing: .3em;
+  text-transform: uppercase;
+}
+
+.modal__titulo {
+  margin: 16px 0 0;
+  font: 400 clamp(28px, 4vw, 44px)/1 var(--font-display);
+  letter-spacing: .01em;
+  text-transform: uppercase;
+}
+
+.modal__lead {
+  margin: 12px 0 0;
+  color: rgba(255, 255, 255, .55);
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+/* ---------- Formulário ---------- */
+
+.form {
+  margin-top: 32px;
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+}
+
+.form__linha {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 22px;
+}
+.form__linha:has(.campo:only-child) {
+  grid-template-columns: 1fr;
+}
+
+.form__grupo {
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+.campo {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  min-width: 0;
+}
+
+.campo__label {
+  padding: 0;
+  color: #666;
+  font: 600 11px var(--font-body);
+  letter-spacing: .28em;
+  text-transform: uppercase;
+}
+
+/* Só borda em baixo: a mesma sobriedade dos cartões de plano. */
+.campo__input {
+  padding: 12px 0;
+  background: none;
+  border: 0;
+  border-bottom: 1px solid var(--color-line);
+  color: #fff;
+  font: 400 16px var(--font-body);
+  transition: border-color .25s ease;
+}
+.campo__input::placeholder {
+  color: #4a4a4a;
+}
+.campo__input:focus {
+  outline: none;
+  border-bottom-color: var(--color-red);
+}
+.campo__input--area {
+  resize: vertical;
+  min-height: 96px;
+  line-height: 1.6;
+}
+
+.campo--invalido .campo__input {
+  border-bottom-color: var(--color-red);
+}
+
+.campo__erro {
+  margin: 0;
+  color: var(--color-red-light);
+  font-size: 12px;
+  letter-spacing: .04em;
+}
+.campo__erro:empty {
+  display: none;
+}
+
+/* Preferência de contacto: pastilhas, não radios do sistema. */
+.opcoes {
+  margin-top: 12px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.opcao input {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.opcao span {
+  display: block;
+  padding: 10px 20px;
+  border: 1px solid var(--color-line);
+  color: rgba(255, 255, 255, .6);
+  font: 600 12px var(--font-body);
+  letter-spacing: .16em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: border-color .2s ease, color .2s ease, background-color .2s ease;
+}
+.opcao span:hover {
+  color: #fff;
+  border-color: rgba(255, 255, 255, .35);
+}
+.opcao input:checked + span {
+  background: var(--color-red);
+  border-color: var(--color-red);
+  color: #fff;
+}
+.opcao input:focus-visible + span {
+  outline: 2px solid #fff;
+  outline-offset: 2px;
+}
+
+.consentimento {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  color: rgba(255, 255, 255, .55);
+  font-size: 13px;
+  line-height: 1.5;
+  cursor: pointer;
+}
+.consentimento input {
+  margin: 2px 0 0;
+  width: 16px;
+  height: 16px;
+  accent-color: var(--color-red);
+  flex-shrink: 0;
+}
+
+/* Armadilha para bots: fora do ecrã, nunca vista nem tabulada. */
+.pote-de-mel {
+  position: absolute;
+  left: -9999px;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+}
+
+.form__enviar {
+  border: 0;
+  cursor: pointer;
+  font-family: var(--font-body);
+}
+.form__enviar[disabled] {
+  opacity: .55;
+  cursor: progress;
+}
+
+.form__estado {
+  margin: 0;
+  color: var(--color-red-light);
+  font-size: 13px;
+  line-height: 1.5;
+}
+.form__estado:empty {
+  display: none;
+}
+
+.modal__sucesso {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 16px;
+  margin-top: 32px;
+}
+
+.modal__visto {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 64px;
+  height: 64px;
+  border: 2px solid var(--color-red);
+  color: var(--color-red);
+}
+
+.modal__sucesso .button {
+  margin-top: 8px;
+}
+
 /* ---------- Responsive ---------- */
 
 @media (max-width: 1150px) {
@@ -1060,6 +1357,12 @@ a:hover {
 }
 
 @media (max-width: 620px) {
+  .form__linha {
+    grid-template-columns: 1fr;
+  }
+  .modal__caixa {
+    padding: 40px 24px;
+  }
   .footer__grid {
     grid-template-columns: 1fr;
   }

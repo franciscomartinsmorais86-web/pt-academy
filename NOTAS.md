@@ -161,3 +161,62 @@ sem biblioteca.
   `#planos` têm `id`.
 
 Links das redes são reais (Instagram, Facebook, TikTok da PT Academy).
+
+## Modal de contacto — `modal.js` + `servidor.js`
+
+O botão "Enviar questão" da faixa de fecho abre um modal com o formulário:
+nome, preferência de contacto (telefone / email / mensagem, em pastilhas),
+telemóvel, email, a questão e o consentimento RGPD. Estética alinhada com o
+resto: caixa `--color-card` com borda bordô, risca vermelha de 3px no topo,
+inputs só com borda em baixo que acende a vermelho no foco.
+
+- **z-index 150** — por cima do nav (100) e do menu (90), por baixo da tela
+  de entrada (200).
+- **Foco preso** dentro da caixa enquanto está aberto; Escape e clique no
+  fundo fecham; o foco volta ao botão que abriu.
+- **`requestAnimationFrame` antes da classe** — o browser não anima a
+  transição de um elemento que acabou de deixar de estar `hidden`.
+- **Validação condicional**: o canal escolhido manda. Escolher "Telefone" ou
+  "Mensagem" torna o telemóvel obrigatório; "Email" torna o email
+  obrigatório. O outro campo continua opcional, mas se for preenchido tem de
+  estar bem escrito.
+- **Pote de mel**: campo "Empresa" fora do ecrã e fora da tabulação. Se vier
+  preenchido, o servidor descarta e responde 200 na mesma — não se dá a
+  dica ao bot.
+- O envio está isolado em `enviarQuestao()`, no fim do `modal.js`. Trocar de
+  serviço é mexer só nessa função.
+
+### Servidor
+
+`servidor.js` serve os ficheiros estáticos **e** expõe `POST /api/contacto`,
+que fala com o Resend. **Sem dependências** — o `fetch` global do Node 18+
+chega, portanto não há `npm install` neste projeto.
+
+```
+node --env-file=.env servidor.js
+```
+
+A validação está repetida no servidor de propósito: a do cliente é conforto,
+a do servidor é a que conta — o pedido pode vir de qualquer lado. Tem também
+travão por IP (5 envios / 10 min, em memória), limite de 16 KB no corpo, e
+escapa o conteúdo antes de o meter no HTML do email. O `reply_to` vai com o
+email do sócio, quando ele o deu.
+
+**Porque não no frontend:** a chave do Resend é secreta — no JavaScript,
+está no código-fonte da página, e com ela manda-se email em nome do domínio
+da academia. O Resend nem sequer aceita chamadas do browser (bloqueia por
+CORS). Alternativas sem servidor, se algum dia fizer sentido: Web3Forms ou
+Formspree (chave pública, feita para ser pública), ou Netlify Forms.
+
+### Por fazer
+
+- **`RESEND_API_KEY`** — copiar `.env.exemplo` para `.env` e pôr a chave
+  real. O `.env` está no `.gitignore`.
+- **Verificar o domínio no Resend** para poder enviar de `@ptacademy.pt`.
+  Sem isso, só `onboarding@resend.dev`, que entrega apenas na conta do
+  Resend.
+- **`EMAIL_DESTINO`** — está `geral@ptacademy.pt`, que é o mesmo placeholder
+  do rodapé. Confirmar o email real da academia.
+- Se a API passar a viver noutra máquina que não a do site: pôr o URL
+  completo no `ENDPOINT` do `modal.js` e o `Access-Control-Allow-Origin` no
+  `servidor.js` (com o domínio do site, nunca `*`).
