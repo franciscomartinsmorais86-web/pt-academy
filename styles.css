@@ -810,54 +810,204 @@ a:hover {
   color: #666;
 }
 
+/* ---------- Closer (faixa de fecho, antes do rodapé) ---------- */
+
+/* Bordô e não vermelho: a faixa vermelha é a .campaign, a meio da página. */
+.closer {
+  background: var(--color-maroon);
+  border-top: 1px solid var(--color-maroon-border);
+  padding: clamp(64px, 10vw, 120px) clamp(24px, 4vw, 48px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 32px;
+  text-align: center;
+}
+
+.closer__eyebrow {
+  margin: 0;
+  color: var(--color-red-light);
+  font: 600 clamp(12px, 1.4vw, 16px) var(--font-body);
+  letter-spacing: .3em;
+  text-transform: uppercase;
+}
+
+.closer__title {
+  margin: 0;
+  max-width: 830px;
+  font: 400 clamp(34px, 6vw, 88px)/0.95 var(--font-display);
+  letter-spacing: .01em;
+  text-transform: uppercase;
+  text-wrap: balance;
+}
+
+.closer__actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 16px;
+}
+
 /* Footer */
 
+/* 100% e não 100dvw: com scrollbar, 100dvw é mais largo do que o body. */
 .footer{
-  width: 100dvw;
-  padding: 8px;
+  width: 100%;
+  padding: clamp(56px, 7vw, 88px) clamp(24px, 4vw, 48px) 0;
   background-color: var(--color-black);
   position: relative;
+  overflow: hidden;
 }
 
 .footer::after{
   content:"";
   height:10px;
-  width: 100dvw;
   background: linear-gradient(to bottom, var(--color-maroon), rgba(0, 0, 0, 0));
-  display: flex;
   position: absolute;
-  inset: 0;
+  top: 0;
+  left: 0;
+  right: 0;
   z-index: 1;
 }
 
-.footer__watermark{
-  color: var(--color-black-alt);
-  font-family: var(--font-display);
-  font-size: 20dvw;
-  display: flex;
-  justify-content: center;
+.footer__grid{
+  display: grid;
+  grid-template-columns: 1.4fr 1fr 1fr 1.4fr;
+  gap: clamp(32px, 5vw, 64px);
+  align-items: start;
 }
 
 .footer ul{
+  list-style: none;
+  margin: 0;
+  padding: 0;
   display: flex;
-  flex-direction: column;;
-  gap:12px;
+  flex-direction: column;
+  gap: 12px;
   align-items: flex-start;
   letter-spacing: 1.5px;
   font-weight: 650;
+  font-size: 15px;
 }
 
-.footer__links{
-  margin: 64px 16px 0px 16px;
-  display: flex;
-  justify-content: space-around;
+/* Títulos de coluna: o mesmo tratamento dos eyebrows do resto do site. */
+.footer__title{
+  margin: 0 0 20px;
+  color: #666;
+  font: 600 12px var(--font-body);
+  letter-spacing: .3em;
+  text-transform: uppercase;
+}
+.footer__title--horario{
+  margin-top: 32px;
 }
 
-.address{
-  margin: 16px 0;
+.footer__logo{
+  margin: 0;
+  font: clamp(24px, 2.4vw, 32px) var(--font-display);
+  letter-spacing: .06em;
+}
+
+.footer__tagline{
+  margin: 12px 0 28px;
+  color: #666;
+  font-size: 14px;
+  letter-spacing: .04em;
+}
+
+.footer__social{
+  flex-direction: row !important;
+  gap: 18px !important;
+}
+.footer__social a{
   display: flex;
-  flex-direction: column;
-  justify-content: space-around;
+  color: rgba(255, 255, 255, .55);
+  transition: color .25s ease;
+}
+.footer__social a:hover{
+  color: var(--color-red);
+}
+
+.footer__contact a{
+  color: rgba(255, 255, 255, .8);
+  font-weight: 400;
+  letter-spacing: .04em;
+  line-height: 1.5;
+}
+.footer__contact a:hover{
+  color: var(--color-red);
+}
+
+.footer__horario{
+  margin: 0;
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 8px 24px;
+  font-size: 14px;
+  letter-spacing: .04em;
+}
+.footer__horario dt{
+  color: #666;
+}
+.footer__horario dd{
+  margin: 0;
+  color: rgba(255, 255, 255, .8);
+  font-family: var(--font-body);
+  font-variant-numeric: tabular-nums;
+}
+
+/* Contorno em vez de preenchimento: presente sem competir com o conteúdo. */
+.footer__watermark{
+  margin-top: clamp(32px, 5vw, 64px);
+  color: transparent;
+  -webkit-text-stroke: 1px rgba(255, 255, 255, .07);
+  font-family: var(--font-display);
+  font-size: clamp(64px, 20vw, 320px);
+  line-height: 1;
+  display: flex;
+  justify-content: center;
+  user-select: none;
+  pointer-events: none;
+}
+
+.footer__legal{
+  border-top: 1px solid var(--color-line);
+  padding: 24px 0;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px 32px;
+  color: #666;
+  font-size: 12px;
+  letter-spacing: .06em;
+}
+.footer__legal p{
+  margin: 0;
+}
+.footer__legal ul{
+  flex-direction: row !important;
+  gap: 24px !important;
+  font-weight: 400 !important;
+  font-size: 12px !important;
+}
+.footer__legal a{
+  color: #666;
+}
+.footer__legal a:hover{
+  color: var(--color-red);
+}
+
+/* Só para leitores de ecrã: dá nome à landmark do rodapé. */
+.visually-hidden{
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
 }
 
 /* ---------- Responsive ---------- */
@@ -897,6 +1047,28 @@ a:hover {
   }
   .modality {
     min-height: 240px;
+  }
+}
+
+@media (max-width: 900px) {
+  .footer__grid {
+    grid-template-columns: 1fr 1fr;
+  }
+  .footer__brand {
+    grid-column: 1 / -1;
+  }
+}
+
+@media (max-width: 620px) {
+  .footer__grid {
+    grid-template-columns: 1fr;
+  }
+  .footer__legal {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .footer__legal ul {
+    gap: 16px !important;
   }
 }
 

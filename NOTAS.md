@@ -127,3 +127,37 @@ desvanecia, e depois raspagem permanente acumulada num canvas de máscara
 fora do ecrã, com a fachada por cima de todo o hero (era preciso raspar
 para ver o título). O código está no commit `d9345c0` se algum dia
 voltarmos à ideia.
+
+## Rodapé e faixa de fecho
+
+O rodapé passou de três colunas anónimas de links para um grid de quatro
+blocos — marca (logo + tagline + redes), "Navegação", "A academia" e
+"Contactos" (morada com link para o mapa, `tel:`, `mailto:` e horário em
+`<dl>`) — cada um com um `.footer__title` no mesmo tratamento dos eyebrows
+do resto do site. Em baixo, barra legal com © e Livro de Reclamações.
+
+Por cima do rodapé entrou a `.closer`: faixa de fecho em **bordô**, não em
+vermelho — a faixa vermelha é a `.campaign`, a meio da página, e repetir a
+cor tirava-lhe o peso.
+
+A marca-de-água `PT·ACADEMY` deixou de ser preenchimento quase invisível e
+passou a **contorno** (`-webkit-text-stroke`), com `clamp()` no tamanho e
+`overflow: hidden` no rodapé — a `20dvw` fixos transbordava em ecrãs
+estreitos.
+
+Corrigido de passagem: os `<a>` estavam soltos dentro de `<ul>` sem `<li>`;
+os links apontavam todos para `google.com`; `width: 100dvw` no `.footer`
+(mais largo que o body quando há scrollbar) passou a `100%`; o `::after`
+tinha `inset: 0` e `height` ao mesmo tempo. Ícones das redes são SVG inline,
+sem biblioteca.
+
+### Por confirmar (placeholders)
+
+- **Horário** — Seg–Sex 07h–22h, Sáb 09h–13h, Dom encerrado. Inventado.
+- **Email** — `geral@ptacademy.pt`. Inventado.
+- **Política de privacidade** — `href="#"`, página por fazer.
+- As âncoras `#inicio`, `#sobre`, `#modalidades`, `#equipa`, `#inscricao`
+  **ainda não existem** no HTML (já era assim na nav). Só `#instalacoes` e
+  `#planos` têm `id`.
+
+Links das redes são reais (Instagram, Facebook, TikTok da PT Academy).
