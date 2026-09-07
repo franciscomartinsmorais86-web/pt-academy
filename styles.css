@@ -20,9 +20,11 @@ html {
   scroll-padding-top: 96px;
 }
 
+/* overflow-x: clip e não hidden — hidden transformaria o html num
+   contentor de scroll e partia o position: sticky do palco da galeria. */
 html, body {
   max-width: 100%;
-  overflow-x: hidden;
+  overflow-x: clip;
 }
 
 /* Menu aberto: trava o scroll da página por trás do overlay. */
@@ -75,7 +77,7 @@ a:hover {
 /* ---------- Tela de entrada ---------- */
 
 /* Só existe com JS: sem ele o overlay nunca seria retirado e a página
-   ficava preta. O intro.js mede o logo do nav e leva este até lá. */
+   ficava preta. */
 .intro {
   display: none;
 }
@@ -88,26 +90,33 @@ a:hover {
   align-items: center;
   justify-content: center;
   pointer-events: none;
+  /* ease-in-out ligeiro: arranca e para com suavidade */
+  transition: transform var(--intro-fundo, 450ms) cubic-bezier(.42, 0, .58, 1);
+  will-change: transform;
 }
 
-/* O fundo preto é uma camada à parte para poder sair sozinho, sem
-   levar o logo atrás. */
+/* Camada de fundo, dentro do próprio elemento que sai — assim o logo
+   sobe junto com o preto em vez de desaparecer sozinho. */
 .intro::before {
   content: '';
   position: absolute;
   inset: 0;
   background: var(--color-black);
-  /* ease-in suave: começa a andar logo e acelera sem disparar no fim */
-  transition: transform var(--intro-fundo, 450ms) cubic-bezier(.35, .05, .65, .6) var(--intro-fundo-atraso, 0ms);
-  will-change: transform;
+  z-index: -1;
+}
+
+.js .intro.is-out {
+  transform: translateY(-100%);
 }
 
 .intro__logo {
   position: relative;
   font: clamp(46px, 11vw, 132px) var(--font-display);
   letter-spacing: .06em;
-  transform-origin: 0 0;
-  will-change: transform;
+  opacity: 0;
+}
+.intro__logo.is-visible {
+  opacity: 1;
 }
 
 /* Enquanto a tela está de pé, o logo do nav fica reservado (ocupa o
@@ -118,11 +127,6 @@ a:hover {
 .is-intro,
 .is-intro body {
   overflow: hidden;
-}
-
-/* Saída: o preto sobe e sai do ecrã enquanto o logo viaja para o nav. */
-.intro.is-out::before {
-  transform: translateY(-100%);
 }
 
 /* ---------- Hero ---------- */
@@ -481,7 +485,12 @@ a:hover {
 
 /* ---------- Modalities ---------- */
 
+/* Cortina da galeria: esta secção é opaca e tapa a viewport inteira,
+   por isso é ela que desliza por cima do palco pregado e o vai
+   descobrindo. Precisa de z-index para ficar por cima. */
 .modalities {
+  position: relative;
+  z-index: 1;
   height: 100dvh;
   min-height: 640px;
   display: grid;
@@ -529,9 +538,118 @@ a:hover {
 .modality--fitness .modality__photo    { background-image: url('./assets/pt-academy-fitness.jpg'); }
 .modality--danca .modality__photo      { background-image: url('./assets/pt-academy-danca.jpg'); }
 
+/* ---------- Galeria pregada ---------- */
+
+/* O wrapper é alto e começa 100dvh acima de onde estaria: esse
+   arranque fica escondido debaixo das modalidades. O palco cola-se ao
+   topo enquanto ainda está tapado e, à medida que a cortina sobe, vai
+   sendo descoberto sem se mexer. Passada essa primeira 100dvh começa o
+   movimento interno do mosaico, que dura o resto do wrapper. */
+.galeria {
+  position: relative;
+  z-index: 0;
+  /* 100 de entrada + 200 de mosaico + 50 de folga + 100 de saída, mais a
+     altura do próprio palco. A folga é o TOLERANCIA_FIM do galeria.js. */
+  height: 550dvh;
+  margin-top: -100dvh;
+  background: var(--color-black);
+}
+
+.galeria__palco {
+  position: sticky;
+  top: 0;
+  height: 100dvh;
+  overflow: hidden;
+}
+
+/* A tela do mosaico é mais alta do que a viewport e desliza através
+   dela (translate em Y) ao mesmo tempo que os cortes se mexem. Altura e
+   deslocamento são escritos pelo galeria.js. */
+.galeria__mosaico {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  will-change: transform;
+}
+
+/* As peças são posicionadas em pixels pelo galeria.js. As arestas são
+   arredondadas uma só vez por corte, portanto peças vizinhas partilham
+   exatamente o mesmo inteiro — sem frestas nem sobreposições. */
+.galeria__peca {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 0;
+  height: 0;
+  margin: 0;
+  overflow: hidden;
+  background: var(--color-black);
+}
+
+.galeria__peca img {
+  position: absolute;
+  left: 0;
+  top: -9%;
+  width: 100%;
+  height: 118%;
+  object-fit: cover;
+  display: block;
+  will-change: transform;
+}
+
+.galeria__peca--texto {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  gap: 14px;
+  padding: clamp(18px, 2.2vw, 38px);
+}
+
+.galeria__eyebrow {
+  margin: 0;
+  color: var(--color-red-light);
+  font: 600 12px var(--font-body);
+  letter-spacing: .3em;
+  text-transform: uppercase;
+}
+
+.galeria__titulo {
+  margin: 0;
+  font: 400 clamp(28px, 3.4vw, 60px)/0.95 var(--font-display);
+  letter-spacing: .01em;
+  text-transform: uppercase;
+  text-wrap: balance;
+}
+
+.galeria__titulo em{
+  color: var(--color-red);
+}
+
+.galeria__corpo {
+  margin: 0;
+  max-width: 40ch;
+  color: rgba(255, 255, 255, .75);
+  font: 400 clamp(13px, 1.1vw, 16px)/1.5 var(--font-body);
+}
+
+.galeria__peca--cta {
+  align-items: flex-start;
+}
+
+.margin-bottom{
+  margin-bottom: 30%;
+}
 /* ---------- Planos ---------- */
 
+/* Saída da galeria, simétrica à entrada: os planos arrancam 100dvh mais
+   cedo e sobem por cima do palco, que a essa altura já terminou o mosaico
+   mas continua pregado. Precisam de z-index e de fundo opaco, tal como a
+   cortina de entrada (.modalities). */
 .plans {
+  position: relative;
+  z-index: 1;
+  margin-top: -100dvh;
   padding: clamp(72px, 10vw, 130px) clamp(24px, 4vw, 48px);
   background: var(--color-black-alt);
 }
@@ -690,6 +808,56 @@ a:hover {
   max-width: 640px;
   font: 400 14px/1.6 var(--font-body);
   color: #666;
+}
+
+/* Footer */
+
+.footer{
+  width: 100dvw;
+  padding: 8px;
+  background-color: var(--color-black);
+  position: relative;
+}
+
+.footer::after{
+  content:"";
+  height:10px;
+  width: 100dvw;
+  background: linear-gradient(to bottom, var(--color-maroon), rgba(0, 0, 0, 0));
+  display: flex;
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+}
+
+.footer__watermark{
+  color: var(--color-black-alt);
+  font-family: var(--font-display);
+  font-size: 20dvw;
+  display: flex;
+  justify-content: center;
+}
+
+.footer ul{
+  display: flex;
+  flex-direction: column;;
+  gap:12px;
+  align-items: flex-start;
+  letter-spacing: 1.5px;
+  font-weight: 650;
+}
+
+.footer__links{
+  margin: 64px 16px 0px 16px;
+  display: flex;
+  justify-content: space-around;
+}
+
+.address{
+  margin: 16px 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
 }
 
 /* ---------- Responsive ---------- */

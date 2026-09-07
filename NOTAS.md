@@ -42,6 +42,44 @@ esteve `visibility: hidden` a reservar o lugar.
   e a página ficava preta. Com `prefers-reduced-motion` não há viagem,
   só o preto a sair.
 
+### Galeria pregada — `galeria.js` + `.galeria` no `styles.css`
+
+Secção "Instalações", entre as modalidades e os planos. Tem duas fases:
+
+1. **Revelação, sem JS.** O wrapper `.galeria` é alto (`400dvh`) e tem
+   `margin-top: -100dvh`, portanto arranca por baixo das modalidades; o palco
+   lá dentro é `sticky` e cola-se ao topo enquanto ainda está tapado. A
+   `.modalities` leva `position: relative; z-index: 1` e faz de cortina: ao
+   subir, vai descobrindo o palco imóvel. Dura exatamente uma altura de ecrã.
+2. **Mosaico, ao scroll.** A tela do mosaico (`.galeria__mosaico`) é
+   `ALTURA_MOSAICO` vezes mais alta do que a viewport (2.6) e **desliza através
+   dela** enquanto os cortes se mexem — é por isso que as peças são grandes:
+   só se vê uma parte de cada vez. O deslize segue o scroll a direito, para se
+   ler colado à página; só os cortes levam o smoothstep.
+
+**A regra do encaixe perfeito** é estrutural, não é afinada à mão: o mosaico
+sai de uma partição por cortes sucessivos (guilhotina) — o palco parte-se em
+dois, cada metade volta a partir-se, até uma folha por peça. Animar só os
+pontos de corte muda as proporções e obriga as peças a reajustarem-se, mas
+cobrir tudo sem frestas nem sobreposições é garantido por construção. Cada
+aresta é arredondada **uma só vez**, no corte, e o mesmo inteiro vai para as
+duas peças vizinhas — é isso que evita a fresta de 1px que aparece quando cada
+peça arredonda por sua conta.
+
+Como a tela é alta e estreita em proporção, a árvore de desktop é uma banda
+panorâmica no topo, três colunas verticais a meio (é aqui que as fotos de
+pessoas ficam bem) e três bandas largas em baixo. Duas das dez peças são de
+texto (fundo preto); entram na árvore como qualquer outra folha. Em mobile há uma árvore diferente, de 7
+peças, com cortes sobretudo horizontais — as peças que lá não entram ficam em
+`display: none`.
+
+A paralaxe acontece **dentro** de cada peça (a foto é 118% da altura e
+translada em Y, com fator diferente por peça), logo as arestas não se mexem.
+Com `prefers-reduced-motion` fica o estado final, sem paralaxe.
+
+Nota de manutenção: `html, body` levam `overflow-x: clip` e **não** `hidden` —
+`hidden` transforma o `html` em contentor de scroll e parte o `sticky` do palco.
+
 ### Nav ao scroll — `nav.js`
 
 O fundo preto, o padding e a troca do hamburger pela lista são todos
