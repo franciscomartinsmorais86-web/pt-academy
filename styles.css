@@ -353,13 +353,16 @@ a:hover {
   font-style: normal;
 }
 
+/* border: 0 e cursor para os <button> ficarem iguais aos <a>. */
 .button {
   display: inline-block;
   padding: 18px 40px;
+  border: 0;
   color: #fff;
   font: 600 13px var(--font-body);
   letter-spacing: .16em;
   text-transform: uppercase;
+  cursor: pointer;
 }
 .button--red {
   background: var(--color-red);
@@ -372,28 +375,18 @@ a:hover {
 .button--dark { background: var(--color-black); }
 
 /* Contorno: 2px de borda com menos 2px de padding, para ficar
-   exactamente com a mesma altura dos botões cheios. */
+   exactamente com a mesma altura dos botões cheios. O fundo
+   transparente é explícito porque os <button> trazem o cinzento do
+   browser. */
 .button--outline {
   padding: 16px 38px;
   border: 2px solid #fff;
-  transition: all .25s ease, color .25s ease;
-  color: var(--color-black);
+  background: transparent;
+  transition: background-color .25s ease, color .25s ease;
 }
 .button--outline:hover {
   background: #fff;
-  color: var(--color-red)
-}
-
-.button--outline2 {
-  padding: 16px 38px;
-  border: 2px solid #fff;
-  transition: all .25s ease, color .25s ease;
-  color: var(--color-black);
-  background: #ddd;
-}
-.button--outline2:hover {
-  background: #fff;
-  color: var(--color-red)
+  color: var(--color-red);
 }
 
 /* ---------- Campaign ---------- */
@@ -1265,11 +1258,6 @@ a:hover {
   overflow: hidden;
 }
 
-.form__enviar {
-  border: 0;
-  cursor: pointer;
-  font-family: var(--font-body);
-}
 .form__enviar[disabled] {
   opacity: .55;
   cursor: progress;

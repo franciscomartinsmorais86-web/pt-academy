@@ -112,7 +112,10 @@ Overlay em fade (`opacity` + `visibility`, .35s); cada item entra em
 ### Hovers
 
 - `.modality__photo` — `scale(1.08)` em .5s ao passar na modalidade.
-- `.button--outline` — inverte fundo/texto em .25s.
+- `.button--outline` — passa a fundo branco com texto vermelho em .25s.
+  Em repouso o texto é branco sobre transparente (antes estava preto e o
+  "Ver equipa" ficava invisível; o `.button--outline2` dos planos, que
+  remendava isso com fundo `#ddd`, foi fundido neste).
 - `.button--red` — só a cor do texto, .2s (o `a:hover` global punha
   vermelho sobre vermelho).
 - `.plan` — a borda acende a vermelho esbatido em .25s.
