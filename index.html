@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>PT Academy</title>
-<link href="https://fonts.googleapis.com/css2?family=Anton&family=Libre+Franklin:wght@400;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Libre+Franklin:wght@400;600&family=Caveat&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="styles.css">
 <script>document.documentElement.classList.add('js');</script>
 </head>
@@ -232,93 +232,8 @@
   </div>
 </section>
 
-<footer class="footer" aria-labelledby="footer-titulo">
-  <h2 class="visually-hidden" id="footer-titulo">Rodapé</h2>
-
-  <div class="footer__grid">
-
-    <div class="footer__brand">
-      <p class="footer__logo">PT<span class="nav__logo-dot">·</span>ACADEMY</p>
-      <p class="footer__tagline">Vila Real · desde 2010</p>
-      <ul class="footer__social">
-        <li>
-          <a href="https://www.instagram.com/pt.academy.dfcm/" target="_blank" rel="noopener" aria-label="Instagram da PT Academy">
-            <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
-              <rect x="3" y="3" width="18" height="18" rx="5"/>
-              <circle cx="12" cy="12" r="4"/>
-              <circle cx="17.2" cy="6.8" r="1.1" fill="currentColor" stroke="none"/>
-            </svg>
-          </a>
-        </li>
-        <li>
-          <a href="https://www.facebook.com/ptacdm/?locale=pt_PT" target="_blank" rel="noopener" aria-label="Facebook da PT Academy">
-            <svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor" aria-hidden="true">
-              <path d="M13.5 21v-8h2.7l.4-3.1h-3.1V7.9c0-.9.25-1.5 1.55-1.5h1.65V3.63A22 22 0 0 0 14.3 3.5c-2.4 0-4 1.46-4 4.14V9.9H7.6V13h2.7v8z"/>
-            </svg>
-          </a>
-        </li>
-        <li>
-          <a href="https://www.tiktok.com/@ptacademy.dfcm" target="_blank" rel="noopener" aria-label="TikTok da PT Academy">
-            <svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor" aria-hidden="true">
-              <path d="M16.6 2h-2.9v13.1a2.55 2.55 0 1 1-2.1-2.5V9.6a5.6 5.6 0 1 0 5 5.57V8.9a6.4 6.4 0 0 0 3.7 1.18V7.2a3.63 3.63 0 0 1-3.7-3.6z"/>
-            </svg>
-          </a>
-        </li>
-      </ul>
-    </div>
-
-    <nav class="footer__col" aria-labelledby="footer-nav">
-      <p class="footer__title" id="footer-nav">Navegação</p>
-      <ul>
-        <li><a href="#inicio">Início</a></li>
-        <li><a href="#sobre">Sobre nós</a></li>
-        <li><a href="#modalidades">Modalidades</a></li>
-      </ul>
-    </nav>
-
-    <nav class="footer__col" aria-labelledby="footer-academia">
-      <p class="footer__title" id="footer-academia">A academia</p>
-      <ul>
-        <li><a href="#instalacoes">Instalações</a></li>
-        <li><a href="#equipa">Equipa</a></li>
-        <li><a href="#planos">Planos</a></li>
-      </ul>
-    </nav>
-
-    <div class="footer__contact">
-      <p class="footer__title">Contactos</p>
-      <ul>
-        <li>
-          <a href="https://maps.google.com/?q=Travessa+da+Rua+Nova+56,+5000-651+Vila+Real" target="_blank" rel="noopener">
-            Tv. da Rua Nova nº56<br>5000-651 Vila Real
-          </a>
-        </li>
-        <li><a href="tel:+351259322108">259 322 108</a></li>
-        <li><a href="mailto:geral@ptacademy.pt">geral@ptacademy.pt</a></li>
-      </ul>
-
-      <p class="footer__title footer__title--horario">Horário</p>
-      <dl class="footer__horario">
-        <dt>Seg – Sex</dt><dd>07h – 22h</dd>
-        <dt>Sábado</dt><dd>09h – 13h</dd>
-        <dt>Domingo</dt><dd>Encerrado</dd>
-      </dl>
-    </div>
-
-  </div>
-
-  <div class="footer__watermark" aria-hidden="true">
-    <span>PT·ACADEMY</span>
-  </div>
-
-  <div class="footer__legal">
-    <p>© 2026 PT Academy</p>
-    <ul>
-      <li><a href="#">Política de privacidade</a></li>
-      <li><a href="https://www.livroreclamacoes.pt/inicio" target="_blank" rel="noopener">Livro de Reclamações</a></li>
-    </ul>
-  </div>
-</footer>
+<!-- Rodapé: injetado pelo rodape.js -->
+<div data-rodape></div>
 <!-- Modal de contacto -->
 <div class="modal" id="modal-contacto" role="dialog" aria-modal="true"
      aria-labelledby="modal-titulo" hidden>
@@ -421,6 +336,7 @@
   </div>
 </div>
 
+<script src="rodape.js"></script>
 <script src="intro.js"></script>
 <script src="nav.js"></script>
 <script src="reveal.js"></script>

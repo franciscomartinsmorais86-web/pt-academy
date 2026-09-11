@@ -11,6 +11,9 @@
   --color-line: rgba(255, 255, 255, .1);
   --font-display: 'Anton', sans-serif;
   --font-body: 'Libre Franklin', sans-serif;
+  /* Só para a assinatura da NK no rodapé. */
+  --color-assinatura: rgba(242, 239, 226, .5);
+  --font-assinatura: 'Caveat', 'Segoe Script', 'Bradley Hand', cursive;
 }
 
 * { box-sizing: border-box; }
@@ -984,12 +987,13 @@ a:hover {
   pointer-events: none;
 }
 
+/* Grelha 1fr auto 1fr e não space-between: assim a assinatura fica
+   no centro exato, seja qual for a largura do © e dos links. */
 .footer__legal{
   border-top: 1px solid var(--color-line);
   padding: 24px 0;
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
   align-items: center;
   gap: 12px 32px;
   color: #666;
@@ -1000,6 +1004,7 @@ a:hover {
   margin: 0;
 }
 .footer__legal ul{
+  justify-self: end;
   flex-direction: row !important;
   gap: 24px !important;
   font-weight: 400 !important;
@@ -1010,6 +1015,40 @@ a:hover {
 }
 .footer__legal a:hover{
   color: var(--color-red);
+}
+
+/* Assinatura da NK Web Design. Única exceção à tipografia do site:
+   manuscrita e em creme, para se ler como assinatura e não como link
+   do rodapé. */
+.assinatura {
+  display: flex;
+  align-items: baseline;
+  gap: 9px;
+  margin: 0;
+}
+
+.assinatura__mao {
+  padding-right: 8px;
+  color: var(--color-assinatura);
+  font-family: var(--font-assinatura);
+  font-weight: 400;
+  /* A Caveat é bem mais "cheia" do que a Mrs Saint Delafield: 1.85rem
+     ficava a gritar ao lado do texto de 12px da barra legal. */
+  font-size: clamp(1.15rem, 1.6vw, 1.35rem);
+  line-height: 1;
+  letter-spacing: 0;
+}
+
+/* .assinatura à frente para ganhar ao .footer__legal a (cinzento, com
+   hover vermelho). */
+.assinatura .assinatura__mao-a{
+  display: inline-block;
+  color: inherit;
+  transition: color .4s ease, transform .4s ease;
+}
+.assinatura .assinatura__mao-a:hover{
+  color: #fff;
+  transform: scale(1.05);
 }
 
 /* Só para leitores de ecrã: dá nome à landmark do rodapé. */
@@ -1342,6 +1381,18 @@ a:hover {
   .footer__brand {
     grid-column: 1 / -1;
   }
+  /* Abaixo disto as três peças não cabem lado a lado: empilham à
+     esquerda, com a assinatura a fechar. */
+  .footer__legal {
+    grid-template-columns: 1fr;
+    justify-items: start;
+  }
+  .footer__legal ul {
+    justify-self: start;
+  }
+  .assinatura {
+    order: 1;
+  }
 }
 
 @media (max-width: 620px) {
@@ -1353,10 +1404,6 @@ a:hover {
   }
   .footer__grid {
     grid-template-columns: 1fr;
-  }
-  .footer__legal {
-    flex-direction: column;
-    align-items: flex-start;
   }
   .footer__legal ul {
     gap: 16px !important;

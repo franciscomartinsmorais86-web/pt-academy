@@ -54,6 +54,8 @@ Ritmo das superfícies na homepage: preto → **vermelho** (campanha) → preto
 
 Duas famílias, via Google Fonts:
 `Anton` (`--font-display`) e `Libre Franklin` 400/600 (`--font-body`).
+Exceção única: a assinatura da NK no rodapé, em `Caveat`
+(`--font-assinatura`) e creme (`--color-assinatura`). Não usar em mais lado nenhum.
 
 | Papel | Especificação |
 |---|---|
@@ -132,6 +134,10 @@ checkbox com `accent-color: var(--color-red)`.
 
 **Marca-de-água**: `PT·ACADEMY` em contorno (`-webkit-text-stroke: 1px
 rgba(255,255,255,.07)`), nunca preenchida.
+
+**Rodapé**: vive no `rodape.js`, nunca copiado para o HTML. Uma página
+nova põe `<div data-rodape></div>` e carrega `rodape.js` antes dos outros
+scripts.
 
 **Ícones**: SVG inline, `currentColor`, cantos retos. Sem bibliotecas.
 

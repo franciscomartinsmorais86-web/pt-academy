@@ -133,11 +133,30 @@ voltarmos à ideia.
 
 ## Rodapé e faixa de fecho
 
+**O rodapé é injetado pelo `rodape.js`.** A página só tem um
+`<div data-rodape></div>` no sítio dele e carrega o script antes dos
+outros; o script troca o marcador pelo `<footer>` completo. Mexer no
+rodapé é mexer só nesse ficheiro, e fica igual em todas as páginas.
+Nas páginas que não sejam a homepage, as âncoras ganham um `/` à frente
+(`/#planos`) para voltarem à homepage. O ano do © é o ano corrente.
+Custo: sem JS a página fica sem rodapé.
+
 O rodapé passou de três colunas anónimas de links para um grid de quatro
 blocos — marca (logo + tagline + redes), "Navegação", "A academia" e
 "Contactos" (morada com link para o mapa, `tel:`, `mailto:` e horário em
 `<dl>`) — cada um com um `.footer__title` no mesmo tratamento dos eyebrows
 do resto do site. Em baixo, barra legal com © e Livro de Reclamações.
+
+A barra legal leva ao centro a assinatura "Designed by NK Web Design"
+(`.assinatura`), manuscrita em Caveat e em creme a 50%; o link
+passa a branco e cresce para `scale(1.05)` em .4s no hover. A barra é uma
+grelha `1fr auto 1fr`, para a assinatura ficar no centro exato; abaixo dos
+900px empilha à esquerda e a assinatura passa para o fim.
+
+A fonte veio colada como Mrs Saint Delafield, mas no site de origem ela
+provavelmente não carregava e o que se via era a Segoe Script do Windows.
+Carregada a sério, ficava fina e caligráfica de mais — trocou-se pela
+Caveat, que vem do Google Fonts e é igual em todos os dispositivos.
 
 Por cima do rodapé entrou a `.closer`: faixa de fecho em **bordô**, não em
 vermelho — a faixa vermelha é a `.campaign`, a meio da página, e repetir a
