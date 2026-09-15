@@ -50,8 +50,9 @@ var RODAPE_HTML = `
       <p class="footer__title" id="footer-nav">Navegação</p>
       <ul>
         <li><a href="${RODAPE_BASE}#inicio">Início</a></li>
-        <li><a href="${RODAPE_BASE}#sobre">Sobre nós</a></li>
+        <li><a href="/sobre.html">Sobre nós</a></li>
         <li><a href="${RODAPE_BASE}#modalidades">Modalidades</a></li>
+        <li><a href="/contactos.html">Contactos</a></li>
       </ul>
     </nav>
 
@@ -73,13 +74,16 @@ var RODAPE_HTML = `
           </a>
         </li>
         <li><a href="tel:+351259322108">259 322 108</a></li>
+        <!-- TODO (confirmar com a academia): geral@ptacademy.pt é o
+             endereço que estamos a convencionar, ainda por confirmar.
+             Aparece também no contactos.html e no servidor.js. -->
         <li><a href="mailto:geral@ptacademy.pt">geral@ptacademy.pt</a></li>
       </ul>
 
       <p class="footer__title footer__title--horario">Horário</p>
       <dl class="footer__horario">
         <dt>Seg – Sex</dt><dd>07h – 22h</dd>
-        <dt>Sábado</dt><dd>09h – 13h</dd>
+        <dt>Sábado</dt><dd>09h – 13h / 15h - 19h</dd>
         <dt>Domingo</dt><dd>Encerrado</dd>
       </dl>
     </div>

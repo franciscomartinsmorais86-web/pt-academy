@@ -15,37 +15,9 @@
   <span class="intro__logo" id="intro-logo">PT<span class="nav__logo-dot">·</span>ACADEMY</span>
 </div>
 
-<nav class="nav">
-  <a href="/" class="nav__logo">PT<span class="nav__logo-dot">·</span>ACADEMY</a>
-
-  <ul class="nav__links">
-    <li><a class="nav__link" href="#inicio">Início</a></li>
-    <li><a class="nav__link" href="#sobre">Sobre nós</a></li>
-    <li><a class="nav__link" href="#modalidades">Modalidades</a></li>
-    <li><a class="nav__link" href="#instalacoes">Instalações</a></li>
-    <li><a class="nav__link" href="#equipa">Equipa</a></li>
-    <li><a class="nav__link" href="#contactos">Contactos</a></li>
-  </ul>
-
-  <button type="button" class="nav__toggle" id="nav-toggle"
-          aria-label="Abrir menu" aria-expanded="false" aria-controls="menu">
-    <span class="nav__toggle-bar"></span>
-    <span class="nav__toggle-bar"></span>
-    <span class="nav__toggle-bar"></span>
-  </button>
-</nav>
-
-<!-- Menu em ecrã inteiro -->
-<div class="menu" id="menu">
-  <ul class="menu__list">
-    <li class="menu__item"><a class="menu__link" href="#inicio">Início</a></li>
-    <li class="menu__item"><a class="menu__link" href="#sobre">Sobre nós</a></li>
-    <li class="menu__item"><a class="menu__link" href="#modalidades">Modalidades</a></li>
-    <li class="menu__item"><a class="menu__link" href="#instalacoes">Instalações</a></li>
-    <li class="menu__item"><a class="menu__link" href="#equipa">Equipa</a></li>
-    <li class="menu__item"><a class="menu__link" href="#contactos">Contactos</a></li>
-  </ul>
-</div>
+<!-- Nav e menu: injetados pelo nav.js -->
+<div data-nav></div>
+<script src="nav.js"></script>
 
 <!-- Hero -->
 <header class="hero">
@@ -120,28 +92,28 @@
    <div class="galeria__mosaico">
 
     <figure class="galeria__peca" data-peca="turma">
-      <img src="./assets/galeria/galeria-turma.jpg" alt="Turma de aulas de grupo na PT Academy">
+      <img src="./assets/galeria/galeria-turma.webp" alt="Turma de aulas de grupo na PT Academy">
     </figure>
     <figure class="galeria__peca" data-peca="peso-morto">
-      <img src="./assets/galeria/galeria-peso-morto.jpg" alt="Atleta a pegar na barra para peso morto">
+      <img src="./assets/galeria/galeria-peso-morto.webp" alt="Atleta a pegar na barra para peso morto">
     </figure>
     <figure class="galeria__peca" data-peca="discos-azafit">
-      <img src="./assets/galeria/galeria-discos-azafit.jpg" alt="Discos carregados numa barra olímpica">
+      <img src="./assets/galeria/galeria-discos-azafit.webp" alt="Discos carregados numa barra olímpica">
     </figure>
     <figure class="galeria__peca" data-peca="disco-10">
-      <img src="./assets/galeria/galeria-disco-10.jpg" alt="Disco de 10 kg numa máquina de musculação">
+      <img src="./assets/galeria/galeria-disco-10.webp" alt="Disco de 10 kg numa máquina de musculação">
     </figure>
     <figure class="galeria__peca" data-peca="sala-cardio">
-      <img src="./assets/galeria/galeria-sala-cardio.jpg" alt="Sala de cardio e musculação da PT Academy">
+      <img src="./assets/galeria/galeria-sala-cardio.webp" alt="Sala de cardio e musculação da PT Academy">
     </figure>
     <figure class="galeria__peca" data-peca="cross-academy">
-      <img src="./assets/galeria/galeria-cross-academy.jpg" alt="Parede da box PT Cross Academy">
+      <img src="./assets/galeria/galeria-cross-academy.webp" alt="Parede da box PT Cross Academy">
     </figure>
     <figure class="galeria__peca" data-peca="sala-fitness">
-      <img src="./assets/galeria/galeria-sala-fitness.jpg" alt="Sala de aulas da PT Fitness Academy">
+      <img src="./assets/galeria/galeria-sala-fitness.webp" alt="Sala de aulas da PT Fitness Academy">
     </figure>
     <figure class="galeria__peca" data-peca="estudio">
-      <img src="./assets/galeria/galeria-estudio.jpg" alt="Estúdio de dança com espelhos">
+      <img src="./assets/galeria/galeria-estudio.webp" alt="Estúdio de dança com espelhos">
     </figure>
 
     <div class="galeria__peca galeria__peca--texto" data-peca="texto-1">
@@ -170,54 +142,49 @@
   <article class="plan reveal reveal--rise">
     <p class="plan__name">Base</p>
     <p class="plan__price"><span class="plan__currency">€</span>22<span class="plan__period">/mês</span></p>
-    <p class="plan__pitch">Para quem já sabe o que anda a fazer.</p>
     <ul class="plan__features">
       <li>Sala de musculação e cardio</li>
       <li>Livre trânsito, todo o horário</li>
+      <li>Plano de treino</li>
       <li>Avaliação física inicial</li>
-      <li>Plano de treino revisto a cada 3 meses</li>
     </ul>
-    <a class="button button--outline plan__cta" href="tel:+351000000000">Ligar</a>
+    <a class="button button--outline plan__cta" href="tel:+351259322108">Ligar</a>
   </article>
 
   <article class="plan plan--featured reveal reveal--rise">
     <p class="plan__flag">Mais escolhido</p>
-    <p class="plan__name">Crossfit</p>
+    <p class="plan__name">Power</p>
     <p class="plan__price"><span class="plan__currency">€</span>28<span class="plan__period">/mês</span></p>
-    <p class="plan__pitch">Musculação e todas as aulas, sem exceção.</p>
+    <p class="plan__pitch">Crossfit e aulas de grupo</p>
     <ul class="plan__features">
       <li>Tudo o que o plano Base inclui</li>
-      <li>Todas as aulas de grupo e de dança</li>
-      <li>Pilates e Yoga</li>
-      <li>Acompanhamento mensal com personal trainer</li>
+      <li>Inclui duas aulas de grupo por semana</li>
+      <li>Acesso à sala de cross training</li>
     </ul>
-    <a class="button button--red plan__cta" href="tel:+351000000000">Ligar</a>
+    <a class="button button--red plan__cta" href="tel:+351259322108">Ligar</a>
   </article>
 
   <article class="plan reveal reveal--rise">
-    <p class="plan__name">Total</p>
-    <p class="plan__price"><span class="plan__currency">€</span>70<span class="plan__period">/mês</span></p>
-    <p class="plan__pitch">A box, os WODs e a comunidade.</p>
+    <p class="plan__name">Premium</p>
+    <p class="plan__price"><span class="plan__currency">€</span>35<span class="plan__period">/mês</span></p>
+    <p class="plan__pitch">A melhor experiência</p>
     <ul class="plan__features">
-      <li>WODs diários com coach</li>
-      <li>Open gym fora dos horários de aula</li>
-      <li>Sala de musculação incluída</li>
-      <li>Escalonamento para todos os níveis</li>
+      <li>Tudo o que o plano Power inclui</li>
+      <li>Acesso livre às salas de musculação e cross training</li>
+      <li>Acesso livre às aulas de grupo</li>
     </ul>
-    <a class="button button--outline plan__cta" href="tel:+351000000000">Ligar</a>
+    <a class="button button--outline plan__cta" href="tel:+351259322108">Ligar</a>
   </article>
 
   <article class="plan reveal reveal--rise">
     <p class="plan__name">Estudante</p>
-    <p class="plan__price"><span class="plan__currency">€</span>20<span class="plan__period">/mês</span></p>
-    <p class="plan__pitch">Cartão de estudante, preço de estudante.</p>
+    <p class="plan__price"><span class="plan__currency">€</span>23<span class="plan__period">/mês</span></p>
     <ul class="plan__features">
-      <li>Até aos 23 anos</li>
-      <li>Sala de musculação e cardio</li>
-      <li>Aulas de grupo até às 17h</li>
-      <li>Suspensão gratuita em época de exames</li>
+      <li>Acesso livre a todas as salas de musculação e cardio</li>
+      <li>Aulas de grupo diárias até às 16:30</li>
+      <li>Destinado a estudantes matriculados na UTAD</li>
     </ul>
-    <a class="button button--outline plan__cta" href="tel:+351000000000">Ligar</a>
+    <a class="button button--outline plan__cta" href="tel:+351259322108">Ligar</a>
   </article>
   </div>
 </section>
@@ -322,15 +289,15 @@
       <p class="form__estado" data-estado role="status" aria-live="polite"></p>
     </form>
 
-    <div class="modal__sucesso" data-sucesso hidden>
-      <div class="modal__visto" aria-hidden="true">
+    <div class="sucesso" data-sucesso hidden>
+      <div class="sucesso__visto" aria-hidden="true">
         <svg viewBox="0 0 24 24" width="34" height="34" fill="none" stroke="currentColor"
              stroke-width="2.2" stroke-linecap="square">
           <path d="M4 12.5l5.5 5.5L20 7"/>
         </svg>
       </div>
-      <h3 class="modal__titulo">Recebemos</h3>
-      <p class="modal__lead">Damos notícias em breve pelo meio que escolheste.</p>
+      <h3 class="sucesso__titulo">Recebemos</h3>
+      <p class="sucesso__lead">Damos notícias em breve pelo meio que escolheste.</p>
       <button type="button" class="button button--outline" data-modal-fechar>Fechar</button>
     </div>
   </div>
@@ -338,9 +305,9 @@
 
 <script src="rodape.js"></script>
 <script src="intro.js"></script>
-<script src="nav.js"></script>
 <script src="reveal.js"></script>
 <script src="galeria.js"></script>
+<script src="formulario.js"></script>
 <script src="modal.js"></script>
 
 </body>

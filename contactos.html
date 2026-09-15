@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Contactos · PT Academy</title>
+<meta name="description" content="Fala com a PT Academy em Vila Real: telefone, email, morada, horário e formulário de contacto.">
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Libre+Franklin:wght@400;600&family=Caveat&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+<link rel="stylesheet" href="contactos.css">
+<script>document.documentElement.classList.add('js');</script>
+</head>
+<body>
+
+<!-- Nav e menu: injetados pelo nav.js -->
+<div data-nav></div>
+<script src="nav.js"></script>
+
+<!-- Abertura: sem fotografia, para chegar depressa à informação -->
+<header class="abertura">
+  <p class="eyebrow">Contactos</p>
+  <h1 class="abertura__titulo">Fala <em>connosco</em></h1>
+  <p class="abertura__lead">Telefone, email ou uma mensagem daqui mesmo. Escolhe o que te der mais jeito — respondemos sempre.</p>
+</header>
+
+<!-- Os três canais. O telefone está em destaque por temperatura (bordô
+     e risca vermelha), não por tamanho. -->
+<section class="canais" aria-label="Formas de contacto">
+  <div class="canais__grelha" data-reveal-group>
+
+    <article class="canal canal--destaque reveal reveal--rise">
+      <p class="canal__flag">Mais rápido</p>
+      <span class="canal__icone" aria-hidden="true">
+        <svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor"
+             stroke-width="1.8" stroke-linecap="square">
+          <path d="M4 4h5l2 5-3 2a12 12 0 0 0 5 5l2-3 5 2v5h-1A19 19 0 0 1 4 5z"/>
+        </svg>
+      </span>
+      <h2 class="canal__nome">Telefone</h2>
+      <p class="canal__valor"><a href="tel:+351259322108">259 322 108</a></p>
+      <p class="canal__nota">Atendemos durante todo o horário da academia. É por aqui que resolves mais depressa.</p>
+      <a class="button button--red canal__cta" href="tel:+351259322108">Ligar agora</a>
+    </article>
+
+    <article class="canal reveal reveal--rise">
+      <span class="canal__icone" aria-hidden="true">
+        <svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor"
+             stroke-width="1.8" stroke-linecap="square">
+          <path d="M3 5h18v14H3z"/>
+          <path d="M3 6l9 7 9-7"/>
+        </svg>
+      </span>
+      <h2 class="canal__nome">Email</h2>
+      <!-- TODO (confirmar com a academia): geral@ptacademy.pt é o endereço
+           que estamos a convencionar, ainda por confirmar. Aparece também
+           no rodape.js e no servidor.js (EMAIL_DESTINO). -->
+      <p class="canal__valor"><a href="mailto:geral@ptacademy.pt">geral@ptacademy.pt</a></p>
+      <p class="canal__nota">Para assuntos que não têm pressa. Respondemos em menos de 24h, dias úteis.</p>
+      <a class="button button--outline canal__cta" href="mailto:geral@ptacademy.pt">Escrever email</a>
+    </article>
+
+    <article class="canal reveal reveal--rise">
+      <span class="canal__icone" aria-hidden="true">
+        <svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor"
+             stroke-width="1.8" stroke-linecap="square">
+          <path d="M4 4h16v12H8l-4 4z"/>
+        </svg>
+      </span>
+      <h2 class="canal__nome">Mensagem</h2>
+      <p class="canal__valor"><a href="#mensagem">Aqui mesmo</a></p>
+      <p class="canal__nota">Deixa a questão no formulário e escolhe como preferes que te respondamos.</p>
+      <a class="button button--outline canal__cta" href="#mensagem">Ir para o formulário</a>
+    </article>
+
+  </div>
+</section>
+
+<!-- Onde estamos: morada em Anton e horário ao lado. Sem mapa embebido —
+     é um link para a app de mapas de quem visita, sem terceiros nem
+     cookies na página. -->
+<section class="local" aria-labelledby="local-titulo">
+  <div class="local__texto" data-reveal-group>
+    <p class="eyebrow eyebrow--traco reveal reveal--slide">Onde estamos</p>
+    <h2 class="local__titulo reveal reveal--slide" id="local-titulo">Tv. da Rua Nova <em>nº56</em></h2>
+    <p class="local__codigo reveal reveal--slide">5000-651 Vila Real</p>
+    <a class="button button--outline local__cta reveal reveal--slide"
+       href="https://maps.google.com/?q=Travessa+da+Rua+Nova+56,+5000-651+Vila+Real"
+       target="_blank" rel="noopener">Abrir no Google Maps</a>
+  </div>
+
+  <div class="local__horario" data-reveal-group>
+    <p class="eyebrow eyebrow--traco reveal reveal--slide">Horário</p>
+    <dl class="horario reveal reveal--slide">
+      <div class="horario__linha">
+        <dt>Segunda a sexta</dt>
+        <dd>07h — 22h</dd>
+      </div>
+      <div class="horario__linha">
+        <dt>Sábado</dt>
+        <dd>09h — 13h<br>15h — 19h</dd>
+      </div>
+      <div class="horario__linha horario__linha--fechado">
+        <dt>Domingo</dt>
+        <dd>Encerrado</dd>
+      </div>
+    </dl>
+  </div>
+</section>
+
+<!-- Formulário: o mesmo do modal da homepage, aberto na página. A lógica
+     vem toda do formulario.js. -->
+<section class="mensagem" id="mensagem">
+  <div class="mensagem__texto" data-reveal-group>
+    <p class="eyebrow eyebrow--traco reveal reveal--slide">Envia mensagem</p>
+    <h2 class="mensagem__titulo reveal reveal--slide">Diz-nos o que <em>precisas</em></h2>
+    <p class="mensagem__lead reveal reveal--slide">Horários, planos, aulas experimentais ou uma dúvida solta. Respondemos em menos de 24h, dias úteis — e pelo meio que escolheres.</p>
+    <p class="mensagem__nota reveal reveal--slide">Se for urgente, liga para <a href="tel:+351259322108">259 322 108</a>.</p>
+  </div>
+
+  <div class="mensagem__caixa">
+    <form class="form" id="form-contacto" novalidate>
+
+      <div class="form__linha">
+        <div class="campo">
+          <label class="campo__label" for="campo-nome">Nome</label>
+          <input class="campo__input" id="campo-nome" name="nome" type="text"
+                 autocomplete="name" required>
+          <p class="campo__erro" data-erro="nome"></p>
+        </div>
+      </div>
+
+      <fieldset class="form__grupo">
+        <legend class="campo__label">Como preferes ser contactado?</legend>
+        <div class="opcoes">
+          <label class="opcao">
+            <input type="radio" name="contacto" value="telefone" checked>
+            <span>Telefone</span>
+          </label>
+          <label class="opcao">
+            <input type="radio" name="contacto" value="email">
+            <span>Email</span>
+          </label>
+          <label class="opcao">
+            <input type="radio" name="contacto" value="mensagem">
+            <span>Mensagem</span>
+          </label>
+        </div>
+      </fieldset>
+
+      <div class="form__linha">
+        <div class="campo">
+          <label class="campo__label" for="campo-telefone">Telemóvel</label>
+          <input class="campo__input" id="campo-telefone" name="telefone" type="tel"
+                 autocomplete="tel" inputmode="tel" placeholder="9xx xxx xxx">
+          <p class="campo__erro" data-erro="telefone"></p>
+        </div>
+        <div class="campo">
+          <label class="campo__label" for="campo-email">Email</label>
+          <input class="campo__input" id="campo-email" name="email" type="email"
+                 autocomplete="email" placeholder="nome@exemplo.pt">
+          <p class="campo__erro" data-erro="email"></p>
+        </div>
+      </div>
+
+      <div class="campo">
+        <label class="campo__label" for="campo-questao">A tua questão</label>
+        <textarea class="campo__input campo__input--area" id="campo-questao"
+                  name="questao" rows="5" required
+                  placeholder="Horários, planos, aulas experimentais…"></textarea>
+        <p class="campo__erro" data-erro="questao"></p>
+      </div>
+
+      <label class="consentimento">
+        <input type="checkbox" name="consentimento" required>
+        <span>Autorizo a PT Academy a usar os meus contactos para responder a esta questão.</span>
+      </label>
+      <p class="campo__erro" data-erro="consentimento"></p>
+
+      <!-- Armadilha para bots: invisível e fora da ordem de tabulação. -->
+      <div class="pote-de-mel" aria-hidden="true">
+        <label for="campo-empresa">Empresa</label>
+        <input id="campo-empresa" name="empresa" type="text" tabindex="-1" autocomplete="off">
+      </div>
+
+      <button type="submit" class="button button--red form__enviar">
+        <span class="form__enviar-texto">Enviar questão</span>
+      </button>
+
+      <p class="form__estado" data-estado role="status" aria-live="polite"></p>
+    </form>
+
+    <div class="sucesso" data-sucesso hidden>
+      <div class="sucesso__visto" aria-hidden="true">
+        <svg viewBox="0 0 24 24" width="34" height="34" fill="none" stroke="currentColor"
+             stroke-width="2.2" stroke-linecap="square">
+          <path d="M4 12.5l5.5 5.5L20 7"/>
+        </svg>
+      </div>
+      <h3 class="sucesso__titulo">Recebemos</h3>
+      <p class="sucesso__lead">Damos notícias em breve pelo meio que escolheste.</p>
+      <a class="button button--outline" href="/">Voltar ao início</a>
+    </div>
+  </div>
+</section>
+
+<!-- Faixa de fecho -->
+<section class="closer">
+  <p class="closer__eyebrow">Ou aparece sem avisar</p>
+  <h2 class="closer__title">Passa por cá</h2>
+  <div class="closer__actions">
+    <a class="button button--red" href="tel:+351259322108">Ligar</a>
+    <a class="button button--outline" href="/#planos">Ver planos</a>
+  </div>
+</section>
+
+<!-- Rodapé: injetado pelo rodape.js -->
+<div data-rodape></div>
+
+<script src="rodape.js"></script>
+<script src="reveal.js"></script>
+<script src="formulario.js"></script>
+<script src="contactos.js"></script>
+
+</body>
+</html>

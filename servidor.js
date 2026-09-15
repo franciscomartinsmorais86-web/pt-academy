@@ -22,6 +22,9 @@ var path = require('path');
 
 var PORTA = process.env.PORTA || 3000;
 var RESEND_API_KEY = process.env.RESEND_API_KEY;
+/* TODO (confirmar com a academia): geral@ptacademy.pt é o endereço que
+   estamos a convencionar, ainda por confirmar. Aparece também no
+   contactos.html e no rodape.js. */
 var EMAIL_DESTINO = process.env.EMAIL_DESTINO || 'geral@ptacademy.pt';
 var EMAIL_REMETENTE = process.env.EMAIL_REMETENTE || 'Site PT Academy <site@ptacademy.pt>';
 
@@ -40,7 +43,7 @@ var TIPOS = {
   '.css': 'text/css; charset=utf-8',
   '.js': 'text/javascript; charset=utf-8',
   '.json': 'application/json; charset=utf-8',
-  '.jpg': 'image/jpeg',
+  '.webp': 'image/jpeg',
   '.jpeg': 'image/jpeg',
   '.png': 'image/png',
   '.webp': 'image/webp',

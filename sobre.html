@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sobre nós · PT Academy</title>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Libre+Franklin:wght@400;600&family=Caveat&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+<link rel="stylesheet" href="sobre.css">
+<script>document.documentElement.classList.add('js');</script>
+</head>
+<body>
+
+<!-- Nav e menu: injetados pelo nav.js -->
+<div data-nav></div>
+<script src="nav.js"></script>
+
+<!-- Hero: a foto aproxima e o título sobe e apaga-se à saída -->
+<header class="hero hero--sobre" data-scroll="saida">
+  <figure class="foto foto--ecra">
+    <div class="foto__camada">
+      <!-- Trocar por <img src="assets/…" alt="…"> -->
+      <span class="foto__vazia">Foto de ambiente · horizontal, ecrã inteiro</span>
+    </div>
+  </figure>
+  <div class="hero__scrim"></div>
+
+  <div class="hero__content">
+    <p class="hero__eyebrow">Sobre nós</p>
+    <h1 class="hero__title">Mais do que um <em>ginásio</em></h1>
+  </div>
+</header>
+
+<!-- Manifesto: pregado ao ecrã, acende palavra a palavra com o scroll -->
+<section class="manifesto" data-scroll="pregado">
+  <div class="manifesto__palco">
+    <p class="eyebrow">Quem somos</p>
+    <p class="manifesto__texto" data-palavras>Desde 2010 que a PT Academy é o sítio onde os Vila Realenses escolhem treinar. Aqui garantimos apoio profissional à medida dos teus objetivos, conhecemos-te pelo <em>nome</em> e ajudamos quando mais precisas.</p>
+  </div>
+</section>
+
+<!-- História: texto com risca que cresce, fotos em paralaxe -->
+<section class="historia" data-scroll="entrada">
+  <div class="historia__texto" data-reveal-group>
+    <p class="eyebrow reveal reveal--slide">A nossa história</p>
+    <h2 class="historia__titulo reveal reveal--slide">Uma casa que foi crescendo</h2>
+    <p class="historia__corpo reveal reveal--slide">Abrimos portas em 2010, em Vila Real. Hoje a casa tem sala de musculação e cardio, box de crossfit, sala de fitness e estúdio de dança, e uma equipa que acompanha cada sócio de perto.</p>
+    <p class="historia__corpo reveal reveal--slide">O essencial nunca mudou: um espaço familiar, onde quem entra pela primeira vez é recebido como quem cá treina há anos.</p>
+  </div>
+
+  <div class="historia__fotos">
+    <figure class="foto foto--retrato foto--lenta" data-scroll="atravessar">
+      <div class="foto__camada">
+        <!-- Trocar por <img src="assets/…" alt="…"> -->
+        <span class="foto__vazia">Foto da equipa · vertical 4:5</span>
+      </div>
+    </figure>
+    <figure class="foto foto--paisagem foto--rapida" data-scroll="atravessar">
+      <div class="foto__camada">
+        <!-- Trocar por <img src="assets/…" alt="…"> -->
+        <span class="foto__vazia">Treino acompanhado · horizontal 4:3</span>
+      </div>
+    </figure>
+  </div>
+</section>
+
+<!-- Números: contam ao ritmo do scroll -->
+<section class="numeros" data-scroll="entrada" aria-label="A PT Academy em números">
+  <div class="numero">
+    <p class="numero__valor"><span data-contar data-desde="2010-06">16</span></p>
+    <p class="numero__legenda">Anos em Vila Real</p>
+  </div>
+  <div class="numero">
+    <p class="numero__valor"><span data-contar="4">4</span></p>
+    <p class="numero__legenda">Modalidades</p>
+  </div>
+</section>
+
+<!-- Letreiro: as modalidades em contorno, a deslizar em sentidos opostos -->
+<div class="letreiro" data-scroll="atravessar" aria-hidden="true">
+  <p class="letreiro__linha">
+    <span>Musculação · Crossfit · Fitness · Dança ·&nbsp;</span>
+    <span>Musculação · Crossfit · Fitness · Dança ·&nbsp;</span>
+    <span>Musculação · Crossfit · Fitness · Dança ·&nbsp;</span>
+  </p>
+  <p class="letreiro__linha letreiro__linha--inversa">
+    <span>Família · Acompanhamento · Todos os níveis ·&nbsp;</span>
+    <span>Família · Acompanhamento · Todos os níveis ·&nbsp;</span>
+    <span>Família · Acompanhamento · Todos os níveis ·&nbsp;</span>
+  </p>
+</div>
+
+<!-- Valores -->
+<section class="valores">
+  <div class="valores__cabeca" data-reveal-group>
+    <p class="eyebrow eyebrow--traco reveal reveal--slide">O que nos move</p>
+    <h2 class="valores__titulo reveal reveal--slide">Três coisas que não negociamos</h2>
+  </div>
+
+  <div class="valores__grelha" data-reveal-group>
+    <article class="valor reveal reveal--rise">
+      <p class="valor__numero">01</p>
+      <h3 class="valor__nome">Família</h3>
+      <p class="valor__texto">Aqui ninguém treina sozinho. Há sempre alguém que te conhece pelo nome e que repara quando faltas.</p>
+    </article>
+    <article class="valor reveal reveal--rise">
+      <p class="valor__numero">02</p>
+      <h3 class="valor__nome">Acompanhamento</h3>
+      <p class="valor__texto">Avaliação física à entrada e um plano de treino revisto contigo, em vez de esquecido numa gaveta.</p>
+    </article>
+    <article class="valor reveal reveal--rise">
+      <p class="valor__numero">03</p>
+      <h3 class="valor__nome">Todos os níveis</h3>
+      <p class="valor__texto">Do primeiro dia ao décimo ano de treino, cada exercício escala para o ponto em que estás.</p>
+    </article>
+  </div>
+</section>
+
+<!-- Faixa de fecho -->
+<section class="closer">
+  <p class="closer__eyebrow">Vem conhecer-nos</p>
+  <h2 class="closer__title">A porta está aberta</h2>
+  <div class="closer__actions">
+    <a class="button button--red" href="tel:+351259322108">Marcar visita</a>
+    <a class="button button--outline" href="/#planos">Ver planos</a>
+  </div>
+</section>
+
+<!-- Rodapé: injetado pelo rodape.js -->
+<div data-rodape></div>
+
+<script src="rodape.js"></script>
+<script src="reveal.js"></script>
+<script src="sobre.js"></script>
+
+</body>
+</html>

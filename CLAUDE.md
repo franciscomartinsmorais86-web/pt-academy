@@ -135,9 +135,11 @@ checkbox com `accent-color: var(--color-red)`.
 **Marca-de-água**: `PT·ACADEMY` em contorno (`-webkit-text-stroke: 1px
 rgba(255,255,255,.07)`), nunca preenchida.
 
-**Rodapé**: vive no `rodape.js`, nunca copiado para o HTML. Uma página
-nova põe `<div data-rodape></div>` e carrega `rodape.js` antes dos outros
-scripts.
+**Nav e rodapé**: vivem no `nav.js` e no `rodape.js`, nunca copiados para
+o HTML. Uma página nova põe `<div data-nav></div>` no início do `<body>`
+com o `<script src="nav.js">` logo a seguir, e `<div data-rodape></div>`
+no fim com o `rodape.js` antes dos outros scripts. Links novos no nav
+entram em `NAV_ITENS`.
 
 **Ícones**: SVG inline, `currentColor`, cantos retos. Sem bibliotecas.
 

@@ -9,7 +9,7 @@ Atualizar sempre que uma animação for acrescentada, afinada ou retirada.
 |---|---|
 | `d9345c0` | Estado inicial do repositório (homepage estática completa) + o primeiro efeito de revelação do hero. `gallery/` ficou fora do controlo de versões — 517 MB de originais e RAW. |
 | `d0574d6` | Retira o efeito de revelação do hero: sai o `<canvas class="hero__reveal">`, o CSS da camada e o `hero-reveal.js`. Fica o `pointer-events: none` no título e no eyebrow do hero, que foi pedido à parte. |
-| `7488625` | Remove `assets/pt-academy-fachada.jpg`, sem uso depois da remoção acima. O original continua em `gallery/PT Academy-42.jpg`. |
+| `7488625` | Remove `assets/pt-academy-fachada.webp`, sem uso depois da remoção acima. O original continua em `gallery/PT Academy-42.webp`. |
 | `5f430a9` | Tela de entrada: ecrã preto com o logo grande que viaja para a posição do logo no nav. |
 
 Por commitar à data desta nota: a saída da tela de entrada passou de fade
@@ -82,6 +82,13 @@ Nota de manutenção: `html, body` levam `overflow-x: clip` e **não** `hidden` 
 
 ### Nav ao scroll — `nav.js`
 
+**O nav e o menu em ecrã inteiro são injetados pelo `nav.js`**, tal como o
+rodapé pelo `rodape.js`. A página põe `<div data-nav></div>` no início do
+`<body>` e o `<script src="nav.js">` **logo a seguir** — não no fim, para
+a página nunca pintar sem nav. Os links estão todos em `NAV_ITENS`; as
+âncoras ganham `/` fora da homepage e o link para a página em que se está
+leva `aria-current="page"` (fica vermelho).
+
 O fundo preto, o padding e a troca do hamburger pela lista são todos
 **interpolados** ao longo do scroll através da custom property
 `--nav-progress` (0 → 1), escrita a cada frame. Não há `transition`
@@ -119,6 +126,99 @@ Overlay em fade (`opacity` + `visibility`, .35s); cada item entra em
 - `.button--red` — só a cor do texto, .2s (o `a:hover` global punha
   vermelho sobre vermelho).
 - `.plan` — a borda acende a vermelho esbatido em .25s.
+
+## Página "Sobre nós" — `sobre.html` + `sobre.css` + `sobre.js`
+
+Primeira página desenhada só a partir do design system. Reaproveita o
+`styles.css` (nav, menu, `.hero`, `.closer`, botões) e o `reveal.js`; o
+rodapé vem do `rodape.js`. Não tem tela de entrada, galeria nem modal.
+
+**Um só mecanismo de scroll.** Cada elemento com `[data-scroll]` recebe
+`--p` (0 → 1) a cada frame e o CSS faz o resto. Quatro modos: `saida`
+(hero a sair pelo topo), `pregado` (secção alta com palco sticky),
+`entrada` (até o topo chegar a 40% do ecrã) e `atravessar` (de baixo a
+cima). `entrada` e `saida` levam smoothstep; os outros são lineares. Os
+valores por omissão de `--p` no CSS são o estado final — sem JS ou com
+`prefers-reduced-motion` a página fica parada e completa.
+
+- **Hero** (`saida`) — a foto aproxima até `scale(1.12)` e o título sobe
+  90px e apaga-se.
+- **Manifesto** (`pregado`) — secção de 240dvh com o texto pregado; o
+  `sobre.js` parte-o em palavras (`--i`, `--n`) e cada uma acende de .15 a
+  1, com a luz espalhada por 4 palavras para ser em degradê.
+- **História** (`entrada`) — risca vermelha à esquerda do texto em
+  `scaleY(--p)`; o texto entra com `reveal--slide`. Duas fotos sobrepostas
+  com paralaxe interna a velocidades diferentes (`--forca` 8% e 16%).
+- **Números** (`entrada`) — contam de 0 ao alvo com o scroll, e descontam
+  se se voltar para cima. Os anos saem de `data-desde="2010-06"` e só
+  sobem no aniversário (1 de junho), não a 1 de janeiro.
+- **Letreiro** (`atravessar`) — modalidades e valores em contorno, duas
+  linhas em sentidos opostos.
+- **Valores** — cartões com `reveal--rise`.
+
+**Placeholders de foto**: `.foto` > `.foto__camada` > `.foto__vazia`
+(riscas + legenda do que lá deve ir + tracejado). Para pôr a foto, trocar
+o `<span class="foto__vazia">` por um `<img>`; a paralaxe continua.
+
+### Por confirmar
+
+- **As três fotos** — ambiente (hero), equipa (4:5) e treino acompanhado
+  (4:3). A escolher pelo Francisco.
+- **Data de abertura** — junho de 2010 é uma escolha conservadora, não um
+  facto. Online só há a "Associação Versátil – PT Academy, Escola de
+  Dança" (NIF 516263170), constituída a 08/01/2021; nada confirma 2010.
+  Perguntar à academia o dia e o ano certos.
+- **Texto** — escrito a partir do que o site já diz (desde 2010, espaço
+  familiar, os quatro espaços, avaliação física, planos revistos,
+  escalonamento). Validar com a academia.
+- O "Sobre nós" do nav e do rodapé aponta para `/sobre.html` em todas as
+  páginas (antes era `#sobre`, âncora que nunca existiu na homepage).
+
+## Página "Contactos" — `contactos.html` + `contactos.css` + `contactos.js`
+
+Página sem movimento próprio: só o `reveal.js` e o nav. Tudo o resto é
+composição de peças que já existiam.
+
+**Sem hero fotográfico**, ao contrário da homepage e do "Sobre nós". Quem
+abre esta página quer o número de telefone, não uma fotografia — abre num
+bloco preto com o título grande e a informação começa logo a seguir. O
+padding de cima é generoso (`clamp(150px, 22vh, 240px)`) porque o nav é
+fixo e no topo da página está transparente.
+
+Ritmo das superfícies: preto (abertura) → preto (canais) → preto-alt (onde
+estamos) → preto (formulário) → bordô (fecho) → rodapé. **Sem faixa
+vermelha** — o vermelho fica nos CTAs, nos ícones e nas riscas.
+
+- **Três canais** em cartões iguais aos `.plan`: telefone, email e o
+  formulário. O telefone está em destaque por **temperatura** (bordô,
+  borda bordô, risca vermelha de 4px, flag em eyebrow), não por tamanho.
+- **O nome do canal é uma etiqueta, não um título** — quem manda no cartão
+  é o valor (o número, o endereço), em Anton. O `.canal__valor` leva
+  `overflow-wrap: anywhere`: o endereço de email é mais largo do que a
+  coluna em ecrãs estreitos.
+- **Sem mapa embebido.** O bloco "Onde estamos" é a morada em Anton com um
+  botão para o Google Maps, que abre na app de quem visita. Um `<iframe>`
+  da Google traria scripts e cookies de terceiros para a página (com o que
+  isso implica em consentimento) e um mapa que nunca combina com a paleta.
+- **Horário** em `<dl>`, com `tabular-nums` para as horas alinharem. O
+  domingo tem a sua modificação (`--fechado`): vermelho claro e em caixa
+  alta, como qualquer outro texto de destaque sobre escuro.
+- **Formulário aberto na página**, não atrás de um botão. É o mesmo do
+  modal da homepage, na mesma caixa (`--color-card`, borda bordô, risca
+  vermelha de 3px), e usa o `formulario.js` partilhado. Em vez do botão
+  "Fechar" do modal, o bloco de sucesso tem "Voltar ao início".
+- Grelhas: 3 → 2 colunas a 1150px, duas colunas → uma a 900px, canais a
+  uma coluna a 620px (onde a flag do destaque também sai do canto, senão
+  passava por cima do ícone).
+
+### Peças que subiram para o `styles.css`
+
+- **`.eyebrow` / `.eyebrow--traco`** — estavam no `sobre.css` e são do
+  site, não de uma página.
+- **`.modal__sucesso` → `.sucesso`** (e `.modal__visto` →
+  `.sucesso__visto`). O bloco de confirmação deixou de viver só dentro de
+  um modal, portanto deixou de ser um elemento dele. `.sucesso__titulo` e
+  `.sucesso__lead` estão agrupados no CSS com os `.modal__` equivalentes.
 
 ## Experiências abandonadas
 
@@ -184,7 +284,25 @@ sem biblioteca.
 
 Links das redes são reais (Instagram, Facebook, TikTok da PT Academy).
 
-## Modal de contacto — `modal.js` + `servidor.js`
+## Formulário de contacto — `formulario.js` + `servidor.js`
+
+A validação e o envio vivem no `formulario.js` e são partilhados pelos dois
+sítios onde o formulário aparece: dentro do modal da homepage e aberto na
+página de contactos. O `modal.js` ficou só com abrir, fechar e prender o
+foco; o `contactos.js` só liga o formulário da página.
+
+```
+ligarFormulario(form, sucesso) → { reiniciar }
+```
+
+O `sucesso` é o bloco que substitui o formulário depois do envio. Quem não
+tiver nenhum, recebe a confirmação na linha de estado. O `reiniciar` existe
+para o modal poder reabrir de raiz.
+
+**O `formulario.js` tem de vir antes** do `modal.js` e do `contactos.js` nos
+`<script>` da página — define a função que os dois chamam.
+
+### Modal — `modal.js`
 
 O botão "Enviar questão" da faixa de fecho abre um modal com o formulário:
 nome, preferência de contacto (telefone / email / mensagem, em pastilhas),
@@ -205,7 +323,7 @@ inputs só com borda em baixo que acende a vermelho no foco.
 - **Pote de mel**: campo "Empresa" fora do ecrã e fora da tabulação. Se vier
   preenchido, o servidor descarta e responde 200 na mesma — não se dá a
   dica ao bot.
-- O envio está isolado em `enviarQuestao()`, no fim do `modal.js`. Trocar de
+- O envio está isolado em `enviarQuestao()`, no fim do `formulario.js`. Trocar de
   serviço é mexer só nessa função.
 
 ### Servidor
@@ -238,7 +356,9 @@ Formspree (chave pública, feita para ser pública), ou Netlify Forms.
   Sem isso, só `onboarding@resend.dev`, que entrega apenas na conta do
   Resend.
 - **`EMAIL_DESTINO`** — está `geral@ptacademy.pt`, que é o mesmo placeholder
-  do rodapé. Confirmar o email real da academia.
+  do rodapé e da página de contactos. **Confirmar o email real da academia** —
+  está marcado com um TODO no `contactos.html`, no `rodape.js` e no
+  `servidor.js`.
 - Se a API passar a viver noutra máquina que não a do site: pôr o URL
-  completo no `ENDPOINT` do `modal.js` e o `Access-Control-Allow-Origin` no
+  completo no `ENDPOINT` do `formulario.js` e o `Access-Control-Allow-Origin` no
   `servidor.js` (com o domínio do site, nunca `*`).
