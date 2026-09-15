@@ -1,288 +1,149 @@
 /* PT Academy — página "Contactos". Carrega depois do styles.css.
 
-   Página sem hero fotográfico de propósito: quem vem aqui quer o número
-   de telefone, não uma fotografia. Abre num bloco preto com o título
-   grande e a informação começa logo a seguir.
+   Página curta de propósito: uma secção só, sem fotografias e sem
+   movimento próprio (nem sequer carrega o reveal.js). Quem abre esta
+   página quer o número de telefone, não uma viagem pelo scroll — toda a
+   informação cabe num ecrã de desktop, com o rodapé logo a seguir.
 
-   Ritmo das superfícies: preto (abertura) → preto (canais) → preto-alt
-   (onde estamos) → preto (formulário) → bordô (fecho) → rodapé. Sem
-   faixa vermelha — o vermelho fica nos CTAs, nos ícones e nas riscas.
+   Espaçamentos, tipografia e cores são os do resto do site; o que muda é
+   só a densidade. As peças genéricas (.eyebrow, .form, .campo, .button,
+   .sucesso) vêm todas do styles.css. */
 
-   As peças genéricas (.eyebrow, .form, .campo, .button, .closer) vêm
-   todas do styles.css; aqui só está o que é desta página. */
+/* ---------- Secção única ---------- */
 
-/* ---------- Abertura ---------- */
-
-/* O nav é fixo e no topo da página está transparente: o padding de cima
-   é generoso para o título nunca lhe passar por baixo. */
-.abertura {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 28px;
-  padding: clamp(150px, 22vh, 240px) clamp(24px, 4vw, 48px) clamp(48px, 7vw, 80px);
+/* O padding de cima dá folga ao nav, que é fixo e no topo da página está
+   transparente — mas sem o exagero de um hero. */
+.contactos {
+  padding: clamp(118px, 15vh, 168px) clamp(24px, 4vw, 48px) clamp(64px, 10vw, 120px);
   background: var(--color-black);
 }
 
-.abertura__titulo {
-  margin: 0;
-  max-width: 14ch;
-  font: 400 clamp(48px, 9vw, 150px)/0.9 var(--font-display);
-  letter-spacing: .01em;
-  text-transform: uppercase;
-  text-wrap: balance;
-}
-.abertura__titulo em {
-  color: var(--color-red);
-  font-style: normal;
-}
-
-.abertura__lead {
-  margin: 0;
-  max-width: 520px;
-  font: 400 17px/1.6 var(--font-body);
-  color: #ccc;
-}
-
-/* ---------- Canais ---------- */
-
-.canais {
-  padding: 0 clamp(24px, 4vw, 48px) clamp(64px, 10vw, 120px);
-  background: var(--color-black);
-}
-
-.canais__grelha {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: clamp(12px, 1.4vw, 20px);
-  align-items: stretch;
-}
-
-/* O mesmo cartão dos planos, com o mesmo hover a acender a borda. */
-.canal {
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  padding: clamp(28px, 2.6vw, 40px) clamp(22px, 2vw, 32px);
-  background: var(--color-card);
-  border: 1px solid rgba(255, 255, 255, .08);
-  transition: border-color .25s ease, background-color .25s ease;
-}
-.canal:hover {
-  border-color: rgba(193, 29, 38, .55);
-}
-
-/* Destaque por temperatura: bordô e risca vermelha, o mesmo tamanho. */
-.canal--destaque {
-  background: var(--color-maroon);
-  border-color: var(--color-maroon-border);
-}
-.canal--destaque::before {
-  content: '';
-  position: absolute;
-  top: -1px;
-  left: -1px;
-  right: -1px;
-  height: 4px;
-  background: var(--color-red);
-}
-
-.canal__flag {
-  position: absolute;
-  top: clamp(26px, 2.4vw, 36px);
-  right: clamp(22px, 2vw, 32px);
-  margin: 0;
-  color: var(--color-red-light);
-  font: 600 11px var(--font-body);
-  letter-spacing: .22em;
-  text-transform: uppercase;
-}
-
-.canal__icone {
-  display: block;
-  margin-bottom: 24px;
-  color: var(--color-red);
-}
-
-/* O nome do canal é uma etiqueta, não um título: quem manda no cartão é
-   o valor (o número, o endereço). */
-.canal__nome {
-  margin: 0 0 12px;
-  font: 600 12px var(--font-body);
-  letter-spacing: .28em;
-  text-transform: uppercase;
-  color: rgba(255, 255, 255, .55);
-}
-
-/* anywhere: o endereço de email é mais largo do que a coluna em ecrãs
-   estreitos e sem isto empurrava o cartão. */
-.canal__valor {
-  margin: 0 0 16px;
-  font: 400 clamp(24px, 2.4vw, 34px)/1.1 var(--font-display);
-  letter-spacing: .01em;
-  overflow-wrap: anywhere;
-}
-
-.canal__nota {
-  margin: 0 0 32px;
-  padding-top: 20px;
-  border-top: 1px solid var(--color-line);
-  font: 400 14px/1.5 var(--font-body);
-  color: rgba(255, 255, 255, .7);
-}
-
-/* margin-top: auto alinha os botões todos em baixo, como nos planos. */
-.canal__cta {
-  display: block;
-  margin-top: auto;
-  text-align: center;
-}
-
-/* ---------- Onde estamos ---------- */
-
-.local {
-  display: grid;
-  grid-template-columns: 1.3fr 1fr;
-  gap: clamp(40px, 6vw, 96px);
-  padding: clamp(64px, 10vw, 120px) clamp(24px, 4vw, 48px);
-  background: var(--color-black-alt);
-  border-top: 1px solid var(--color-line);
-}
-
-.local__texto {
+.contactos__cabeca {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  gap: 28px;
-}
-
-.local__titulo {
-  margin: 0;
-  max-width: 12ch;
-  font: 400 clamp(38px, 6vw, 96px)/0.95 var(--font-display);
-  letter-spacing: .01em;
-  text-transform: uppercase;
-  text-wrap: balance;
-}
-.local__titulo em {
-  color: var(--color-red);
-  font-style: normal;
-}
-
-.local__codigo {
-  margin: -8px 0 0;
-  font: 400 17px/1.6 var(--font-body);
-  color: #ccc;
-}
-
-.local__cta {
-  margin-top: 4px;
-}
-
-.local__horario {
-  display: flex;
-  flex-direction: column;
-  gap: 28px;
-}
-
-/* ---------- Horário ---------- */
-
-.horario {
-  margin: 0;
-  display: grid;
-  gap: 0;
-}
-
-.horario__linha {
-  display: flex;
-  justify-content: space-between;
-  align-items: baseline;
-  gap: 24px;
-  padding: 18px 0;
+  gap: 18px;
+  margin-bottom: clamp(40px, 5vw, 64px);
+  padding-bottom: clamp(32px, 4vw, 48px);
   border-bottom: 1px solid var(--color-line);
 }
-.horario__linha:first-child {
-  border-top: 1px solid var(--color-line);
-}
 
-.horario dt {
-  font: 600 12px var(--font-body);
-  letter-spacing: .16em;
-  text-transform: uppercase;
-  color: rgba(255, 255, 255, .55);
-}
-
-/* tabular-nums: as horas alinham-se coluna a coluna. */
-.horario dd {
+/* Escala de título de secção, não de hero: o título anuncia a página sem
+   empurrar a informação para fora do ecrã. */
+.contactos__titulo {
   margin: 0;
-  font: 400 16px/1.4 var(--font-body);
-  font-variant-numeric: tabular-nums;
-  text-align: right;
-  white-space: nowrap;
-}
-
-.horario__linha--fechado dd {
-  color: var(--color-red-light);
-  font-size: 13px;
-  letter-spacing: .16em;
-  text-transform: uppercase;
-}
-
-/* ---------- Mensagem (formulário) ---------- */
-
-.mensagem {
-  display: grid;
-  grid-template-columns: 1fr 1.1fr;
-  gap: clamp(40px, 6vw, 96px);
-  padding: clamp(64px, 10vw, 120px) clamp(24px, 4vw, 48px);
-  background: var(--color-black);
-}
-
-.mensagem__texto {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 28px;
-}
-
-.mensagem__titulo {
-  margin: 0;
-  max-width: 11ch;
-  font: 400 clamp(38px, 6vw, 96px)/0.95 var(--font-display);
+  font: 400 clamp(38px, 6vw, 88px)/0.95 var(--font-display);
   letter-spacing: .01em;
   text-transform: uppercase;
   text-wrap: balance;
 }
-.mensagem__titulo em {
+.contactos__titulo em {
   color: var(--color-red);
   font-style: normal;
 }
 
-.mensagem__lead {
+.contactos__lead {
   margin: 0;
   max-width: 480px;
   font: 400 17px/1.6 var(--font-body);
   color: #ccc;
 }
 
-.mensagem__nota {
-  margin: 0;
-  font: 400 14px/1.6 var(--font-body);
-  color: #666;
-}
-.mensagem__nota a {
-  color: var(--color-red-light);
+.contactos__grelha {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: clamp(32px, 4vw, 64px);
+  align-items: start;
 }
 
-/* A mesma caixa do modal: cartão com risca vermelha no topo. */
-.mensagem__caixa {
+.contactos__info {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(32px, 4vw, 48px);
+}
+
+/* ---------- Dados (telefone, email, morada) ---------- */
+
+/* Rótulo à esquerda em label, valor à direita em Anton. Linhas separadas
+   por fio, sem caixas — é o que mantém a página compacta. */
+.dados,
+.horario {
+  margin: 0;
+  display: grid;
+  gap: 0;
+}
+
+.dados__linha,
+.horario__linha {
+  display: grid;
+  grid-template-columns: 120px 1fr;
+  align-items: baseline;
+  gap: 20px;
+  padding: 16px 0;
+  border-bottom: 1px solid var(--color-line);
+}
+.dados__linha:first-child,
+.horario__linha:first-child {
+  border-top: 1px solid var(--color-line);
+}
+
+.dados__rotulo,
+.horario dt {
+  font: 600 11px var(--font-body);
+  letter-spacing: .28em;
+  text-transform: uppercase;
+  color: #666;
+}
+
+/* anywhere: o endereço de email é mais largo do que a coluna em ecrãs
+   estreitos e sem isto empurrava a grelha. */
+.dados__valor {
+  margin: 0;
+  font: 400 clamp(20px, 1.9vw, 26px)/1.15 var(--font-display);
+  letter-spacing: .01em;
+  overflow-wrap: anywhere;
+}
+
+/* A morada é endereço, não um dado curto: fica em corpo, que se lê
+   melhor em duas linhas. */
+.dados__valor--morada {
+  font: 400 16px/1.5 var(--font-body);
+  letter-spacing: 0;
+}
+.dados__valor--morada a {
+  color: rgba(255, 255, 255, .8);
+}
+.dados__valor--morada a:hover {
+  color: var(--color-red);
+}
+
+/* ---------- Horário ---------- */
+
+/* tabular-nums: as horas alinham-se coluna a coluna. */
+.horario dd {
+  margin: 0;
+  font: 400 15px/1.5 var(--font-body);
+  font-variant-numeric: tabular-nums;
+  color: rgba(255, 255, 255, .8);
+}
+
+.horario__linha--fechado dd {
+  color: var(--color-red-light);
+  font-size: 12px;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+}
+
+/* ---------- Caixa do formulário ---------- */
+
+/* A mesma caixa do modal: cartão com risca vermelha de 3px no topo. */
+.contactos__caixa {
   position: relative;
-  align-self: start;
-  padding: clamp(32px, 3.4vw, 52px) clamp(24px, 2.6vw, 44px);
+  padding: clamp(28px, 2.8vw, 44px) clamp(22px, 2.4vw, 36px);
   background: var(--color-card);
   border: 1px solid var(--color-maroon-border);
 }
-.mensagem__caixa::before {
+.contactos__caixa::before {
   content: '';
   position: absolute;
   top: -1px;
@@ -292,54 +153,38 @@
   background: var(--color-red);
 }
 
-/* O .form já traz margin-top para se descolar do título do modal; aqui
-   é a primeira coisa dentro da caixa e não precisa dela. */
-.mensagem__caixa .form {
-  margin-top: 0;
+.contactos__caixa-titulo {
+  margin: 0;
+  font: 600 12px var(--font-body);
+  letter-spacing: .28em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, .55);
+}
+
+/* O .form traz margin-top de 32px para se descolar do título do modal;
+   aqui o título é uma etiqueta e 22px chegam. */
+.contactos__caixa .form {
+  margin-top: 22px;
+  gap: 18px;
+}
+
+.contactos__caixa .sucesso {
+  margin-top: 22px;
 }
 
 /* ---------- Responsive ---------- */
 
-@media (max-width: 1150px) {
-  .canais__grelha {
-    grid-template-columns: repeat(2, 1fr);
-  }
-  /* Com duas colunas o destaque fica sozinho na linha de baixo se for o
-     terceiro; é o primeiro, portanto abre a grelha. */
-  .local,
-  .mensagem {
-    gap: clamp(32px, 4vw, 56px);
-  }
-}
-
 @media (max-width: 900px) {
-  .local,
-  .mensagem {
+  .contactos__grelha {
     grid-template-columns: 1fr;
-  }
-  .mensagem__caixa {
-    align-self: stretch;
   }
 }
 
 @media (max-width: 620px) {
-  .canais__grelha {
-    grid-template-columns: 1fr;
-  }
-  /* A flag sairia por cima do ícone num cartão estreito. */
-  .canal__flag {
-    position: static;
-    margin-bottom: 20px;
-  }
-  .canal--destaque .canal__icone {
-    margin-top: 0;
-  }
+  /* Rótulo por cima do valor: 120px de coluna não sobram num telemóvel. */
+  .dados__linha,
   .horario__linha {
-    flex-direction: column;
-    align-items: flex-start;
+    grid-template-columns: 1fr;
     gap: 6px;
-  }
-  .horario dd {
-    text-align: left;
   }
 }

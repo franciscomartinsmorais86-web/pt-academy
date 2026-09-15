@@ -176,40 +176,42 @@ o `<span class="foto__vazia">` por um `<img>`; a paralaxe continua.
 
 ## Página "Contactos" — `contactos.html` + `contactos.css` + `contactos.js`
 
-Página sem movimento próprio: só o `reveal.js` e o nav. Tudo o resto é
-composição de peças que já existiam.
+**A página curta do site.** Sem fotografias, sem faixa de fecho e sem
+movimento próprio — nem sequer carrega o `reveal.js`. Espaçamentos,
+tipografia e cores são os do resto do site; o que muda é só a densidade.
 
-**Sem hero fotográfico**, ao contrário da homepage e do "Sobre nós". Quem
-abre esta página quer o número de telefone, não uma fotografia — abre num
-bloco preto com o título grande e a informação começa logo a seguir. O
-padding de cima é generoso (`clamp(150px, 22vh, 240px)`) porque o nav é
-fixo e no topo da página está transparente.
+Uma secção só (`<main class="contactos">`), com o cabeçalho por cima de
+uma grelha de duas colunas: dados e horário à esquerda, formulário à
+direita. Toda a informação cabe num ecrã de desktop, com o rodapé logo a
+seguir.
 
-Ritmo das superfícies: preto (abertura) → preto (canais) → preto-alt (onde
-estamos) → preto (formulário) → bordô (fecho) → rodapé. **Sem faixa
-vermelha** — o vermelho fica nos CTAs, nos ícones e nas riscas.
+- **Título em escala de secção**, não de hero (`clamp(38px, 6vw, 88px)`).
+  Um título de hero empurrava a informação para fora do ecrã.
+- **Padding de topo `clamp(118px, 15vh, 168px)`** — só a folga de que o
+  nav precisa, porque é fixo e no topo da página está transparente.
+- **Dados em linhas com fio, não em cartões.** Rótulo à esquerda em label
+  (11px, `.28em`, `#666`), valor à direita em Anton. É o que mantém a
+  página compacta. A morada é a exceção: fica em corpo, porque um
+  endereço de duas linhas lê-se pior em Anton.
+- **`overflow-wrap: anywhere` no valor** — o endereço de email é mais
+  largo do que a coluna em ecrãs estreitos e sem isto empurrava a grelha.
+- **Horário** no mesmo desenho de linhas, com `tabular-nums` para as
+  horas alinharem. O domingo leva a sua modificação (`--fechado`):
+  vermelho claro e em caixa alta.
+- **Sem mapa embebido.** A morada é um link para o Google Maps, que abre
+  na app de quem visita. Um `<iframe>` da Google traria scripts e cookies
+  de terceiros para a página e um mapa que não combina com a paleta.
+- **Um só CTA vermelho**: o botão de enviar. O telefone e o email são
+  links, não botões.
+- A caixa do formulário é a mesma do modal (`--color-card`, borda bordô,
+  risca vermelha de 3px no topo) e usa o `formulario.js` partilhado.
+- Grelha de duas colunas → uma a 900px; a 620px o rótulo passa para cima
+  do valor, porque 120px de coluna não sobram num telemóvel.
 
-- **Três canais** em cartões iguais aos `.plan`: telefone, email e o
-  formulário. O telefone está em destaque por **temperatura** (bordô,
-  borda bordô, risca vermelha de 4px, flag em eyebrow), não por tamanho.
-- **O nome do canal é uma etiqueta, não um título** — quem manda no cartão
-  é o valor (o número, o endereço), em Anton. O `.canal__valor` leva
-  `overflow-wrap: anywhere`: o endereço de email é mais largo do que a
-  coluna em ecrãs estreitos.
-- **Sem mapa embebido.** O bloco "Onde estamos" é a morada em Anton com um
-  botão para o Google Maps, que abre na app de quem visita. Um `<iframe>`
-  da Google traria scripts e cookies de terceiros para a página (com o que
-  isso implica em consentimento) e um mapa que nunca combina com a paleta.
-- **Horário** em `<dl>`, com `tabular-nums` para as horas alinharem. O
-  domingo tem a sua modificação (`--fechado`): vermelho claro e em caixa
-  alta, como qualquer outro texto de destaque sobre escuro.
-- **Formulário aberto na página**, não atrás de um botão. É o mesmo do
-  modal da homepage, na mesma caixa (`--color-card`, borda bordô, risca
-  vermelha de 3px), e usa o `formulario.js` partilhado. Em vez do botão
-  "Fechar" do modal, o bloco de sucesso tem "Voltar ao início".
-- Grelhas: 3 → 2 colunas a 1150px, duas colunas → uma a 900px, canais a
-  uma coluna a 620px (onde a flag do destaque também sai do canto, senão
-  passava por cima do ícone).
+**Primeira versão, abandonada:** página longa com hero sem foto, três
+canais em cartões, secção de morada, secção de formulário e faixa de
+fecho — cinco ecrãs de scroll para dar um número de telefone. Trocada por
+esta a pedido do Francisco.
 
 ### Peças que subiram para o `styles.css`
 
