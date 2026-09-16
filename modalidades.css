@@ -1,0 +1,685 @@
+/* PT Academy — página "Modalidades". Carrega depois do styles.css.
+
+   Quatro capítulos pregados, um por modalidade. Cada capítulo é uma
+   secção alta com um palco sticky de 100dvh: o palco fica preso enquanto
+   o texto entra da margem mais próxima e, quando a secção acaba, o
+   capítulo seguinte sobe por cima como cortina (arranca 100dvh mais cedo,
+   com z-index acima — o mesmo truque da galeria da homepage).
+
+   Tudo o que mexe lê duas custom properties escritas pelo modalidades.js:
+   --p  entrada do capítulo, 0 → 1 (com smoothstep);
+   --q  avanço dentro do capítulo, 0 → 1 (linear, para a paralaxe).
+   Os valores por omissão são o estado final: sem JS ou com
+   prefers-reduced-motion a página fica parada e completa. */
+
+/* Os únicos destinos de âncora são os capítulos, em ecrã inteiro: não
+   precisam da folga que o styles.css reserva para o nav. */
+html {
+  scroll-padding-top: 0;
+  scroll-behavior: smooth;
+}
+
+/* ---------- Hero ---------- */
+
+/* Reaproveita o .hero, mais baixo: os capítulos são o peso da página. */
+.hero--modalidades {
+  height: 72dvh;
+  min-height: 460px;
+}
+
+/* A foto aproxima e o conteúdo sobe e apaga-se enquanto o hero sai. */
+.hero__photo--box {
+  background-image: url('./assets/modalidades/hero-box.webp');
+  transform: scale(calc(1 + var(--p, 0) * .12));
+  will-change: transform;
+}
+
+.hero--modalidades .hero__content {
+  transform: translateY(calc(var(--p, 0) * -70px));
+  opacity: calc(1 - var(--p, 0) * 1.6);
+}
+
+/* Índice das quatro modalidades, no lugar do CTA do hero. Só os nomes,
+   separados por fios, em Anton. */
+.indice {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.indice__item + .indice__item {
+  border-left: 1px solid rgba(255, 255, 255, .25);
+}
+
+.indice__link {
+  display: block;
+  padding: 6px clamp(14px, 2vw, 28px);
+  font: 400 clamp(18px, 2vw, 26px)/1 var(--font-display);
+  letter-spacing: .03em;
+  text-transform: uppercase;
+  transition: color .2s ease;
+}
+
+/* ---------- Capítulos ---------- */
+
+.capitulos {
+  position: relative;
+}
+
+.capitulo {
+  /* De onde o texto entra: positivo = da direita, negativo = da esquerda. */
+  --dx: 56px;
+  --p: 1;
+  --q: .5;
+  /* Tempo a sós, já pregado, antes de a cortina seguinte começar a subir. */
+  --folga: 70dvh;
+
+  position: relative;
+  background: var(--color-black);
+}
+
+/* 100dvh pregado + folga + 100dvh a ser tapado pelo seguinte. A secção
+   seguinte arranca 100dvh mais cedo, por cima — daí a margem negativa. */
+.js .capitulo {
+  height: calc(200dvh + var(--folga));
+}
+.js .capitulo + .capitulo {
+  margin-top: -100dvh;
+}
+
+/* Cada capítulo fica por cima do anterior. */
+.capitulo:nth-child(1) { z-index: 1; }
+.capitulo:nth-child(2) { z-index: 2; }
+.capitulo:nth-child(3) { z-index: 3; }
+.capitulo:nth-child(4) { z-index: 4; }
+
+/* O palco: meio a meio, foto de um lado e texto do outro. overflow hidden
+   porque o número em marca-de-água sai da caixa. */
+.capitulo__palco {
+  position: relative;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  height: 100dvh;
+  overflow: hidden;
+  background: var(--color-black);
+}
+.js .capitulo__palco {
+  position: sticky;
+  top: 0;
+}
+
+/* Lados. O capítulo normal tem a foto à esquerda; o invertido troca as
+   colunas e o texto passa a entrar da esquerda. */
+.capitulo__foto  { grid-column: 1; grid-row: 1; }
+.capitulo__texto { grid-column: 2; grid-row: 1; }
+
+.capitulo--invertido { --dx: -56px; }
+.capitulo--invertido .capitulo__foto  { grid-column: 2; }
+.capitulo--invertido .capitulo__texto { grid-column: 1; }
+
+/* ---------- Foto ---------- */
+
+/* Moldura fixa com a camada a mexer lá dentro: a foto aproxima de 1.1
+   para 1 durante a entrada (a mesma ideia do reveal das fotos) e, ao
+   longo do capítulo, desliza 10% em Y — paralaxe sem mexer nas arestas. */
+.capitulo__foto {
+  position: relative;
+  margin: 0;
+  overflow: hidden;
+  background: var(--color-card);
+}
+
+.capitulo__foto-camada {
+  position: absolute;
+  inset: -6% 0;
+  transform:
+    translateY(calc((.5 - var(--q)) * 10%))
+    scale(calc(1.1 - var(--p) * .1));
+  will-change: transform;
+}
+
+.capitulo__foto-camada > img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Foto de detalhe: pequena, 4:5, encostada à costura entre a foto e o
+   texto, no canto de baixo. Transborda 40px para o lado do texto — menos
+   do que o padding interior da coluna, portanto nunca toca no texto.
+   Entra na segunda metade da entrada, a subir. */
+.capitulo__detalhe {
+  --pd: clamp(0, (var(--p) - .5) / .5, 1);
+
+  position: absolute;
+  z-index: 2;
+  bottom: clamp(24px, 5vh, 56px);
+  right: calc(50% - 40px);
+  width: clamp(120px, 14vw, 220px);
+  aspect-ratio: 4 / 5;
+  margin: 0;
+  overflow: hidden;
+  outline: 10px solid var(--color-black);
+  background: var(--color-card);
+  opacity: var(--pd);
+  transform: translateY(calc((1 - var(--pd)) * 40px));
+  will-change: transform, opacity;
+}
+.capitulo--invertido .capitulo__detalhe {
+  right: auto;
+  left: calc(50% - 40px);
+}
+
+.capitulo__detalhe > img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* ---------- Número em marca-de-água ---------- */
+
+/* O número do capítulo em contorno, atrás do texto, como a marca-de-água
+   do rodapé. Viaja o dobro do texto para ler como uma camada mais funda. */
+.capitulo__marca {
+  position: absolute;
+  z-index: 0;
+  top: clamp(40px, 6vh, 72px);
+  left: calc(50% + clamp(12px, 2vw, 32px));
+  margin: 0;
+  color: transparent;
+  -webkit-text-stroke: 1px rgba(255, 255, 255, .07);
+  font: 400 clamp(180px, 26vw, 420px)/1 var(--font-display);
+  letter-spacing: -.02em;
+  opacity: var(--p);
+  transform: translateX(calc(var(--dx) * 2 * (1 - var(--p))));
+  pointer-events: none;
+  user-select: none;
+  will-change: transform, opacity;
+}
+.capitulo--invertido .capitulo__marca {
+  left: auto;
+  right: calc(50% + clamp(12px, 2vw, 32px));
+}
+
+/* ---------- Texto ---------- */
+
+/* A coluna de texto. O padding interior (do lado da foto) é maior do que
+   a margem exterior, para a coluna respirar da costura. */
+.capitulo__texto {
+  --pad-interior: clamp(56px, 7vw, 120px);
+  --pad-exterior: clamp(24px, 4vw, 48px);
+
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 18px;
+  padding: clamp(88px, 12vh, 140px) var(--pad-exterior) clamp(48px, 7vh, 96px) var(--pad-interior);
+}
+.capitulo--invertido .capitulo__texto {
+  padding-right: var(--pad-interior);
+  padding-left: var(--pad-exterior);
+}
+
+/* A entrada, peça a peça: cada filho tem o seu --i e entra escalonado
+   (arranca a --i × 9% do progresso e demora 46%), a deslizar --dx da
+   margem mais próxima e a acender. O escalonamento é todo CSS. */
+.capitulo__texto > * {
+  --pe: clamp(0, (var(--p) - var(--i, 0) * .09) / .46, 1);
+
+  margin: 0;
+  opacity: var(--pe);
+  transform: translateX(calc(var(--dx) * (1 - var(--pe))));
+}
+.capitulo__texto > :nth-child(1) { --i: 0; }
+.capitulo__texto > :nth-child(2) { --i: 1; }
+.capitulo__texto > :nth-child(3) { --i: 2; }
+.capitulo__texto > :nth-child(4) { --i: 3; }
+.capitulo__texto > :nth-child(5) { --i: 4; }
+.capitulo__texto > :nth-child(6) { --i: 5; }
+.capitulo__texto > :nth-child(7) { --i: 6; }
+.capitulo__texto > :nth-child(8) { --i: 7; }
+
+.capitulo__titulo {
+  font: 400 clamp(48px, 7vw, 132px)/.95 var(--font-display);
+  letter-spacing: .01em;
+  text-transform: uppercase;
+}
+
+.capitulo__lead {
+  max-width: 480px;
+  color: #ccc;
+  font: 400 17px/1.6 var(--font-body);
+}
+
+/* Lista com traço, como as dos planos. */
+.capitulo__lista {
+  display: grid;
+  gap: 10px;
+  padding: 0;
+  list-style: none;
+}
+.capitulo__lista li {
+  position: relative;
+  padding-left: 20px;
+  color: rgba(255, 255, 255, .7);
+  font: 400 14px/1.5 var(--font-body);
+}
+.capitulo__lista li::before {
+  content: '';
+  position: absolute;
+  top: .65em;
+  left: 0;
+  width: 9px;
+  height: 1px;
+  background: var(--color-red);
+}
+
+/* Etiquetas: as pastilhas do formulário, sem estado. */
+.etiquetas {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  max-width: 560px;
+  padding: 0;
+  list-style: none;
+}
+.etiquetas li {
+  padding: 8px 14px;
+  border: 1px solid var(--color-line);
+  color: rgba(255, 255, 255, .6);
+  font: 600 11px var(--font-body);
+  letter-spacing: .16em;
+  text-transform: uppercase;
+}
+
+.capitulo__plano {
+  color: #666;
+  font: 600 11px/1.6 var(--font-body);
+  letter-spacing: .28em;
+  text-transform: uppercase;
+}
+.capitulo__plano strong {
+  color: var(--color-red-light);
+  font-weight: 600;
+}
+
+.capitulo__acoes {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+.capitulo__texto > .capitulo__acoes {
+  margin-top: 10px;
+}
+
+/* ---------- Mapa de aulas ---------- */
+
+/* Sobe por cima do último capítulo como qualquer cortina, por isso leva
+   a mesma margem negativa e um z-index acima dos quatro. A altura mínima
+   garante que a secção seguinte só começa depois de o último capítulo
+   ter acabado por baixo desta. */
+.mapa {
+  position: relative;
+  z-index: 5;
+  display: flex;
+  flex-direction: column;
+  padding: clamp(64px, 10vw, 120px) clamp(24px, 4vw, 48px);
+  background: var(--color-black-alt);
+}
+.js .mapa {
+  min-height: 100dvh;
+  margin-top: -100dvh;
+}
+
+.mapa__cabeca {
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+  max-width: 720px;
+  margin-bottom: clamp(32px, 4vw, 48px);
+}
+
+.mapa__titulo {
+  margin: 0;
+  font: 400 clamp(38px, 6vw, 96px)/1 var(--font-display);
+  letter-spacing: .01em;
+  text-transform: uppercase;
+  text-wrap: balance;
+}
+.mapa__titulo em {
+  color: var(--color-red);
+  font-style: normal;
+}
+
+.mapa__lead {
+  margin: 0;
+  max-width: 560px;
+  color: #ccc;
+  font: 400 17px/1.6 var(--font-body);
+}
+
+/* As abas são dois radios escondidos e os labels em pastilha. O radio
+   marcado mostra a sua semana e acende a sua aba — tudo por ~, sem JS. */
+.mapa__radio {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.mapa__escolha {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: clamp(24px, 3vw, 40px);
+}
+
+.mapa__aba {
+  padding: 10px 20px;
+  border: 1px solid var(--color-line);
+  color: rgba(255, 255, 255, .6);
+  font: 600 12px var(--font-body);
+  letter-spacing: .16em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: border-color .2s ease, color .2s ease, background-color .2s ease;
+}
+.mapa__aba:hover {
+  color: #fff;
+  border-color: rgba(255, 255, 255, .35);
+}
+#mapa-cross:checked ~ .mapa__escolha .mapa__aba[for="mapa-cross"],
+#mapa-grupo:checked ~ .mapa__escolha .mapa__aba[for="mapa-grupo"] {
+  background: var(--color-red);
+  border-color: var(--color-red);
+  color: #fff;
+}
+#mapa-cross:focus-visible ~ .mapa__escolha .mapa__aba[for="mapa-cross"],
+#mapa-grupo:focus-visible ~ .mapa__escolha .mapa__aba[for="mapa-grupo"] {
+  outline: 2px solid #fff;
+  outline-offset: 2px;
+}
+
+/* A agenda: uma tabela real, dias em coluna e horas em linha, como um
+   quadro de horários de ginásio. Cada `.agenda__scroll` embrulha uma
+   tabela inteira (uma por aba) e só a escolhida fica visível — a mesma
+   troca por `~` que as abas, sem JS. O scroll horizontal é para caber
+   num telemóvel sem espremer as colunas: a tabela tem uma largura
+   mínima e desliza, com a coluna das horas fixa. */
+.agenda__scroll {
+  display: none;
+  overflow-x: auto;
+  border: 1px solid var(--color-line);
+}
+#mapa-cross:checked ~ .agenda__scroll--cross,
+#mapa-grupo:checked ~ .agenda__scroll--grupo {
+  display: block;
+}
+
+.agenda {
+  width: 100%;
+  min-width: 720px;
+  border-collapse: collapse;
+  table-layout: fixed;
+}
+
+.agenda th,
+.agenda td {
+  border: 1px solid var(--color-line);
+  padding: 10px clamp(6px, 1vw, 12px);
+  vertical-align: top;
+}
+
+.agenda thead th {
+  background: var(--color-black-alt);
+  color: rgba(255, 255, 255, .7);
+  font: 600 12px var(--font-body);
+  letter-spacing: .16em;
+  text-transform: uppercase;
+  text-align: left;
+}
+
+.agenda__cab-hora {
+  width: 84px;
+}
+
+/* A coluna e a linha do cabeçalho ficam visíveis ao deslizar a tabela
+   para o lado ou para baixo. */
+.agenda thead th,
+.agenda tbody th {
+  position: sticky;
+  z-index: 1;
+}
+.agenda thead th {
+  top: 0;
+}
+.agenda tbody th {
+  left: 0;
+  background: var(--color-black-alt);
+  color: #fff;
+  font: 400 clamp(16px, 1.6vw, 20px)/1 var(--font-display);
+  letter-spacing: .02em;
+  text-align: left;
+  white-space: nowrap;
+  font-variant-numeric: tabular-nums;
+}
+
+/* Cada aula é um bloco cheio dentro da célula; quando há mais do que
+   uma a começar na mesma hora, empilham com um respiro pequeno entre
+   elas. Risca vermelha à esquerda para se distinguir das bordas neutras
+   da tabela. */
+.agenda__aula {
+  display: block;
+  padding: 6px 8px;
+  background: var(--color-card);
+  border-left: 2px solid var(--color-red);
+  color: rgba(255, 255, 255, .85);
+  font: 600 11px/1.3 var(--font-body);
+  letter-spacing: .02em;
+  text-transform: uppercase;
+}
+.agenda__aula + .agenda__aula {
+  margin-top: 4px;
+}
+
+.mapa__nota {
+  margin: clamp(24px, 3vw, 32px) 0 0;
+  color: #666;
+  font: 400 14px/1.6 var(--font-body);
+}
+.mapa__nota a {
+  color: rgba(255, 255, 255, .8);
+}
+
+/* ---------- Também na PT Academy ---------- */
+
+.extras {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(32px, 4vw, 48px);
+  padding: clamp(64px, 10vw, 120px) clamp(24px, 4vw, 48px);
+  background: var(--color-black);
+}
+
+.extras__cabeca {
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+  max-width: 720px;
+}
+
+.extras__titulo {
+  margin: 0;
+  font: 400 clamp(38px, 6vw, 96px)/1 var(--font-display);
+  letter-spacing: .01em;
+  text-transform: uppercase;
+  text-wrap: balance;
+}
+.extras__titulo em {
+  color: var(--color-red);
+  font-style: normal;
+}
+
+/* Linhas corridas, como o quadro de espaços das Instalações: nome em
+   Anton, texto ao meio, ligação à direita. Hover: linha a bordô com a
+   risca vermelha a abrir à esquerda. */
+.extras__lista {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  border-top: 1px solid var(--color-line);
+}
+
+.extra {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(200px, .8fr) 1.6fr auto;
+  align-items: baseline;
+  gap: clamp(16px, 3vw, 48px);
+  padding: clamp(18px, 2vw, 26px) clamp(14px, 1.6vw, 24px);
+  border-bottom: 1px solid var(--color-line);
+  transition: background-color .25s ease;
+}
+.extra:hover {
+  background: var(--color-maroon);
+}
+.extra::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: -1px;
+  bottom: -1px;
+  width: 3px;
+  background: var(--color-red);
+  transform: scaleY(0);
+  transform-origin: top;
+  transition: transform .3s cubic-bezier(.22, .61, .36, 1);
+}
+.extra:hover::before {
+  transform: scaleY(1);
+}
+
+.extra__nome {
+  margin: 0;
+  font: 400 clamp(26px, 3vw, 44px)/1 var(--font-display);
+  letter-spacing: .01em;
+  text-transform: uppercase;
+}
+
+.extra__texto {
+  margin: 0;
+  max-width: 60ch;
+  color: rgba(255, 255, 255, .7);
+  font: 400 15px/1.5 var(--font-body);
+}
+
+.extra__link {
+  color: rgba(255, 255, 255, .8);
+  font: 600 12px var(--font-body);
+  letter-spacing: .16em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+/* ---------- Responsive ---------- */
+
+/* Sem espaço para meio a meio: a foto passa a fundo do palco inteiro,
+   com scrim, e o texto assenta em baixo como no hero. A foto de detalhe
+   sai. O texto continua a entrar da margem do seu lado. */
+@media (max-width: 900px) {
+  .capitulo__palco {
+    grid-template-columns: 1fr;
+  }
+  .capitulo__foto,
+  .capitulo--invertido .capitulo__foto {
+    position: absolute;
+    inset: 0;
+    grid-column: 1;
+  }
+  .capitulo__foto::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      rgba(10, 10, 10, .35) 0%,
+      rgba(10, 10, 10, .35) 30%,
+      rgba(10, 10, 10, .94) 100%
+    );
+    pointer-events: none;
+  }
+  .capitulo__texto,
+  .capitulo--invertido .capitulo__texto {
+    grid-column: 1;
+    justify-content: flex-end;
+    gap: 14px;
+    padding: 96px clamp(24px, 4vw, 48px) clamp(40px, 8vh, 64px);
+  }
+  .capitulo__titulo {
+    font-size: clamp(44px, 12vw, 80px);
+  }
+  .capitulo__lead {
+    font-size: 15px;
+  }
+  .capitulo__detalhe {
+    display: none;
+  }
+  .capitulo__marca,
+  .capitulo--invertido .capitulo__marca {
+    top: 72px;
+    left: auto;
+    right: 12px;
+    font-size: clamp(120px, 34vw, 200px);
+    -webkit-text-stroke-color: rgba(255, 255, 255, .12);
+  }
+
+  .extra {
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+}
+
+@media (max-width: 620px) {
+  /* Num telemóvel a lista não cabe com as etiquetas: fica o lead. */
+  .capitulo__lista {
+    display: none;
+  }
+  .indice__link {
+    font-size: 16px;
+    padding: 6px 12px;
+  }
+}
+
+/* ---------- Movimento reduzido ---------- */
+
+/* O modalidades.js não arranca, portanto --p e --q ficam nos valores por
+   omissão (estado final). Falta desfazer as secções altas e o sticky. */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  .js .capitulo {
+    height: auto;
+  }
+  .js .capitulo + .capitulo,
+  .js .mapa {
+    margin-top: 0;
+  }
+  .js .capitulo__palco {
+    position: relative;
+  }
+  .js .mapa {
+    min-height: 0;
+  }
+  .indice__link,
+  .mapa__aba,
+  .extra,
+  .extra::before {
+    transition: none;
+  }
+}

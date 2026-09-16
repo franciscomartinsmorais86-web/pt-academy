@@ -284,6 +284,188 @@ quadro de espaços → faixa de fecho. Reaproveita `.hero`, `.closer`,
   e os corredores não contam. (Houve uma legenda por baixo do passeio,
   "21 vistas · 9 espaços"; foi retirada.)
 
+## Página "Modalidades" — `modalidades.html` + `modalidades.css` + `modalidades.js`
+
+Quatro capítulos pregados, um por modalidade, pela ordem da homepage:
+Musculação → Crossfit → Fitness → Dança. Hero curto (72dvh, a box) com um
+índice que salta para cada capítulo → os quatro capítulos → horário de aulas
+semanal → faixa "Também na PT Academy" (Personal Trainer e Nutrição). Sem
+faixa de fecho própria — a página acaba na faixa dos extras e no rodapé.
+Reaproveita `.hero`, `.eyebrow`, os botões e o `reveal.js`; os tiles das
+modalidades na homepage passaram a `<a>` para `/modalidades.html#…`.
+
+Decisões do Francisco nesta ronda: capítulos pregados (não secções corridas),
+composição meio a meio (foto numa metade, texto na outra, a alternar de lado),
+hero curto com índice, "Crossfit" e não "Cross Training", só o nome do plano
+(sem preços), horário inventado, PT e Nutrição numa faixa curta, fotos
+escolhidas por mim da `gallery/`.
+
+**Ajustes de uma segunda ronda, já com a página publicada:** sem faixa de
+fecho no fim (o CTA da página foi removido); sem o "01 / 04" por cima do
+eyebrow em cada capítulo; o CTA de cada capítulo passou a um botão só, "Ver
+planos" (`button--outline`, para `/#planos`) — saiu o "Marcar aula
+experimental" (`button--red`), que assumia sem confirmação que há aula
+experimental; sem a risca vermelha (`.eyebrow--traco`) antes dos eyebrows —
+só nesta página, o resto do site mantém-na; e o mapa de aulas em lista por
+dia virou uma agenda semanal em grelha (dias × horas, como o Google
+Calendar), com o título "Horário de Aulas semanal".
+
+**Terceira ronda:** o Francisco mandou os cartazes reais da academia
+(Cross Training e Aulas de Grupo). A agenda da ronda 2 (grelha CSS Grid,
+dados inventados, abas Fitness/Dança) saiu inteira; entrou uma tabela HTML
+com os dados verdadeiros, abas Cross Training/Aulas de Grupo. Ver `###
+Agenda semanal` mais abaixo.
+
+### Capítulos pregados
+
+**A mecânica é a da galeria da homepage.** Cada `.capitulo` é uma secção de
+`200dvh + --folga` (70dvh) com um palco sticky de 100dvh. O palco fica preso
+durante a folga e depois durante 100dvh enquanto o capítulo seguinte — que
+arranca 100dvh mais cedo (`margin-top: -100dvh`) e tem `z-index` acima —
+sobe por cima como cortina. Quando a secção acaba, o palco já está tapado.
+O `.mapa` leva a mesma margem negativa e `z-index: 5`, para fazer de cortina
+ao último capítulo; e `min-height: 100dvh`, senão a caixa do capítulo 4
+(positioned, com z-index) tapava o topo da secção seguinte.
+
+**Duas custom properties por capítulo**, escritas pelo `modalidades.js` a
+cada frame, como no `sobre.js`:
+
+- `--p` — a entrada. Arranca com o topo da secção a `MOD_ENTRADA_INICIO`
+  (0.6) da altura do ecrã, ainda com o capítulo a subir como cortina, e
+  acaba `MOD_ENTRADA_FIM` (0.4) da folga depois de o palco prender. Leva
+  smoothstep. A folga não se lê do CSS — deduz-se da altura da secção
+  (`altura − 2 × vh`).
+- `--q` — o avanço na secção inteira, linear, para a paralaxe.
+
+Os valores por omissão (`--p: 1`, `--q: .5`) são o estado final: sem JS ou
+com `prefers-reduced-motion` as secções perdem a altura extra e o sticky e
+a página fica parada e completa.
+
+**O texto entra da margem mais próxima**, peça a peça. Cada filho de
+`.capitulo__texto` tem um `--i` por `:nth-child` e o seu próprio progresso,
+`--pe = clamp(0, (--p − --i × .09) / .46, 1)`: arranca escalonado e demora
+46% da entrada. Opacidade `--pe` e `translateX(--dx × (1 − --pe))`, com
+`--dx` = 56px no capítulo normal (foto à esquerda, texto à direita, entra
+da direita) e −56px no `.capitulo--invertido`. O escalonamento é todo CSS;
+o JS só escreve `--p`.
+
+- **Foto** — camada interna com `scale(1.1 → 1)` na entrada (a ideia do
+  `reveal` das fotos) e `translateY` de 10% com `--q` (paralaxe; as arestas
+  não se mexem).
+- **Foto de detalhe** — 4:5, encostada à costura entre as duas metades, no
+  canto de baixo, a transbordar 40px para o lado do texto (menos do que o
+  padding interior da coluna, por isso nunca lhe toca). Contorno de 10px
+  em preto como as fotos da História. Entra na segunda metade de `--p`, a
+  subir 40px.
+- **Número em marca-de-água** — "01" a "04" em contorno atrás do texto,
+  como a marca-de-água do rodapé. Viaja o dobro do texto (`--dx × 2`) para
+  se ler como uma camada mais funda.
+- **Índice do hero** — os quatro nomes em Anton com o número em label,
+  separados por fios, no lugar do CTA. `html { scroll-padding-top: 0 }`
+  nesta página, senão os capítulos aterravam 96px abaixo do topo e
+  via-se uma tira do capítulo anterior; e `scroll-behavior: smooth`.
+- **Mobile (≤ 900px)** — não há meio a meio: a foto passa a fundo do palco
+  com scrim (como o hero) e o texto assenta em baixo; a foto de detalhe
+  sai; o número encolhe para o canto de cima. A ≤ 620px sai a lista com
+  traços (ficam o lead e as etiquetas).
+
+### Agenda semanal (horário de aulas)
+
+Duas agendas reais, **Cross Training** e **Aulas de Grupo** — dados que o
+Francisco enviou em 16 set. 2026, transcritos por mim dos cartazes da
+academia (duas fotos, "Horário Cross Training" e "[Horário] Aulas de
+Grupo"). Já não são Fitness/Dança: o cartaz da box mostra que o Crossfit
+também corre por horário fixo, não livre trânsito como se assumia antes;
+e não há cartaz de Dança — essa aba saiu, marcada como pendente.
+
+Cada agenda é uma **tabela HTML a sério** (`<table class="agenda">`), não
+uma grelha CSS Grid como na primeira versão — a densidade real dos dados
+(dias com 2-3 aulas encostadas na mesma hora, ex. Aulas de Grupo às
+18h30) não cabia em linhas de altura fixa por hora. Uma tabela resolve
+isto de graça: cada linha (`<tr>`) é uma hora de início, cada coluna um
+dia, e a célula cresce sozinha para caber quantas aulas lá estejam,
+empilhadas em `.agenda__aula` com um respiro de 4px entre elas.
+
+- **Cabeçalho e primeira coluna presos** (`position: sticky`), para
+  continuarem visíveis ao deslizar a tabela — que tem `min-width: 720px`
+  e vive dentro de um `.agenda__scroll` com `overflow-x: auto`, por isso
+  em ecrãs estreitos desliza em vez de espremer as colunas.
+- **`.agenda__aula`** é o mesmo desenho da primeira versão (cartão
+  `--color-card` com risca vermelha à esquerda) — só a disposição em
+  torno dele mudou, de grelha para tabela.
+- As abas continuam dois radios escondidos com labels em pastilha e a
+  troca toda em CSS; os ids mudaram de `mapa-fitness`/`mapa-danca` para
+  `mapa-cross`/`mapa-grupo`.
+- Musculação continua sem agenda: é em livre trânsito, e o lead diz o
+  horário de abertura.
+
+**Por hora, o que está em cada cartaz (transcrito tal e qual, sem
+inventar minutos):**
+
+Cross Training — 07h00 (Seg-Sex); 09h00 Cross Kids (só Sáb); 10h00 (todos
+os dias, e ao Sáb com Hybrid Training a seguir); 18h30 (Seg-Sex, com
+Hybrid Training a seguir à Terça e à Quinta); 19h30 (Seg-Qui).
+
+Aulas de Grupo — 08h00 e 09h00 +Mulher (Ter/Qui de manhã, Seg/Qua/Sex às
+9h, Pilates ao Sáb); 10h00 Pilates/Localizada/Cycling; 11h00 só Cycling
+ao Sáb; 16h30 GAP/Abs/Pilates; 17h30 e 18h30 com duas a três aulas
+encostadas por dia (Cycling+Pilates, HIIT+Mobilidade, BBP+Pilates+Step
+Latino, Jump+Pilates+Mobilidade…); 19h30 fecha o dia, também com duas
+aulas na maioria dos dias.
+
+Onde uma célula tem mais do que uma aula, as fotos não dizem os minutos
+exatos entre elas — só que estão encostadas na mesma hora de início. Se
+alguma leitura estiver errada, dizer que corrijo já.
+
+### Fotos (novas em `assets/modalidades/`)
+
+Escolhidas por mim da `gallery/`, convertidas para WebP (qualidade 82, lado
+maior a 2048px, como as restantes). A validar pelo Francisco:
+
+| Ficheiro | Origem em `gallery/` | Onde |
+|---|---|---|
+| `hero-box.webp` | `PT Academy-12.jpg` | hero (a box, larga) |
+| `musculacao.webp` | `CM-25.jpg` | 01, remada com barra |
+| `musculacao-detalhe.webp` | `PT ACADEMY - AULAS - PT-3.jpg` | 01, treinador com sócia |
+| `crossfit.webp` | `CM-12.jpg` | 02, swing frente ao letreiro |
+| `crossfit-detalhe.webp` | `HYROX-5.jpg` | 02, coach no rig |
+| `fitness.webp` | `step latino-9.jpg` | 03, turma de step |
+| `fitness-detalhe.webp` | `Pilates-19.jpg` | 03, pilates com bolas |
+| `danca.webp` | `PT - DANÇA - CONTEMPORÂNEO-15.jpg` | 04, bailarina |
+| `danca-detalhe.webp` | `PT - DANÇA - CONTEMPORÂNEO-30.jpg` | 04, parede de floresta |
+
+### Por confirmar
+
+O que a pesquisa deu: as quatro modalidades (homepage), as aulas de grupo
+"GAP, Abdominais, Pump, Pilates, Jump, Cycling, HIIT, Cross-Training,
+Zumba" (anúncio de emprego da PT Academy no net-empregos, jan. 2024), Step
+Latino, Jump, Pilates, Abs, HYROX e alongamentos (fotos na `gallery/`), a
+"Associação Versátil – PT Academy, Escola de Dança" (2021), o letreiro
+"PT·Dance Academy" com barra de ballet numa sala (`gallery/self/…WA0010`),
+"fitness e dança para todas as idades" e "vista para o Corgo na zona de
+musculação" (reviews em ginasios.fitness), e Personal Trainer e Nutrição
+nas listagens online. Tudo o resto está inventado para o Francisco
+substituir:
+
+- **Textos dos capítulos** — leads e listas escritos a partir do que se
+  sabe. Em especial: "há sempre alguém na sala" (01), "relvado para o
+  trenó" e "do primeiro WOD ao HYROX" (02), "onze aulas em cinco estúdios"
+  e "turmas pequenas" (03), "turmas por idade e nível", "professoras
+  formadas" e "espetáculo de final de ano" (04).
+- **Etiquetas** — as de Musculação e Crossfit (WOD, Halterofilismo,
+  Ginástica, Metcon) são genéricas. Hip Hop e Ballet na Dança são
+  suposições; só o Contemporâneo tem fotos.
+- **Plano por modalidade** — deduzido dos planos da homepage (Base =
+  musculação; Power/Premium = cross e aulas). A dança está como "inscrição
+  própria" porque a escola é uma associação à parte — confirmar se entra
+  nos planos.
+- **Horário de Dança** — não recebi cartaz nenhum; a agenda da página só
+  tem Cross Training e Aulas de Grupo. Se houver um horário de dança,
+  mando fazer a terceira aba.
+- **PT e Nutrição** — existem nas listagens, mas os termos ("sessões
+  individuais", "consultas", "reavaliações") são meus.
+- "Pedir horário" e "Marcar consulta" são `tel:`.
+
 ## Passeio virtual — `walkthrough.js` + `walkthrough.css`
 
 Uma fotografia de cada vez, com pontos clicáveis que levam a outras. Módulo
@@ -505,9 +687,10 @@ sem biblioteca.
 - **Horário** — Seg–Sex 07h–22h, Sáb 09h–13h, Dom encerrado. Inventado.
 - **Email** — `geral@ptacademy.pt`. Inventado.
 - **Política de privacidade** — `href="#"`, página por fazer.
-- As âncoras `#inicio`, `#sobre`, `#modalidades`, `#equipa`, `#inscricao`
-  **ainda não existem** no HTML (já era assim na nav). Só `#instalacoes` e
-  `#planos` têm `id`.
+- As âncoras `#inicio`, `#sobre`, `#equipa`, `#inscricao` **ainda não
+  existem** no HTML (já era assim na nav). Só `#modalidades`, `#instalacoes`
+  e `#planos` têm `id`. O "Modalidades" do nav e do rodapé aponta agora para
+  `/modalidades.html`, não para a âncora.
 
 Links das redes são reais (Instagram, Facebook, TikTok da PT Academy).
 

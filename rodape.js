@@ -51,7 +51,7 @@ var RODAPE_HTML = `
       <ul>
         <li><a href="${RODAPE_BASE}#inicio">Início</a></li>
         <li><a href="/sobre.html">Sobre nós</a></li>
-        <li><a href="${RODAPE_BASE}#modalidades">Modalidades</a></li>
+        <li><a href="/modalidades.html">Modalidades</a></li>
         <li><a href="/contactos.html">Contactos</a></li>
       </ul>
     </nav>

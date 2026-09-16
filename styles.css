@@ -533,9 +533,13 @@ a:hover {
   grid-template-rows: 1fr 1fr;
 }
 
+/* É um <a> desde que os tiles abrem a página das modalidades: block
+   para o grid, cor explícita para o a:hover global não pintar o título. */
 .modality {
   position: relative;
+  display: block;
   overflow: hidden;
+  color: #fff;
 }
 
 .modality__photo {

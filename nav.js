@@ -19,7 +19,7 @@ var NAV_BASE = NAV_NA_HOMEPAGE ? '' : '/';
 var NAV_ITENS = [
   { texto: 'Início',      href: NAV_BASE + '#inicio' },
   { texto: 'Sobre nós',   href: '/sobre.html' },
-  { texto: 'Modalidades', href: NAV_BASE + '#modalidades' },
+  { texto: 'Modalidades', href: '/modalidades.html' },
   { texto: 'Instalações', href: '/instalacoes.html' },
   { texto: 'Equipa',      href: NAV_BASE + '#equipa' },
   { texto: 'Contactos',   href: '/contactos.html' }
