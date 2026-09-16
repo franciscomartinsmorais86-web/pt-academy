@@ -59,7 +59,7 @@ var RODAPE_HTML = `
     <nav class="footer__col" aria-labelledby="footer-academia">
       <p class="footer__title" id="footer-academia">A academia</p>
       <ul>
-        <li><a href="${RODAPE_BASE}#instalacoes">Instalações</a></li>
+        <li><a href="/instalacoes.html">Instalações</a></li>
         <li><a href="${RODAPE_BASE}#equipa">Equipa</a></li>
         <li><a href="${RODAPE_BASE}#planos">Planos</a></li>
       </ul>

@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Instalações · PT Academy</title>
+<meta name="description" content="Percorre as instalações da PT Academy em Vila Real sala a sala, num passeio virtual: musculação, cross training, cardio e estúdios de aulas.">
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Libre+Franklin:wght@400;600&family=Caveat&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+<link rel="stylesheet" href="instalacoes.css">
+<script>document.documentElement.classList.add('js');</script>
+</head>
+<body>
+
+<!-- Nav e menu: injetados pelo nav.js -->
+<div data-nav></div>
+<script src="nav.js"></script>
+
+<!-- Hero curto de propósito: a página começa à porta da rua e entrega o
+     ecrã ao passeio virtual logo a seguir. -->
+<header class="hero hero--instalacoes">
+  <div class="hero__photo hero__photo--rua"></div>
+  <div class="hero__scrim"></div>
+
+  <div class="hero__content">
+    <p class="hero__eyebrow">Instalações</p>
+    <h1 class="hero__title">Conhece a casa <em>toda</em></h1>
+  </div>
+</header>
+
+<!-- O elemento principal da página: o passeio virtual em 4:3.
+     Por agora só a moldura e o lugar marcado — o componente interativo
+     (vistas, pontos de passagem, botão de voltar) entra dentro do
+     .passeio__tela sem mexer no resto. -->
+<section class="passeio" aria-labelledby="passeio-titulo">
+
+  <div class="passeio__cabeca" data-reveal-group>
+    <p class="eyebrow eyebrow--traco reveal reveal--slide">Passeio virtual</p>
+    <h2 class="passeio__titulo reveal reveal--slide" id="passeio-titulo">Percorre o ginásio <em>daqui</em></h2>
+    <p class="passeio__lead reveal reveal--slide">Da rua ao último estúdio, sala a sala. Olha em volta e segue os pontos para atravessar a casa — sem pressa e sem marcação.</p>
+  </div>
+
+  <figure class="passeio__moldura reveal reveal--rise">
+
+    <!-- PLACEHOLDER — substituir o conteúdo de .passeio__tela pelo
+         componente do passeio. A moldura já trata do 4:3, da risca
+         vermelha e dos cantos; o componente só precisa de preencher. -->
+    <div class="passeio__tela" role="img" aria-label="Lugar reservado ao passeio virtual das instalações">
+
+      <div class="passeio__placa">
+        <svg class="passeio__icone" viewBox="0 0 24 24" width="30" height="30" fill="none"
+             stroke="currentColor" stroke-width="1.6" stroke-linecap="square" aria-hidden="true">
+          <path d="M3 8l9-4 9 4v8l-9 4-9-4z"/>
+          <path d="M12 4v16"/>
+          <path d="M3 8l9 4 9-4"/>
+        </svg>
+        <p class="passeio__placa-titulo">Passeio virtual</p>
+        <p class="passeio__placa-nota">Elemento interativo · 4:3</p>
+      </div>
+
+      <!-- Amostra dos pontos de passagem, só para se ler a intenção. -->
+      <span class="passeio__ponto passeio__ponto--a" aria-hidden="true"></span>
+      <span class="passeio__ponto passeio__ponto--b" aria-hidden="true"></span>
+      <span class="passeio__ponto passeio__ponto--c" aria-hidden="true"></span>
+
+      <span class="passeio__canto passeio__canto--ne" aria-hidden="true"></span>
+      <span class="passeio__canto passeio__canto--no" aria-hidden="true"></span>
+      <span class="passeio__canto passeio__canto--se" aria-hidden="true"></span>
+      <span class="passeio__canto passeio__canto--so" aria-hidden="true"></span>
+    </div>
+
+    <figcaption class="passeio__legenda">
+      <span>Arrasta para olhar · clica nos pontos para mudar de sala</span>
+      <span class="passeio__contagem">21 vistas · 9 espaços</span>
+    </figcaption>
+  </figure>
+</section>
+
+<!-- Lista dos espaços: hairlines, sem cartões, para não roubar peso ao
+     passeio. -->
+<section class="espacos" aria-labelledby="espacos-titulo">
+  <div class="espacos__cabeca" data-reveal-group>
+    <p class="eyebrow eyebrow--traco reveal reveal--slide">O que vais encontrar</p>
+    <h2 class="espacos__titulo reveal reveal--slide" id="espacos-titulo">Nove espaços, uma casa</h2>
+  </div>
+
+  <!-- Quadro de espaços, como o letreiro de entrada de um edifício:
+       linhas corridas de ponta a ponta, número à esquerda, nome grande e
+       a localização à direita. As nove entradas são as vistas do passeio
+       (o corredor e a rua não contam como espaço).
+
+       TODO (confirmar com a academia): que modalidade vive em cada
+       estúdio, para trocar a localização pela aula. -->
+  <ol class="quadro" data-reveal-group>
+    <li class="quadro__espaco reveal reveal--slide">
+      <span class="quadro__numero">01</span>
+      <h3 class="quadro__nome">Átrio e receção</h3>
+      <p class="quadro__nota">À entrada</p>
+    </li>
+    <li class="quadro__espaco reveal reveal--slide">
+      <span class="quadro__numero">02</span>
+      <h3 class="quadro__nome">Sala de musculação</h3>
+      <p class="quadro__nota">Máquinas, polias e racks</p>
+    </li>
+    <li class="quadro__espaco reveal reveal--slide">
+      <span class="quadro__numero">03</span>
+      <h3 class="quadro__nome">Box de cross training</h3>
+      <p class="quadro__nota">Pé-direito alto</p>
+    </li>
+    <li class="quadro__espaco reveal reveal--slide">
+      <span class="quadro__numero">04</span>
+      <h3 class="quadro__nome">Zona de cardio</h3>
+      <p class="quadro__nota">Passadeiras, remos e bicicletas</p>
+    </li>
+    <li class="quadro__espaco reveal reveal--slide">
+      <span class="quadro__numero">05</span>
+      <h3 class="quadro__nome">Sala Laranja</h3>
+      <p class="quadro__nota">Estúdio · junto ao átrio</p>
+    </li>
+    <li class="quadro__espaco reveal reveal--slide">
+      <span class="quadro__numero">06</span>
+      <h3 class="quadro__nome">Sala Cinza</h3>
+      <p class="quadro__nota">Estúdio · junto ao átrio</p>
+    </li>
+    <li class="quadro__espaco reveal reveal--slide">
+      <span class="quadro__numero">07</span>
+      <h3 class="quadro__nome">Sala Verde</h3>
+      <p class="quadro__nota">Estúdio · piso de cima</p>
+    </li>
+    <li class="quadro__espaco reveal reveal--slide">
+      <span class="quadro__numero">08</span>
+      <h3 class="quadro__nome">Sala Amarela</h3>
+      <p class="quadro__nota">Estúdio · piso de cima</p>
+    </li>
+    <li class="quadro__espaco reveal reveal--slide">
+      <span class="quadro__numero">09</span>
+      <h3 class="quadro__nome">Sala Roxa</h3>
+      <p class="quadro__nota">Estúdio · piso de cima</p>
+    </li>
+  </ol>
+</section>
+
+<!-- Faixa de fecho -->
+<section class="closer">
+  <p class="closer__eyebrow">Vê ao vivo</p>
+  <h2 class="closer__title">O passeio sabe melhor de dentro</h2>
+  <div class="closer__actions">
+    <a class="button button--red" href="tel:+351259322108">Marcar visita</a>
+    <a class="button button--outline" href="/#planos">Ver planos</a>
+  </div>
+</section>
+
+<!-- Rodapé: injetado pelo rodape.js -->
+<div data-rodape></div>
+
+<script src="rodape.js"></script>
+<script src="reveal.js"></script>
+
+</body>
+</html>

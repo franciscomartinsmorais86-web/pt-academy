@@ -1,0 +1,311 @@
+/* PT Academy — página "Instalações". Carrega depois do styles.css.
+
+   A página é curta de propósito: o peso todo está no passeio virtual em
+   4:3. Hero curto → passeio → lista de espaços → faixa de fecho. */
+
+/* ---------- Hero ---------- */
+
+/* Reaproveita o .hero da homepage, mais baixo: o passeio tem de se ver
+   sem ser preciso muito scroll. */
+.hero--instalacoes {
+  height: 72dvh;
+  min-height: 460px;
+}
+
+.hero__photo--rua {
+  background-image: url('./assets/walkthrough/rua.webp');
+}
+
+/* ---------- Passeio virtual ---------- */
+
+.passeio {
+  padding: clamp(64px, 10vw, 120px) clamp(24px, 4vw, 48px);
+  background: var(--color-black);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: clamp(40px, 5vw, 64px);
+}
+
+.passeio__cabeca {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 28px;
+  max-width: 830px;
+  text-align: center;
+}
+
+.passeio__titulo {
+  margin: 0;
+  font: 400 clamp(38px, 6vw, 96px)/0.95 var(--font-display);
+  letter-spacing: .01em;
+  text-transform: uppercase;
+  text-wrap: balance;
+}
+.passeio__titulo em {
+  color: var(--color-red);
+  font-style: normal;
+}
+
+.passeio__lead {
+  margin: 0;
+  max-width: 560px;
+  color: #ccc;
+  font: 400 17px/1.6 var(--font-body);
+}
+
+/* A moldura trata do formato e da borda; o conteúdo do passeio entra
+   dentro do .passeio__tela e herda o 4:3 sem precisar de saber dele. */
+.passeio__moldura {
+  margin: 0;
+  width: 100%;
+  max-width: 1180px;
+}
+
+.passeio__tela {
+  position: relative;
+  aspect-ratio: 4 / 3;
+  overflow: hidden;
+  background: var(--color-card);
+  border: 1px solid var(--color-line);
+  border-top: 3px solid var(--color-red);
+}
+
+/* Riscas a marcar o lugar — saem com o componente. */
+.passeio__tela::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(45deg,
+    var(--color-card) 0 14px,
+    var(--color-black) 14px 28px);
+}
+
+.passeio__placa {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  padding: 24px;
+  text-align: center;
+}
+
+.passeio__icone {
+  color: var(--color-red);
+}
+
+.passeio__placa-titulo {
+  margin: 0;
+  font: 400 clamp(28px, 4vw, 44px)/1 var(--font-display);
+  letter-spacing: .01em;
+  text-transform: uppercase;
+}
+
+.passeio__placa-nota {
+  margin: 0;
+  color: #666;
+  font: 600 11px var(--font-body);
+  letter-spacing: .28em;
+  text-transform: uppercase;
+}
+
+/* Pontos de passagem: quadrados vermelhos com um anel que abre e
+   apaga. Aqui são só amostra; o componente é que os vai gerar. */
+.passeio__ponto {
+  position: absolute;
+  z-index: 1;
+  width: 14px;
+  height: 14px;
+  margin: -7px 0 0 -7px;
+  background: var(--color-red);
+}
+
+.passeio__ponto::after {
+  content: '';
+  position: absolute;
+  inset: -7px;
+  border: 1px solid var(--color-red);
+}
+
+.passeio__ponto--a { left: 18%; top: 62%; }
+.passeio__ponto--b { left: 74%; top: 44%; }
+.passeio__ponto--c { left: 49%; top: 76%; }
+
+.js .passeio__ponto::after {
+  animation: ponto-anel 2.4s cubic-bezier(.22, .61, .36, 1) infinite;
+}
+.js .passeio__ponto--b::after { animation-delay: .8s; }
+.js .passeio__ponto--c::after { animation-delay: 1.6s; }
+
+@keyframes ponto-anel {
+  0%        { opacity: .9; transform: scale(1); }
+  70%, 100% { opacity: 0;  transform: scale(2.4); }
+}
+
+/* Cantos de visor: quatro cantos em L, a vermelho. */
+.passeio__canto {
+  position: absolute;
+  z-index: 3;
+  width: 22px;
+  height: 22px;
+  border: 0 solid var(--color-red);
+  pointer-events: none;
+}
+.passeio__canto--no { left: 12px;  top: 12px;    border-left-width: 2px;  border-top-width: 2px; }
+.passeio__canto--ne { right: 12px; top: 12px;    border-right-width: 2px; border-top-width: 2px; }
+.passeio__canto--so { left: 12px;  bottom: 12px; border-left-width: 2px;  border-bottom-width: 2px; }
+.passeio__canto--se { right: 12px; bottom: 12px; border-right-width: 2px; border-bottom-width: 2px; }
+
+.passeio__legenda {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 12px 24px;
+  padding-top: 16px;
+  color: #666;
+  font: 600 11px var(--font-body);
+  letter-spacing: .28em;
+  text-transform: uppercase;
+}
+
+.passeio__contagem {
+  font-variant-numeric: tabular-nums;
+}
+
+/* ---------- Espaços ---------- */
+
+.espacos {
+  padding: clamp(64px, 10vw, 120px) clamp(24px, 4vw, 48px);
+  background: var(--color-black-alt);
+  display: flex;
+  flex-direction: column;
+  gap: clamp(40px, 5vw, 64px);
+}
+
+.espacos__cabeca {
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+}
+
+.espacos__titulo {
+  margin: 0;
+  max-width: 830px;
+  font: 400 clamp(38px, 6vw, 96px)/1 var(--font-display);
+  letter-spacing: .01em;
+  text-transform: uppercase;
+  text-wrap: balance;
+}
+
+/* Quadro: linhas corridas de ponta a ponta, sem caixas. Número
+   esbatido à esquerda, nome grande, localização à direita. */
+.quadro {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  border-top: 1px solid var(--color-line);
+}
+
+.quadro__espaco {
+  position: relative;
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: baseline;
+  gap: clamp(16px, 3vw, 48px);
+  padding: clamp(18px, 2vw, 26px) clamp(14px, 1.6vw, 24px);
+  border-bottom: 1px solid var(--color-line);
+  transition: background-color .25s ease;
+}
+.quadro__espaco:hover {
+  background: var(--color-maroon);
+}
+
+/* A risca vermelha da esquerda abre de cima para baixo no hover —
+   a linha não se mexe nem cresce, só muda de temperatura. */
+.quadro__espaco::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: -1px;
+  bottom: -1px;
+  width: 3px;
+  background: var(--color-red);
+  transform: scaleY(0);
+  transform-origin: top;
+  transition: transform .3s cubic-bezier(.22, .61, .36, 1);
+}
+.quadro__espaco:hover::before {
+  transform: scaleY(1);
+}
+
+.quadro__numero {
+  color: rgba(255, 255, 255, .2);
+  font: 400 clamp(20px, 1.8vw, 26px)/1 var(--font-display);
+  font-variant-numeric: tabular-nums;
+  transition: color .25s ease;
+}
+.quadro__espaco:hover .quadro__numero {
+  color: var(--color-red);
+}
+
+.quadro__nome {
+  margin: 0;
+  font: 400 clamp(26px, 3.4vw, 52px)/1 var(--font-display);
+  letter-spacing: .01em;
+  text-transform: uppercase;
+}
+
+.quadro__nota {
+  margin: 0;
+  max-width: 30ch;
+  color: #666;
+  font: 600 12px/1.5 var(--font-body);
+  letter-spacing: .16em;
+  text-align: right;
+  text-transform: uppercase;
+  transition: color .25s ease;
+}
+.quadro__espaco:hover .quadro__nota {
+  color: var(--color-red-light);
+}
+
+/* ---------- Responsive ---------- */
+
+/* A localização deixa de caber ao lado do nome: passa para baixo,
+   alinhada à esquerda, na mesma coluna. */
+@media (max-width: 900px) {
+  .quadro__espaco {
+    grid-template-columns: auto 1fr;
+    row-gap: 10px;
+  }
+  .quadro__nota {
+    grid-column: 2;
+    max-width: none;
+    text-align: left;
+  }
+}
+
+@media (max-width: 620px) {
+  .passeio__legenda {
+    justify-content: flex-start;
+  }
+}
+
+/* ---------- Movimento reduzido ---------- */
+
+@media (prefers-reduced-motion: reduce) {
+  .js .passeio__ponto::after {
+    animation: none;
+  }
+  .quadro__espaco,
+  .quadro__espaco::before,
+  .quadro__numero,
+  .quadro__nota {
+    transition: none;
+  }
+}

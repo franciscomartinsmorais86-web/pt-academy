@@ -20,7 +20,7 @@ var NAV_ITENS = [
   { texto: 'Início',      href: NAV_BASE + '#inicio' },
   { texto: 'Sobre nós',   href: '/sobre.html' },
   { texto: 'Modalidades', href: NAV_BASE + '#modalidades' },
-  { texto: 'Instalações', href: NAV_BASE + '#instalacoes' },
+  { texto: 'Instalações', href: '/instalacoes.html' },
   { texto: 'Equipa',      href: NAV_BASE + '#equipa' },
   { texto: 'Contactos',   href: '/contactos.html' }
 ];
