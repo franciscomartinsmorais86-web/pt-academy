@@ -55,127 +55,75 @@
   font: 400 17px/1.6 var(--font-body);
 }
 
-/* A moldura trata do formato e da borda; o conteúdo do passeio entra
-   dentro do .passeio__tela e herda o 4:3 sem precisar de saber dele. */
+/* O passeio tem de caber inteiro no ecrã, por baixo do nav fixo, para se
+   verem todos os botões ao mesmo tempo. A altura não se pode impor ao
+   palco (partia o 4:3 ou punha barras pretas), por isso limita-se a
+   largura a partir dela: 150px são o nav (96px) e folga. O mínimo de
+   320px só pesa em ecrãs deitados muito baixos. */
 .passeio__moldura {
   margin: 0;
   width: 100%;
-  max-width: 1180px;
+  max-width: min(1180px, max(320px, calc((100dvh - 150px) * 4 / 3)));
 }
 
+/* A tela é só moldura: borda, risca vermelha e cantos. Não leva o 4:3 —
+   com a borda incluída a caixa de dentro deixava de o ser e o componente
+   punha barras pretas dos lados. */
 .passeio__tela {
   position: relative;
-  aspect-ratio: 4 / 3;
-  overflow: hidden;
-  background: var(--color-card);
+  background: #000;
   border: 1px solid var(--color-line);
   border-top: 3px solid var(--color-red);
 }
 
-/* Riscas a marcar o lugar — saem com o componente. */
-.passeio__tela::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: repeating-linear-gradient(45deg,
-    var(--color-card) 0 14px,
-    var(--color-black) 14px 28px);
+/* O palco é onde o componente monta. Sem borda, exatamente 4:3: é esta
+   caixa que o walkthrough.js mede, e as coordenadas de cada ponto são
+   percentagens dela. O 4:3 fica também no CSS para a altura estar certa
+   antes de o módulo correr (sem saltos) e sem JS.
+   isolation: os z-index do componente ficam cá dentro e os cantos da
+   moldura passam sempre por cima. */
+.passeio__palco {
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  isolation: isolate;
 }
 
-.passeio__placa {
-  position: absolute;
-  inset: 0;
-  z-index: 2;
+.passeio__sem-js {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: fill;
+}
+
+.passeio__erro {
   display: flex;
-  flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 14px;
+  width: 100%;
+  height: 100%;
+  margin: 0;
   padding: 24px;
-  text-align: center;
-}
-
-.passeio__icone {
-  color: var(--color-red);
-}
-
-.passeio__placa-titulo {
-  margin: 0;
-  font: 400 clamp(28px, 4vw, 44px)/1 var(--font-display);
-  letter-spacing: .01em;
-  text-transform: uppercase;
-}
-
-.passeio__placa-nota {
-  margin: 0;
-  color: #666;
-  font: 600 11px var(--font-body);
+  color: rgba(255, 255, 255, .55);
+  font: 600 11px/1.6 var(--font-body);
   letter-spacing: .28em;
+  text-align: center;
   text-transform: uppercase;
 }
 
-/* Pontos de passagem: quadrados vermelhos com um anel que abre e
-   apaga. Aqui são só amostra; o componente é que os vai gerar. */
-.passeio__ponto {
+/* Cantos de visor: quatro cantos em L, a vermelho. Ficam entre a borda e
+   os botões de margem do componente (a 22px), para não os tocarem. */
+.passeio__canto {
   position: absolute;
   z-index: 1;
   width: 14px;
   height: 14px;
-  margin: -7px 0 0 -7px;
-  background: var(--color-red);
-}
-
-.passeio__ponto::after {
-  content: '';
-  position: absolute;
-  inset: -7px;
-  border: 1px solid var(--color-red);
-}
-
-.passeio__ponto--a { left: 18%; top: 62%; }
-.passeio__ponto--b { left: 74%; top: 44%; }
-.passeio__ponto--c { left: 49%; top: 76%; }
-
-.js .passeio__ponto::after {
-  animation: ponto-anel 2.4s cubic-bezier(.22, .61, .36, 1) infinite;
-}
-.js .passeio__ponto--b::after { animation-delay: .8s; }
-.js .passeio__ponto--c::after { animation-delay: 1.6s; }
-
-@keyframes ponto-anel {
-  0%        { opacity: .9; transform: scale(1); }
-  70%, 100% { opacity: 0;  transform: scale(2.4); }
-}
-
-/* Cantos de visor: quatro cantos em L, a vermelho. */
-.passeio__canto {
-  position: absolute;
-  z-index: 3;
-  width: 22px;
-  height: 22px;
   border: 0 solid var(--color-red);
   pointer-events: none;
 }
-.passeio__canto--no { left: 12px;  top: 12px;    border-left-width: 2px;  border-top-width: 2px; }
-.passeio__canto--ne { right: 12px; top: 12px;    border-right-width: 2px; border-top-width: 2px; }
-.passeio__canto--so { left: 12px;  bottom: 12px; border-left-width: 2px;  border-bottom-width: 2px; }
-.passeio__canto--se { right: 12px; bottom: 12px; border-right-width: 2px; border-bottom-width: 2px; }
-
-.passeio__legenda {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
-  gap: 12px 24px;
-  padding-top: 16px;
-  color: #666;
-  font: 600 11px var(--font-body);
-  letter-spacing: .28em;
-  text-transform: uppercase;
-}
-
-.passeio__contagem {
-  font-variant-numeric: tabular-nums;
-}
+.passeio__canto--no { left: 8px;  top: 8px;    border-left-width: 2px;  border-top-width: 2px; }
+.passeio__canto--ne { right: 8px; top: 8px;    border-right-width: 2px; border-top-width: 2px; }
+.passeio__canto--so { left: 8px;  bottom: 8px; border-left-width: 2px;  border-bottom-width: 2px; }
+.passeio__canto--se { right: 8px; bottom: 8px; border-right-width: 2px; border-bottom-width: 2px; }
 
 /* ---------- Espaços ---------- */
 
@@ -211,15 +159,21 @@
   border-top: 1px solid var(--color-line);
 }
 
+/* A segunda fila da grelha é a foto do espaço, fechada a 0fr. No hover
+   passa a 1fr e a linha abre espaço para baixo; a transição de
+   grid-template-rows é o que deixa animar até à altura real. */
 .quadro__espaco {
   position: relative;
   display: grid;
   grid-template-columns: auto 1fr auto;
+  grid-template-rows: auto 0fr;
   align-items: baseline;
-  gap: clamp(16px, 3vw, 48px);
+  column-gap: clamp(16px, 3vw, 48px);
   padding: clamp(18px, 2vw, 26px) clamp(14px, 1.6vw, 24px);
   border-bottom: 1px solid var(--color-line);
-  transition: background-color .25s ease;
+  transition:
+    background-color .25s ease,
+    grid-template-rows .55s cubic-bezier(.22, .61, .36, 1);
 }
 .quadro__espaco:hover {
   background: var(--color-maroon);
@@ -274,6 +228,92 @@
   color: var(--color-red-light);
 }
 
+/* Fotos do espaço. .quadro__foto é a fila que abre (min-height: 0 e
+   overflow: hidden, senão o 0fr não fecha); a moldura dá o 4:3 e o corte;
+   cada foto é uma .quadro__foto-camada lá dentro, criada pelo
+   instalacoes.js. Ficam alinhadas com o nome, não com o número.
+
+   As urls não estão aqui de propósito: um background-image no CSS é
+   descarregado logo que o elemento existe, mesmo numa fila fechada a 0px
+   — eram ~1,9 MB ao abrir a página. O script só cria a camada (com --foto)
+   depois de a imagem estar descodificada, para nunca se ver a meio. */
+.quadro__foto {
+  grid-column: 2 / -1;
+  grid-row: 2;
+  align-self: stretch;
+  min-height: 0;
+  overflow: hidden;
+}
+
+/* 4:3, o rácio de todas as fotos: com o cover a foto entra inteira, sem
+   corte. À largura toda da linha abria até 750px de altura, por isso a
+   largura fica limitada — 280 a 460px, ou seja 210 a 345px de altura. */
+.quadro__foto-moldura {
+  position: relative;
+  width: min(100%, clamp(280px, 32vw, 460px));
+  aspect-ratio: 4 / 3;
+  margin-top: clamp(16px, 1.8vw, 24px);
+  overflow: hidden;
+}
+/* Uma camada por foto, todas empilhadas. A ativa sobe (z-index 1) e entra
+   em .5s; a que sai fica por baixo, inteira, e só apaga depois de coberta
+   (.5s de atraso) — sem isto as duas ficavam a meio ao mesmo tempo e via-se
+   o bordô por trás. No hover todas passam de scale(1.12) para 1, como as
+   outras fotografias do site. */
+.quadro__foto-camada {
+  position: absolute;
+  inset: 0;
+  background-image: var(--foto, none);
+  background-position: center;
+  background-size: cover;
+  opacity: 0;
+  transform: scale(1.12);
+  transition:
+    opacity .5s ease .5s,
+    transform 1.1s cubic-bezier(.22, .61, .36, 1);
+}
+.quadro__foto-camada--ativa {
+  z-index: 1;
+  opacity: 1;
+  transition:
+    opacity .5s ease,
+    transform 1.1s cubic-bezier(.22, .61, .36, 1);
+}
+
+/* Riscas por baixo da moldura, uma por foto, só nos espaços com várias:
+   dizem que há mais do que uma e qual se está a ver. Mesma largura da
+   moldura. */
+.quadro__foto-marcas {
+  display: flex;
+  gap: 6px;
+  width: min(100%, clamp(280px, 32vw, 460px));
+  margin-top: 12px;
+}
+
+.quadro__foto-marca {
+  flex: 1;
+  height: 2px;
+  background: var(--color-line);
+  transition: background-color .35s ease;
+}
+.quadro__foto-marca--ativa {
+  background: var(--color-red);
+}
+
+/* Só onde há cursor: num ecrã tátil não há hover, e um toque a abrir
+   300px de foto empurrava a lista toda. Abre com 120ms de atraso para
+   um cursor a atravessar a lista não abrir todas as linhas por onde
+   passa; fecha logo. */
+@media (hover: hover) {
+  .quadro__espaco:hover {
+    grid-template-rows: auto 1fr;
+    transition-delay: 0s, .12s;
+  }
+  .quadro__espaco:hover .quadro__foto-camada {
+    transform: scale(1);
+  }
+}
+
 /* ---------- Responsive ---------- */
 
 /* A localização deixa de caber ao lado do nome: passa para baixo,
@@ -281,31 +321,36 @@
 @media (max-width: 900px) {
   .quadro__espaco {
     grid-template-columns: auto 1fr;
-    row-gap: 10px;
+    grid-template-rows: auto auto 0fr;
   }
+  /* Margem e não row-gap: um row-gap também ficava por cima da fila da
+     foto fechada e deixava a linha mais alta sem nada à vista. */
   .quadro__nota {
     grid-column: 2;
     max-width: none;
+    margin-top: 10px;
     text-align: left;
+  }
+  .quadro__foto {
+    grid-row: 3;
   }
 }
 
-@media (max-width: 620px) {
-  .passeio__legenda {
-    justify-content: flex-start;
+@media (max-width: 900px) and (hover: hover) {
+  .quadro__espaco:hover {
+    grid-template-rows: auto auto 1fr;
   }
 }
 
 /* ---------- Movimento reduzido ---------- */
 
 @media (prefers-reduced-motion: reduce) {
-  .js .passeio__ponto::after {
-    animation: none;
-  }
   .quadro__espaco,
   .quadro__espaco::before,
   .quadro__numero,
-  .quadro__nota {
+  .quadro__nota,
+  .quadro__foto-camada,
+  .quadro__foto-marca {
     transition: none;
   }
 }

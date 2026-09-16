@@ -223,6 +223,216 @@ esta a pedido do Francisco.
   um modal, portanto deixou de ser um elemento dele. `.sucesso__titulo` e
   `.sucesso__lead` estão agrupados no CSS com os `.modal__` equivalentes.
 
+## Página "Instalações" — `instalacoes.html` + `instalacoes.css`
+
+Página curta: o peso todo está no passeio virtual. Hero curto → passeio →
+quadro de espaços → faixa de fecho. Reaproveita `.hero`, `.closer`,
+`.eyebrow` e o `reveal.js`.
+
+- **Hero a 72dvh** (mínimo 460px) com a `rua.webp`: a página começa à
+  porta e o passeio aparece sem muito scroll.
+- **Passeio** — ver secção a seguir. A moldura (`.passeio__tela`) leva a
+  borda, a risca vermelha de 3px e quatro cantos de visor em L; o 4:3 é do
+  `.passeio__palco`, que não tem borda.
+- **Quadro de espaços** — linhas corridas (número esbatido, nome em Anton,
+  localização à direita), não cartões. Hover: linha a bordô, número a
+  vermelho, risca de 3px a abrir à esquerda em `scaleY`. A 900px a
+  localização passa para baixo do nome.
+- **Fotos no hover do quadro** — cada linha é uma grelha com uma segunda
+  fila fechada a `0fr` (`.quadro__foto`, com `min-height: 0` e
+  `overflow: hidden`). No hover passa a `1fr` em .55s com o easing de
+  marca, e a linha abre espaço para baixo. As fotos entram numa
+  `.quadro__foto-moldura` em 4:3 — o rácio das fotos, portanto sem corte —
+  com 280 a 460px de largura, alinhada com o nome e não com o número. No
+  hover passam de `scale(1.12)` para 1 em 1.1s. Abre com 120ms de atraso,
+  para um cursor a atravessar a lista não abrir todas as linhas; fecha
+  logo. Só em `(hover: hover)` — num ecrã tátil um toque a abrir 300px
+  empurrava a lista. **O átrio não tem**: a `atrio.webp` ainda é o marcador
+  de lugar; quando chegar a foto, basta o `data-fotos` e a `.quadro__foto`.
+- **Espaços com várias fotos** — as fotos vêm do passeio: musculação 6
+  (`musculacao`, `musculacao2`, `musculacao3`, `polias`, `smith`,
+  `halteres`), cross 4, sala roxa 2; os outros têm uma. O cardio sai da
+  musculação no passeio, mas no quadro é um espaço à parte. Passam em
+  sequência na mesma moldura, 1.5s cada, enquanto o cursor lá estiver; a
+  primeira troca espera pela linha aberta (+670ms). Lado a lado não dava:
+  6 fotos na linha ficavam com ~186px e as linhas abriam a alturas
+  diferentes.
+  - Uma `.quadro__foto-camada` por foto, empilhadas. A ativa sobe
+    (`z-index: 1`) e entra em .5s; a que sai fica inteira por baixo e só
+    apaga depois de coberta (.5s de atraso) — sem isso as duas ficavam a
+    meio ao mesmo tempo e via-se o bordô.
+  - Riscas de 2px por baixo da moldura, uma por foto e da largura dela;
+    a atual a vermelho. Só nos espaços com mais de uma.
+  - Sai do hover: a sequência pára. Volta: recomeça na primeira.
+  - `prefers-reduced-motion`: só a primeira foto, sem sequência nem riscas.
+- **Fotos do quadro a pedido** (`instalacoes.js`) — com as urls no CSS, as
+  fotos eram descarregadas ao abrir a página (~1,9 MB na altura): um
+  `background-image` é pedido logo que o elemento existe, mesmo numa fila
+  fechada a 0px, e não há lazy loading nativo para fundos. Agora as urls
+  vivem num `data-fotos` na linha. A primeira foto é pedida no primeiro
+  `pointerenter`; cada seguinte é adiantada quando a anterior aparece. Uma
+  foto só entra depois do `decode()` — o script só cria a camada (com
+  `--foto`) nessa altura — e a sequência só avança quando a atual já
+  apareceu, portanto numa rede lenta espera em vez de saltar fotos. Cada
+  foto pede-se uma vez; uma que falhe é saltada. Sem `(hover: hover)` não
+  se pede nada. Sem JS as linhas abrem sem foto.
+- **`preload` da `rua.webp`** com `fetchpriority="high"` — é a primeira
+  coisa que se vê (fundo do hero e primeira cena do passeio), mas num
+  `background-image` o browser só a descobria depois de ler o CSS. Ao abrir,
+  a página passa de ~2,35 MB em fotos para ~0,45 MB.
+- **9 espaços**: átrio, musculação, cross, cardio e as cinco salas — a rua
+  e os corredores não contam. (Houve uma legenda por baixo do passeio,
+  "21 vistas · 9 espaços"; foi retirada.)
+
+## Passeio virtual — `walkthrough.js` + `walkthrough.css`
+
+Uma fotografia de cada vez, com pontos clicáveis que levam a outras. Módulo
+ES sem dependências; montado no fim do `instalacoes.html`. As cenas vivem
+em `assets/walkthrough/walkthrough.json`, ao lado das fotos.
+
+**A regra que não se parte:** as coordenadas são percentagens de uma caixa
+exatamente 4:3 e ancoram o **canto superior esquerdo** do botão, sem
+`transform`. Todas as fotos são 4:3 e a caixa é forçada a 4:3 em pixels
+por JS (`dimensionar()`); a imagem usa `object-fit: fill` de propósito.
+`object-fit: cover`, outro rácio ou um `translate(-50%, -50%)` tiram todos
+os pontos do sítio. Aumentar `--wt-alvo` (34px) também os desloca: o canto
+fica e o círculo cresce para a direita e para baixo.
+
+Porque o palco e a moldura são peças separadas: o componente mede o elemento
+onde monta com `getBoundingClientRect()`, que inclui a borda. Montado numa
+caixa com borda, deixava de ser 4:3 e aparecia uma barra preta de cada lado.
+
+### Montar
+
+```js
+import { montarWalkthrough } from './walkthrough.js';
+const dados = await fetch('assets/walkthrough/walkthrough.json').then(r => r.json());
+const wt = montarWalkthrough(elemento, dados, {
+  base: 'assets/walkthrough/',   // pasta das fotos, com barra no fim
+  alturaMaxima: 700,             // opcional, px — no site não se usa (ver abaixo)
+  aoMudar: (id, cena) => {},     // opcional
+});
+```
+
+Sem `alturaMaxima` no site: se cortasse a altura, a caixa encolhia mas o
+palco continuava 4:3 à largura toda, e ficavam barras pretas. A altura é
+controlada pela **largura** da moldura, calculada a partir do ecrã:
+`max-width: min(1180px, max(320px, calc((100dvh - 150px) * 4 / 3)))`. Assim
+o passeio cabe inteiro por baixo do nav (96px) e vêem-se todos os botões ao
+mesmo tempo. (Os tamanhos medidos no browser — 390×844 → caixa 340×255;
+1024×768 → 822×616 — foram com 190px, quando ainda havia legenda; com 150px
+a caixa fica uns 50px mais alta nos ecrãs onde é a altura que manda.)
+
+API: `wt.ir(id)` (empilha a atual), `wt.voltar()`, `wt.reiniciar()`,
+`wt.cena`, `wt.profundidade`, `wt.destruir()`. Na página fica em
+`window.wt`, para saltar entre cenas a partir da consola.
+
+### Formato das cenas
+
+```jsonc
+{ "inicio": "rua",
+  "cenas": {
+    "rua": { "titulo": "Rua", "ficheiro": "rua.webp",
+             "pontos": [ { "left": 80.84, "top": 46.76, "texto": "Entrar", "para": "atrio" } ] } } }
+```
+
+- **`pontos[]`** — `left`/`top` em %, `para`, `texto` opcional (sem ele:
+  "Ver mais"). `"seta": true` mostra uma seta para cima em vez de rótulo.
+  `"destaque": true` dá-lhe a animação de chamada (ver abaixo) — hoje só o
+  "Entrar" da rua.
+- **`margens[]`** — botões presos a uma borda. `pos`:
+  `canto-inferior-esquerdo`, `canto-superior-esquerdo`,
+  `canto-inferior-direito`, `canto-superior-direito`, `margem-esquerda`,
+  `margem-direita`, `margem-superior`, `margem-inferior`. Com seta (por
+  omissão) é uma passagem; com `"seta": false` é um ponto normal. `x`/`y`
+  em % afinam a posição ao longo da margem (ex.: o voltar da `cross3`).
+- **`voltar`** — posição do botão de voltar: um nome de margem (omissão
+  `canto-inferior-esquerdo`), `false` para o tirar, ou uma coordenada
+  `{ "left", "top", "seta": "cima" }` (ex.: `musculacao2`).
+- **`tipo: "split"` + `partes[]`** — ecrã dividido sem foto própria
+  (`escolha_mc`). Mostra as fotos das partes lado a lado; a escolhida
+  expande e entra nessa cena.
+
+### Comportamento e movimento
+
+- Pontos com `left > 55` abrem a pastilha para a esquerda; margens de cima
+  e de baixo crescem na vertical.
+- Vermelho com anel a pulsar (`wt-pulso`, 2.4s) = avançar. Preto sem anel =
+  voltar. **O anel normal quase não se vê**: é filho do `.wt-alvo`, que tem
+  `overflow: hidden`, e fica cortado pela borda do botão.
+- **Ponto em destaque** (`.wt-destaque`) — o primeiro botão do passeio
+  passava despercebido. Preenchimento vermelho cheio; dois anéis no
+  `.wt-ponto` (que não corta) a abrir de 1.1x a 2.6x, com 450ms entre eles;
+  depois a pastilha abre sozinha com o rótulo, fica aberta e fecha. Ciclo
+  de 4.2s, a começar 0.8s depois de a cena aparecer. A largura aberta vem do
+  mesmo `--w` que o `medir()` escreve para o hover. O hover pára a animação.
+  Com `prefers-reduced-motion`: sem anéis e pastilha aberta, parada. Abrir
+  sozinha também serve os ecrãs táteis, onde o rótulo nunca aparecia.
+- Troca de cena em fade de .35s. Ecrã dividido: a metade escolhida expande
+  em .55s e só então entra na cena.
+- `Esc` volta atrás. As fotos seguintes são pré-carregadas ao entrar numa
+  cena.
+- Destino sem foto → ponto a tracejado e aviso "Foto por tirar"; foto com
+  404 → aviso "Foto por carregar". A navegação nunca parte.
+- `prefers-reduced-motion`: sem transições e sem anel.
+- Sem JS, o palco mostra a `rua.webp` parada. Se o JSON não carregar, uma
+  linha a pedir para recarregar.
+
+### Integração (esta ronda)
+
+- Pontos **redondos**, por decisão do Francisco: registado no `CLAUDE.md`
+  como a exceção única ao "nada é redondo".
+- Tirado o `@font-face` auto-alojado do `walkthrough.css`: a Anton já vem
+  do Google Fonts. O `.woff2` não entrou no projeto.
+- Os cantos da moldura encolheram (14px a 8px da borda) para não tocarem
+  nos botões de margem do componente, que ficam a 22px.
+- A legenda dizia "Arrasta para olhar", mas o passeio não se arrasta —
+  passou a "Segue os pontos para mudar de sala". O lead perdeu o "olha em
+  volta" pela mesma razão. Depois a legenda saiu de todo, a pedido do
+  Francisco.
+- A pasta de entrega (`_entrega-walkthrough/`) foi retirada; o que era
+  documentação está aqui.
+- **Choque de classes com o site.** O componente marcava os botões de
+  margem que avançam com a classe `nav`, e o `.nav` do `styles.css` é a
+  barra fixa: dava-lhes `left: 0; right: 0` e `padding: 28px`. O botão
+  esticava a largura toda e a seta encostava à esquerda — o "Cardio" da
+  musculação aparecia do lado contrário, e o embrulho esticado podia tapar
+  pontos à mesma altura. Passou a `wt-avanca`. O componente ainda usa
+  outras classes de estado sem prefixo (`on`, `dir`, `falta`, `livre`,
+  `escolhida`, `a-expandir`, `abre-esq`, `ci-esq`, `m-dir`, `para-cima`…):
+  **não criar classes globais do site com estes nomes.**
+- **Voltar mais escuro** (`--wt-escuro` de .62 para .85). Na sala cinza, uma
+  foto clara e toda cinzenta, o círculo cinzento sobre o espelho passava
+  por um objeto da sala e parecia não haver botão.
+- Verificado no browser a 390, 1024 e 1920px: as 22 cenas, 44 botões,
+  todos dentro da foto e a receber o clique no centro; voltar e `Esc`
+  recuam; sem voltar na rua; sem erros de consola nem pedidos falhados.
+
+### Por confirmar
+
+- **`atrio.webp` é um marcador de lugar** (255×191, 692 bytes), não uma
+  fotografia — e o átrio é o centro do percurso. **Não publicar sem a foto
+  verdadeira.**
+- **12 cenas são becos sem saída**, só com voltar: `cardio`, `polias`,
+  `smith`, `halteres`, `cross2`, `cross3`, `cross4`, `sala_laranja`,
+  `sala_cinza`, `sala_amarela`, `sala_verde`, `sala_roxa2`. Intencional
+  por agora (folhas do percurso).
+- **Desvios ao design system que ficaram como estavam** (só os pontos
+  redondos foram decididos): sombra (`box-shadow`) nos alvos; setas com
+  `stroke-linecap="round"`; rótulo do ecrã dividido e aviso de foto em
+  falta numa sans do sistema a 700, não em Anton/Franklin; `border-radius:
+  6px` no nome do ficheiro do aviso.
+- **Em ecrãs táteis os rótulos não aparecem**: a pastilha só abre no
+  hover, portanto no telemóvel vêem-se círculos sem nome. E na
+  `corredor_cima2` os pontos da Sala Verde e da Sala Roxa ficam a 28px um
+  do outro a 390px de largura, com alvos de 34px — quase se tocam.
+- **`Esc` com o menu aberto** fecha o menu e recua uma cena ao mesmo tempo
+  — os dois ouvem a tecla na `window`. E recua mesmo com o passeio fora do
+  ecrã.
+- O componente não mexe no URL: não há ligação direta para uma cena.
+- `assets/walkthrough/planta.txt` (o rascunho do percurso) ficou fora dos
+  commits; o `walkthrough.json` substitui-o.
+
 ## Eyebrows sem linha vermelha
 
 **Não colocar linhas vermelhas antes das eyebrows** (regra no `CLAUDE.md`).

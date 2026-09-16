@@ -1,3 +1,9 @@
+# Para me relembrares ocasionalmente
+
+Tive a ideia de, nas salas de aulas de grupo, mostrar por defeito
+a sala vazia mas adicionar uma animação que, por onde o cursor passa
+mostra partes da sala a ser usada.
+
 # PT Academy
 
 Site do ginásio PT Academy (conteúdo em PT-PT). A fonte da verdade da
@@ -17,6 +23,10 @@ Páginas novas reutilizam o `styles.css` e estas regras; nada de estilos inline.
    vermelha por página (`.campaign`).
 3. **Nada é redondo.** `border-radius: 0` em tudo, incluindo a scrollbar
    e os ícones (`stroke-linecap="square"`). Marcadores de lista são traços.
+   **Exceção única:** os pontos do passeio virtual (`walkthrough.css`) são
+   círculos que esticam para pastilhas. Um alvo redondo sobre fotografia
+   lê-se como "clica aqui"; um quadrado lê-se como parte da própria foto.
+   Decidido pelo Francisco — não alargar a mais lado nenhum.
 4. **Destaque = temperatura, não tamanho.** Um elemento em destaque passa
    para bordô + risca vermelha no topo; não cresce nem ganha sombra.
 5. **Sem sombras, sem gradientes decorativos.** Os únicos gradientes são
@@ -142,6 +152,13 @@ no fim com o `rodape.js` antes dos outros scripts. Links novos no nav
 entram em `NAV_ITENS`.
 
 **Ícones**: SVG inline, `currentColor`, cantos retos. Sem bibliotecas.
+
+**Passeio virtual** (`walkthrough.js` + `walkthrough.css`, cenas em
+`assets/walkthrough/walkthrough.json`): classes prefixadas `.wt`, não BEM,
+porque o componente foi feito para funcionar isolado. As coordenadas dos
+pontos são percentagens de uma caixa **exatamente 4:3** e ancoram o canto
+superior esquerdo — nunca `object-fit: cover`, nunca `translate(-50%, -50%)`.
+Formato dos dados e API no `NOTAS.md`.
 
 ## Movimento
 

@@ -1,0 +1,263 @@
+{
+  "inicio": "rua",
+  "cenas": {
+    "rua": {
+      "titulo": "Rua",
+      "ficheiro": "rua.webp",
+      "pontos": [
+        {
+          "left": 80.84,
+          "top": 46.76,
+          "texto": "Entrar",
+          "para": "atrio",
+          "destaque": true
+        }
+      ]
+    },
+    "atrio": {
+      "titulo": "Átrio",
+      "voltar": "margem-inferior",
+      "ficheiro": "atrio.webp",
+      "pontos": [
+        {
+          "left": 2.31,
+          "top": 46.96,
+          "texto": "Musculação e Cross",
+          "para": "escolha_mc"
+        },
+        {
+          "left": 33.69,
+          "top": 26.02,
+          "texto": "Ver mais salas",
+          "para": "corredor_cima"
+        },
+        {
+          "left": 63.18,
+          "top": 26.02,
+          "texto": "Sala Laranja",
+          "para": "sala_laranja"
+        },
+        {
+          "left": 90.16,
+          "top": 46.96,
+          "texto": "Sala Cinza",
+          "para": "sala_cinza"
+        }
+      ]
+    },
+    "escolha_mc": {
+      "titulo": "Musculação ou Cross",
+      "voltar": "canto-superior-esquerdo",
+      "tipo": "split",
+      "partes": [
+        {
+          "id": "musculacao",
+          "titulo": "Sala de Musculação"
+        },
+        {
+          "id": "cross",
+          "titulo": "Cross Training"
+        }
+      ]
+    },
+    "musculacao": {
+      "titulo": "Sala de Musculação",
+      "ficheiro": "musculacao.webp",
+      "voltar": "canto-superior-esquerdo",
+      "pontos": [
+        {
+          "left": 69.3,
+          "top": 52.2,
+          "seta": true,
+          "texto": "Continuar",
+          "para": "musculacao2"
+        }
+      ],
+      "margens": [
+        {
+          "pos": "margem-direita",
+          "para": "cardio",
+          "texto": "Cardio",
+          "seta": false
+        },
+        {
+          "pos": "margem-esquerda",
+          "para": "musculacao3"
+        }
+      ]
+    },
+    "cardio": {
+      "titulo": "Cardio",
+      "ficheiro": "cardio.webp",
+      "pontos": []
+    },
+    "musculacao2": {
+      "titulo": "Musculação (2)",
+      "ficheiro": "musculacao2.webp",
+      "pontos": [],
+      "voltar": {
+        "left": 48.8,
+        "top": 55.1,
+        "seta": "cima"
+      },
+      "margens": [
+        {
+          "pos": "margem-esquerda",
+          "para": "smith"
+        },
+        {
+          "pos": "margem-direita",
+          "para": "halteres"
+        }
+      ]
+    },
+    "musculacao3": {
+      "titulo": "Musculação (3)",
+      "ficheiro": "musculacao3.webp",
+      "pontos": [
+        {
+          "left": 43.3,
+          "top": 46.7,
+          "texto": "Polias",
+          "para": "polias"
+        }
+      ]
+    },
+    "polias": {
+      "titulo": "Polias",
+      "ficheiro": "polias.webp",
+      "pontos": []
+    },
+    "smith": {
+      "titulo": "Smith",
+      "ficheiro": "smith.webp",
+      "pontos": []
+    },
+    "halteres": {
+      "titulo": "Halteres",
+      "ficheiro": "halteres.webp",
+      "pontos": []
+    },
+    "cross": {
+      "titulo": "Cross Training",
+      "ficheiro": "cross.webp",
+      "voltar": "canto-superior-esquerdo",
+      "pontos": [
+        {
+          "left": 61.3,
+          "top": 56.7,
+          "para": "cross3"
+        },
+        {
+          "left": 6.8,
+          "top": 60.7,
+          "para": "cross4"
+        }
+      ],
+      "margens": [
+        {
+          "pos": "margem-direita",
+          "para": "cross2"
+        }
+      ]
+    },
+    "cross2": {
+      "titulo": "Cross Training (2)",
+      "ficheiro": "cross2.webp",
+      "pontos": []
+    },
+    "cross3": {
+      "titulo": "Cross Training (3)",
+      "ficheiro": "cross3.webp",
+      "pontos": [],
+      "voltar": {
+        "pos": "margem-direita",
+        "y": 58
+      }
+    },
+    "cross4": {
+      "titulo": "Cross Training (4)",
+      "ficheiro": "cross4.webp",
+      "pontos": []
+    },
+    "corredor_cima": {
+      "titulo": "Corredor de cima",
+      "voltar": "margem-direita",
+      "ficheiro": "corredor-cima.webp",
+      "pontos": [
+        {
+          "left": 59.27,
+          "top": 42.73,
+          "texto": "Continuar",
+          "seta": true,
+          "para": "corredor_cima2"
+        },
+        {
+          "left": 21.97,
+          "top": 39.57,
+          "texto": "Sala Amarela",
+          "para": "sala_amarela"
+        }
+      ]
+    },
+    "corredor_cima2": {
+      "titulo": "Corredor de cima (2)",
+      "voltar": "margem-inferior",
+      "ficheiro": "corredor-cima2.webp",
+      "pontos": [
+        {
+          "left": 61.0,
+          "top": 36.4,
+          "texto": "Sala Verde",
+          "para": "sala_verde"
+        },
+        {
+          "left": 52.7,
+          "top": 32.7,
+          "texto": "Sala Roxa",
+          "para": "sala_roxa"
+        }
+      ]
+    },
+    "sala_laranja": {
+      "titulo": "Sala Laranja",
+      "ficheiro": "sala-laranja.webp",
+      "pontos": [],
+      "voltar": "margem-esquerda"
+    },
+    "sala_cinza": {
+      "titulo": "Sala Cinza",
+      "ficheiro": "sala-cinza.webp",
+      "pontos": [],
+      "voltar": "margem-esquerda"
+    },
+    "sala_amarela": {
+      "titulo": "Sala Amarela",
+      "ficheiro": "sala-amarela.webp",
+      "pontos": [],
+      "voltar": "margem-direita"
+    },
+    "sala_verde": {
+      "titulo": "Sala Verde",
+      "ficheiro": "sala-verde.webp",
+      "pontos": []
+    },
+    "sala_roxa": {
+      "titulo": "Sala Roxa",
+      "ficheiro": "sala-roxa.webp",
+      "voltar": "margem-inferior",
+      "pontos": [],
+      "margens": [
+        {
+          "pos": "margem-esquerda",
+          "para": "sala_roxa2"
+        }
+      ]
+    },
+    "sala_roxa2": {
+      "titulo": "Sala Roxa (resto)",
+      "ficheiro": "sala-roxa2.webp",
+      "pontos": []
+    }
+  }
+}

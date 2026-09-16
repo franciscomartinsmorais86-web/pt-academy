@@ -1,0 +1,16 @@
+rua.webp(1ª imagem):
+	ponto: left:80.84 top:46.76 "Entrar" "atrio.webp"
+
+atrio.webp:
+	ponto: left:2.31 top:46.96 "musculacao e Cross" aqui vão ser duas imagens em ecrã dividido: "musculacao.webp" com o título "Sala de musculacao" sobre a imagem e "cross.webp" com o título "Cross Training". Duas imagens separadas a dividir o ecrã com animações de hover, ao clicar em qualquer uma das imagens esta deve expandir com uma animação tomando todo o palco como uma imagem normal toma, agora que a imagem está expandida vemos os seus pontos onde podemos clicar, mantemos sempre no topo um botão para voltar.
+	ponto: left:33.69 top:26.02 "Ver mais salas" "corredor-cima.webp"
+	ponto: left:63.18 top:26.02 "Sala Laranja" "sala-laranja.webp"
+	ponto: left:90.16 top:46.96 "Sala Cinza" "sala-cinza.webp"
+	
+corredor-cima.webp:
+	ponto: left:69.84 top:42.45 "Sala Verde" "sala-verde.webp"
+	ponto: left:59.27 top:42.73 sem texto, apenas uma seta para cima "corredor-cima2.webp"
+	ponto: left:21.97 top:39.57 "Sala Amarela" "sala-amarela.webp"
+
+corredor-cima2.webp:
+	

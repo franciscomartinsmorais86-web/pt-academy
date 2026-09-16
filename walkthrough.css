@@ -1,0 +1,220 @@
+/* Walkthrough PT Academy — estilos do componente.
+   Tudo prefixado .wt, sem estilos globais. A Anton vem do Google Fonts que
+   a página já carrega; --wt-fonte resolve para ela.
+
+   Exceção ao design system: os pontos são redondos e esticam para
+   pastilhas. É a única coisa redonda do site — ver CLAUDE.md. */
+
+.wt{
+  /* Trocar aqui, e só aqui, para mudar o aspecto */
+  --wt-marca:#C11D26;
+  /* .85 e não .62: a .62 o voltar ficava cinzento sobre fotos claras e
+     monocromáticas (sala cinza) e passava por um objeto da sala. */
+  --wt-escuro:rgba(10,10,10,.85);
+  --wt-escuro-forte:rgba(10,10,10,.92);
+  --wt-borda:rgba(255,255,255,.9);
+  --wt-alvo:34px;          /* diâmetro do círculo; mexe com a ancoragem, ver README */
+  --wt-margem:22px;        /* afastamento dos botões de margem à borda */
+  --wt-fonte:"Anton",Impact,"Haettenschweiler","Arial Narrow Bold",sans-serif;
+
+  /* sem fundo próprio: o preto fica só na caixa da foto, para o componente
+     não pintar a página à sua volta */
+  position:relative;display:flex;align-items:center;justify-content:center;
+  width:100%;
+}
+.wt *{box-sizing:border-box}
+.wt button{font:inherit;color:inherit;background:none;border:none;padding:0;cursor:pointer}
+
+/* A caixa é sempre 4:3 e é dela que dependem todas as percentagens.
+   O tamanho é dado por JS: só tem filhos absolutos e o aspect-ratio
+   sozinho deixa-a a 0x0. */
+.wt-caixa{position:relative;aspect-ratio:4/3;overflow:hidden;background:#000}
+.wt-caixa img.wt-fundo{display:block;width:100%;height:100%;object-fit:fill}
+
+.wt-cena{position:absolute;inset:0;opacity:0;transition:opacity .35s ease}
+.wt-cena.on{opacity:1}
+
+/* ---------- pontos ----------
+   Ancorados pelo CANTO SUPERIOR ESQUERDO, que é o que a app de coordenadas
+   devolve: left/top sem transform. */
+.wt-ponto{position:absolute;width:0;height:0}
+.wt-ponto .wt-alvo,.wt-volta .wt-alvo{
+  position:absolute;left:0;top:0;height:var(--wt-alvo);width:var(--wt-alvo);
+  border-radius:calc(var(--wt-alvo) / 2);
+  border:2px solid var(--wt-borda);background:rgba(193,29,38,.5);
+  backdrop-filter:blur(2px);cursor:pointer;overflow:hidden;
+  display:flex;align-items:center;flex-wrap:nowrap;
+  box-shadow:0 2px 12px rgba(0,0,0,.5);
+  transition:width .34s cubic-bezier(.22,.72,.2,1),background .22s ease,border-color .22s ease;
+}
+.wt-ponto .wt-alvo::after{
+  content:"";position:absolute;left:-6px;top:-6px;
+  width:calc(var(--wt-alvo) + 8px);height:calc(var(--wt-alvo) + 8px);border-radius:50%;
+  border:2px solid rgba(193,29,38,.55);animation:wt-pulso 2.4s ease-out infinite;pointer-events:none;
+}
+.wt-ponto:hover .wt-alvo::after{animation:none;opacity:0}
+@keyframes wt-pulso{
+  0%{transform:scale(.72);opacity:.9}
+  70%{transform:scale(1.25);opacity:0}
+  100%{opacity:0}
+}
+.wt-ponto .wt-txt,.wt-volta .wt-txt{
+  flex:0 0 auto;padding:0 16px 0 12px;white-space:nowrap;
+  font-family:var(--wt-fonte);font-size:15px;letter-spacing:.055em;
+  text-transform:uppercase;line-height:1;color:#fff;
+  opacity:0;transition:opacity .16s ease .04s;
+}
+.wt-ponto .wt-seta,.wt-volta .wt-seta{
+  flex:0 0 calc(var(--wt-alvo) - 4px);
+  display:flex;align-items:center;justify-content:center;color:#fff;
+}
+.wt-seta svg{display:block;width:15px;height:15px}
+.wt-seta.para-dir svg{transform:rotate(180deg)}
+.wt-seta.para-cima svg{transform:rotate(90deg)}
+.wt-seta.para-baixo svg{transform:rotate(-90deg)}
+.wt-ponto:hover .wt-alvo{width:var(--w,var(--wt-alvo));background:var(--wt-marca);border-color:#fff}
+.wt-ponto:hover .wt-txt{opacity:1}
+
+/* na metade direita a pastilha abre para dentro da foto */
+.wt-ponto.abre-esq .wt-alvo{left:auto;right:calc(var(--wt-alvo) * -1);flex-direction:row-reverse}
+.wt-ponto.abre-esq .wt-alvo::after{left:auto;right:-6px}
+.wt-ponto.abre-esq .wt-txt{padding:0 12px 0 16px}
+
+/* ponto cuja foto de destino não existe */
+.wt-ponto.falta .wt-alvo{background:rgba(120,120,120,.45);border-style:dashed}
+.wt-ponto.falta:hover .wt-alvo{background:#555;border-color:#999}
+
+/* ---------- ponto em destaque ----------
+   "destaque": true no JSON — o "Entrar" da rua, o primeiro botão do
+   passeio. O anel normal quase não se vê: é filho do .wt-alvo, que tem
+   overflow:hidden, e fica cortado pela borda do próprio botão. Aqui os
+   anéis vão no .wt-ponto, que não corta, e abrem até 2,6x. Entre ondas, a
+   pastilha abre sozinha e mostra o rótulo — o que também serve os ecrãs
+   táteis, onde não há hover. Um ciclo de 4,2s: duas ondas, pastilha
+   aberta, fecha. O hover pára tudo e fica o comportamento normal. */
+.wt-ponto.wt-destaque .wt-alvo{
+  background:var(--wt-marca);border-color:#fff;
+  animation:wt-chama 4.2s cubic-bezier(.22,.61,.36,1) .8s infinite;
+}
+.wt-ponto.wt-destaque .wt-alvo::after{content:none}
+.wt-ponto.wt-destaque .wt-txt{animation:wt-chama-txt 4.2s ease .8s infinite}
+.wt-ponto.wt-destaque::before,.wt-ponto.wt-destaque::after{
+  content:"";position:absolute;left:0;top:0;
+  width:var(--wt-alvo);height:var(--wt-alvo);border-radius:50%;
+  border:2px solid var(--wt-marca);opacity:0;pointer-events:none;
+  animation:wt-onda 4.2s cubic-bezier(.22,.61,.36,1) .8s infinite;
+}
+.wt-ponto.wt-destaque::after{animation-delay:1.25s}
+.wt-ponto.wt-destaque:hover .wt-alvo,.wt-ponto.wt-destaque:hover .wt-txt{animation:none}
+.wt-ponto.wt-destaque:hover::before,.wt-ponto.wt-destaque:hover::after{animation:none;opacity:0}
+
+@keyframes wt-onda{
+  0%{transform:scale(1.1);opacity:.95}
+  16%,100%{transform:scale(2.6);opacity:0}
+}
+@keyframes wt-chama{
+  0%,34%{width:var(--wt-alvo)}
+  44%,80%{width:var(--w,var(--wt-alvo))}
+  90%,100%{width:var(--wt-alvo)}
+}
+@keyframes wt-chama-txt{
+  0%,40%{opacity:0}
+  48%,74%{opacity:1}
+  82%,100%{opacity:0}
+}
+
+/* ---------- botões de margem ---------- */
+.wt-volta{position:absolute;z-index:3}
+.wt-volta .wt-alvo{position:static;background:var(--wt-escuro);border-color:rgba(255,255,255,.75)}
+.wt-volta:hover .wt-alvo{width:var(--w,var(--wt-alvo));background:var(--wt-escuro-forte);border-color:#fff}
+.wt-volta:hover .wt-txt{opacity:1}
+
+.wt-volta.ci-esq{left:var(--wt-margem);bottom:var(--wt-margem)}
+.wt-volta.cs-esq{left:var(--wt-margem);top:var(--wt-margem)}
+.wt-volta.ci-dir{right:var(--wt-margem);bottom:var(--wt-margem)}
+.wt-volta.cs-dir{right:var(--wt-margem);top:var(--wt-margem)}
+.wt-volta.m-esq{left:var(--wt-margem);top:50%;transform:translateY(-50%)}
+.wt-volta.m-dir{right:var(--wt-margem);top:50%;transform:translateY(-50%)}
+.wt-volta.m-sup{top:var(--wt-margem);left:50%;transform:translateX(-50%)}
+.wt-volta.m-inf{bottom:var(--wt-margem);left:50%;transform:translateX(-50%)}
+
+/* botão de margem que avança: vermelho e com anel, para não se confundir
+   com o de voltar, que é preto e sem anel */
+.wt-volta.wt-avanca .wt-alvo{background:rgba(193,29,38,.5)}
+.wt-volta.wt-avanca:hover .wt-alvo{background:var(--wt-marca)}
+.wt-volta.wt-avanca .wt-alvo::after{
+  content:"";position:absolute;left:-6px;top:-6px;
+  width:calc(var(--wt-alvo) + 8px);height:calc(var(--wt-alvo) + 8px);border-radius:50%;
+  border:2px solid rgba(193,29,38,.55);animation:wt-pulso 2.4s ease-out infinite;pointer-events:none;
+}
+.wt-volta.wt-avanca:hover .wt-alvo::after{animation:none;opacity:0}
+
+.wt-volta.dir .wt-alvo{flex-direction:row-reverse}
+.wt-volta.dir .wt-txt{padding:0 12px 0 16px}
+
+/* nas margens de cima e de baixo cresce na vertical: o rótulo fica por
+   cima (ou por baixo) da seta, nunca ao lado */
+.wt-volta.m-inf .wt-alvo,.wt-volta.m-sup .wt-alvo{
+  flex-direction:column-reverse;border-radius:calc(var(--wt-alvo) / 2 + 2px);
+  transition:width .34s cubic-bezier(.22,.72,.2,1),height .34s cubic-bezier(.22,.72,.2,1),
+             background .22s ease,border-color .22s ease;
+}
+.wt-volta.m-sup .wt-alvo{flex-direction:column}
+.wt-volta.m-inf .wt-txt{padding:11px 14px 6px}
+.wt-volta.m-sup .wt-txt{padding:6px 14px 11px}
+.wt-volta.m-inf:hover .wt-alvo,.wt-volta.m-sup:hover .wt-alvo{
+  width:var(--w,var(--wt-alvo));height:var(--h,var(--wt-alvo));
+}
+
+/* botão de voltar preso a uma coordenada em vez de a uma margem */
+.wt-volta.livre{width:0;height:0}
+.wt-volta.livre .wt-alvo{position:absolute;left:0;top:0}
+.wt-volta.livre.abre-esq .wt-alvo{left:auto;right:calc(var(--wt-alvo) * -1);flex-direction:row-reverse}
+.wt-volta.livre.abre-esq .wt-txt{padding:0 12px 0 16px}
+
+/* ---------- ecrã dividido ---------- */
+.wt-dividido{position:absolute;inset:0;display:flex;background:#000}
+.wt-metade{
+  position:relative;flex:1 1 50%;min-width:0;overflow:hidden;cursor:pointer;
+  transition:flex-basis .55s cubic-bezier(.65,0,.35,1),flex-grow .55s cubic-bezier(.65,0,.35,1);
+}
+.wt-metade + .wt-metade{border-left:1px solid rgba(255,255,255,.14)}
+.wt-metade img{
+  display:block;width:100%;height:100%;object-fit:cover;
+  filter:brightness(.62) saturate(.9);transform:scale(1.02);
+  transition:filter .35s ease,transform .55s cubic-bezier(.65,0,.35,1);
+}
+.wt-metade:hover img{filter:brightness(.85) saturate(1);transform:scale(1.06)}
+.wt-metade .wt-rotulo{
+  position:absolute;inset:auto 0 0 0;padding:26px 22px;color:#fff;
+  background:linear-gradient(to top,rgba(0,0,0,.85),transparent);
+  font-size:19px;font-weight:700;letter-spacing:.01em;transition:opacity .3s ease;
+  font-family:ui-sans-serif,-apple-system,"Segoe UI",Roboto,sans-serif;
+}
+.wt-dividido.a-expandir .wt-metade{cursor:default}
+.wt-dividido.a-expandir .wt-metade.escolhida{flex-grow:1;flex-basis:100%}
+.wt-dividido.a-expandir .wt-metade:not(.escolhida){flex-grow:0;flex-basis:0%}
+.wt-dividido.a-expandir .wt-metade.escolhida img{filter:none;transform:scale(1)}
+.wt-dividido.a-expandir .wt-rotulo{opacity:0}
+
+/* ---------- foto em falta ---------- */
+.wt-falta{
+  position:absolute;inset:0;display:flex;flex-direction:column;
+  align-items:center;justify-content:center;gap:10px;text-align:center;padding:30px;color:#f2f2f2;
+  font-family:ui-sans-serif,-apple-system,"Segoe UI",Roboto,sans-serif;
+  background:repeating-linear-gradient(45deg,#101010 0 14px,#0c0c0c 14px 28px);
+}
+.wt-falta b{font-size:17px}
+.wt-falta code{
+  font-family:ui-monospace,Menlo,Consolas,monospace;font-size:12px;color:#FF8A80;
+  background:#2A1215;border:1px solid #5C2B2E;border-radius:6px;padding:3px 8px;
+}
+
+@media (prefers-reduced-motion: reduce){
+  .wt-cena,.wt-ponto .wt-alvo,.wt-volta .wt-alvo,.wt-metade,.wt-metade img{transition:none}
+  .wt-ponto .wt-alvo::after,.wt-volta.wt-avanca .wt-alvo::after{animation:none}
+  /* sem movimento, o destaque fica com a pastilha aberta e parada */
+  .wt-ponto.wt-destaque .wt-alvo{animation:none;width:var(--w,var(--wt-alvo))}
+  .wt-ponto.wt-destaque .wt-txt{animation:none;opacity:1}
+  .wt-ponto.wt-destaque::before,.wt-ponto.wt-destaque::after{animation:none;opacity:0}
+}
