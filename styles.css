@@ -411,18 +411,6 @@ a:hover {
   text-transform: uppercase;
 }
 
-.eyebrow--traco {
-  display: flex;
-  align-items: center;
-  gap: 14px;
-}
-.eyebrow--traco::before {
-  content: '';
-  width: 32px;
-  height: 2px;
-  background: var(--color-red);
-}
-
 /* ---------- Campaign ---------- */
 
 .campaign {
@@ -707,24 +695,14 @@ a:hover {
   margin: 0 0 clamp(40px, 5vw, 64px);
 }
 
-/* Sublinhado vermelho curto antes do eyebrow, como na homepage original. */
+/* Sem linha vermelha antes do eyebrow — ver CLAUDE.md. */
 .plans__eyebrow {
-  display: flex;
-  align-items: center;
-  gap: 14px;
   margin: 0 0 20px;
   color: var(--color-red-light);
   font: 600 13px var(--font-body);
   letter-spacing: .3em;
   text-transform: uppercase;
 }
-.plans__eyebrow::before {
-  content: '';
-  width: 32px;
-  height: 2px;
-  background: var(--color-red);
-}
-
 .plans__title {
   margin: 0 0 20px;
   font: 400 clamp(38px, 6vw, 96px)/1.02 var(--font-display);

@@ -99,8 +99,8 @@ Regras:
 **Logo**: `PT<span class="nav__logo-dot">·</span>ACADEMY`, sempre com o
 ponto do meio a vermelho. Nunca como imagem.
 
-**Eyebrow**: linha curta acima do título. Variante com traço: `::before`
-de 32×2px `--color-red` e `gap: 14px`. Sobre fundo vermelho passa a preto.
+**Eyebrow**: linha curta acima do título. Sobre fundo vermelho passa a preto.
+**Não colocar linhas vermelhas antes das eyebrows.**
 
 **Botões** (`.button`): padding 18px 40px, sem raio, sem sombra. Servem
 tanto para `<a>` como para `<button>`.

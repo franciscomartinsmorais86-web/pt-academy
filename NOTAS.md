@@ -216,11 +216,26 @@ esta a pedido do Francisco.
 ### Peças que subiram para o `styles.css`
 
 - **`.eyebrow` / `.eyebrow--traco`** — estavam no `sobre.css` e são do
-  site, não de uma página.
+  site, não de uma página. O `.eyebrow--traco` foi retirado depois (ver
+  "Eyebrows sem linha vermelha").
 - **`.modal__sucesso` → `.sucesso`** (e `.modal__visto` →
   `.sucesso__visto`). O bloco de confirmação deixou de viver só dentro de
   um modal, portanto deixou de ser um elemento dele. `.sucesso__titulo` e
   `.sucesso__lead` estão agrupados no CSS com os `.modal__` equivalentes.
+
+## Eyebrows sem linha vermelha
+
+**Não colocar linhas vermelhas antes das eyebrows** (regra no `CLAUDE.md`).
+Saíram de todo o site:
+
+- `.eyebrow--traco` retirado do `styles.css`. Era usado nas Instalações
+  (2), no Sobre (1) e nas Modalidades (4) — nas Modalidades já tinha sido
+  tirado noutra frente de trabalho, sem tocar nessa página aqui.
+- `.plans__eyebrow::before` retirado — era a linha antes de "Planos", na
+  homepage. O `.plans__eyebrow` perdeu também o `display: flex` e o `gap`,
+  que só existiam para a linha.
+- Continuam os traços de 9px das listas (`.plan__features`,
+  `.capitulo__lista`): são marcadores de lista, não linhas de eyebrow.
 
 ## Experiências abandonadas
 
