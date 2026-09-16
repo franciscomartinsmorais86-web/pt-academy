@@ -1,0 +1,218 @@
+/* PT Academy — página "Equipa". Carrega depois do styles.css.
+
+   Sem hero: o título sozinho dá entrada à página → quatro grupos de
+   cartões 3:4 (Direção, Comercial, Personal Trainers, Dança) → rodapé.
+   Cada cartão tem a foto e, por cima, um vídeo curto que o equipa.js
+   liga no hover (ou no toque): a foto funde para o vídeo, que toca uma
+   vez e volta à foto. Sem faixa de fecho nem CTA. */
+
+/* ---------- Página ---------- */
+
+/* O padding de cima dá folga ao nav, que é fixo e no topo da página está
+   transparente — como nos Contactos, sem o exagero de um hero. */
+.equipa {
+  padding: clamp(118px, 15vh, 168px) clamp(24px, 4vw, 48px) clamp(64px, 10vw, 120px);
+  background: var(--color-black);
+  display: flex;
+  flex-direction: column;
+  gap: clamp(56px, 7vw, 96px);
+}
+
+/* Só o título, à escala de hero mas sem foto: é ele que abre a página. */
+.equipa__cabeca {
+  margin: 0;
+}
+
+.equipa__titulo {
+  margin: 0;
+  font: 400 clamp(48px, 9vw, 150px)/0.9 var(--font-display);
+  letter-spacing: .01em;
+  text-transform: uppercase;
+  text-wrap: balance;
+}
+.equipa__titulo em {
+  color: var(--color-red);
+  font-style: normal;
+}
+
+/* ---------- Grupos ---------- */
+
+.grupo {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(20px, 2.4vw, 32px);
+}
+
+/* Título do grupo à esquerda, contagem à direita, um fio por baixo. */
+.grupo__cabeca {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 16px;
+  padding-bottom: 14px;
+  border-bottom: 1px solid var(--color-line);
+}
+
+.grupo__titulo {
+  margin: 0;
+  font: 400 clamp(28px, 3.4vw, 56px)/1 var(--font-display);
+  letter-spacing: .01em;
+  text-transform: uppercase;
+}
+
+.grupo__conta {
+  margin: 0;
+  color: #666;
+  font: 600 11px var(--font-body);
+  letter-spacing: .28em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.grupo__grelha {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: clamp(12px, 1.4vw, 20px);
+}
+
+/* ---------- Cartão ---------- */
+
+.pessoa {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  background: var(--color-card);
+  border: 1px solid rgba(255, 255, 255, .08);
+  transition: border-color .25s ease;
+}
+.pessoa:hover,
+.pessoa.is-a-tocar {
+  border-color: rgba(193, 29, 38, .55);
+}
+
+/* A proprietária: bordô + risca vermelha, como o plano em destaque na
+   homepage. Não cresce — muda de temperatura. */
+.pessoa--destaque {
+  background: var(--color-maroon);
+  border-color: var(--color-maroon-border);
+}
+.pessoa--destaque::before {
+  content: '';
+  position: absolute;
+  z-index: 1;
+  top: -1px;
+  left: -1px;
+  right: -1px;
+  height: 4px;
+  background: var(--color-red);
+}
+
+/* A moldura é um <button>, para o toque e o teclado, mas não parece um:
+   sem borda, sem raio, sem sombra. O 3:4 é dela; a foto e o vídeo
+   enchem-na. */
+.pessoa__media {
+  position: relative;
+  display: block;
+  width: 100%;
+  aspect-ratio: 3 / 4;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: #000;
+  overflow: hidden;
+  cursor: pointer;
+  color: inherit;
+  font: inherit;
+}
+.pessoa__media:focus-visible {
+  outline: 2px solid var(--color-red);
+  outline-offset: -2px;
+}
+
+.pessoa__foto,
+.pessoa__video {
+  position: absolute;
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* O vídeo está sempre por cima, invisível. O equipa.js só lhe dá a
+   classe quando já há frames a tocar (evento playing), e tira-a quando
+   acaba ou o rato sai. A foto fica por baixo o tempo todo, portanto nunca
+   se vê um frame preto — só a fusão de um para o outro. */
+.pessoa__video {
+  opacity: 0;
+  transition: opacity .35s ease;
+  pointer-events: none;
+}
+.pessoa.is-a-tocar .pessoa__video {
+  opacity: 1;
+}
+
+.pessoa__legenda {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 18px clamp(16px, 1.6vw, 22px) 22px;
+}
+
+.pessoa__nome {
+  margin: 0;
+  font: 400 clamp(22px, 1.9vw, 30px)/1 var(--font-display);
+  letter-spacing: .02em;
+  text-transform: uppercase;
+  text-wrap: balance;
+}
+
+.pessoa__funcao {
+  margin: 0;
+  color: var(--color-red-light);
+  font: 600 11px var(--font-body);
+  letter-spacing: .22em;
+  text-transform: uppercase;
+}
+
+/* ---------- Breakpoints ---------- */
+
+@media (max-width: 1150px) {
+  .grupo__grelha {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (max-width: 900px) {
+  .grupo__grelha {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* Aos 620px fica em duas colunas de propósito, ao contrário do resto do
+   site: com cartões 3:4 numa coluna só, dezoito pessoas davam oito
+   metros de scroll. Encolhe só a legenda. */
+@media (max-width: 620px) {
+  .pessoa__legenda {
+    padding: 14px 14px 16px;
+  }
+  .pessoa__nome {
+    font-size: 18px;
+  }
+  .pessoa__funcao {
+    font-size: 10px;
+    letter-spacing: .18em;
+  }
+}
+
+/* ---------- Movimento reduzido ---------- */
+
+@media (prefers-reduced-motion: reduce) {
+  .pessoa,
+  .pessoa__video {
+    transition: none;
+  }
+}

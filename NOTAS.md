@@ -466,6 +466,81 @@ substituir:
   individuais", "consultas", "reavaliações") são meus.
 - "Pedir horário" e "Marcar consulta" são `tel:`.
 
+## Página "Equipa" — `equipa.html` + `equipa.css` + `equipa.js`
+
+Sem hero: o título sozinho ("As *caras* da casa", à escala de hero mas
+sobre preto, por baixo do nav como nos Contactos) → quatro grupos de
+cartões 3:4 → rodapé. Sem faixa de fecho nem CTA, por decisão do
+Francisco: a página serve só para apresentar as pessoas. Reaproveita o
+`reveal.js` e o padrão do plano em destaque; o nav, o rodapé e o "Ver
+equipa" da homepage passaram a apontar para `/equipa.html` (antes era a
+âncora `#equipa`, que nunca existiu).
+
+Decisões do Francisco (16 set. 2026): hero curto com foto; grelha dividida
+por grupos (Direção · Comercial · Personal Trainers · Dança), pela ordem
+que ele deu — proprietária, diretor técnico, diretor comercial, comerciais,
+PTs e só depois a dança; o vídeo toca **uma vez** no hover e volta à foto;
+no telemóvel é o toque que liga e desliga; Mara Fraguito e Majó são duas
+pessoas; o cartão da proprietária em destaque (bordô + risca vermelha);
+nome + função em cada cartão; título "As *caras* da casa".
+
+**Segunda ronda, já com a página feita:** saiu o hero (72dvh com a foto do
+treinador ao lado da sócia, `data-scroll="saida"` com a foto a aproximar e
+o título a subir) e saíram o lead e a dica "Passa o rato…". Fica só o
+título a abrir a página. A foto convertida para o hero,
+`assets/equipa-hero-treino-acompanhado.webp`, deixou de ser usada e fica
+lá até o Francisco mandar apagar.
+
+### Cartões com vídeo
+
+Cada `.pessoa` tem a foto (`assets/pessoal/<nome>.webp`, 1200×1600) e, por
+cima, o vídeo recortado a 3:4 (`assets/pessoal/<nome>.mp4`, 540×720,
+1,5–3,5 s, silenciado; os originais 9:16 já não estão no repo). A moldura é um `<button>` com
+`aria-pressed`, para o toque e o teclado. O vídeo está sempre no DOM com
+`opacity: 0`; o `equipa.js` chama `play()` e só põe a classe `.is-a-tocar`
+(que o funde para 1 em .35s) no evento `playing`, quando já há frames — a
+foto fica por baixo o tempo todo, nunca se vê um frame preto. No `ended`,
+ou ao sair do cartão, a classe sai, o vídeo pausa e rebobina 400 ms depois
+(`EQUIPA_REBOBINAR`, maior do que o fade), para o salto não se ver.
+
+- **Com rato** (`hover: hover` e `pointer: fine`, sem `prefers-reduced-
+  motion`): `mouseenter` liga, `mouseleave` desliga. O clique do rato é
+  ignorado para não interromper o vídeo; o clique de teclado (Enter/Space,
+  `event.detail === 0`) alterna.
+- **Sem rato**, ou com movimento reduzido: o clique/toque alterna. Só toca
+  um de cada vez — ligar um desliga o anterior.
+- **Carregamento**: `preload="none"` em todos. Com rato, um
+  `IntersectionObserver` (margem 300px) passa cada vídeo a `preload="auto"`
+  quando o cartão se aproxima, para o hover ser imediato (~7 MB no total).
+  Sem rato, cada vídeo só se carrega quando é tocado.
+- O hover do cartão em si é só a borda a acender (como `.plan`); a foto
+  não faz `scale`, porque o vídeo entra por cima sem escala e o salto
+  notava-se.
+
+### Grelha
+
+4 colunas → 3 (1150px) → 2 (900px). Aos 620px **fica em duas colunas**, ao
+contrário do resto do site: com cartões 3:4 numa coluna só, dezoito
+pessoas davam oito metros de scroll. Se o Francisco preferir uma, é uma
+linha no `equipa.css`. Os cartões entram com `reveal--rise` escalonado por
+grupo; as cinco primeiras fotos carregam já, as restantes com
+`loading="lazy"`.
+
+### Por confirmar
+
+- **Nomes e acentos** — escritos a partir dos nomes dos ficheiros:
+  Patrícia Teles, Tiago Figueira, Ruben Souza (sem acento, como no
+  ficheiro — pode ser Rúben), Bárbara Maltez, Vanessa Ribeiro, Alexandra
+  Santos, Fernando Campeã, Filipe Sousa, João Rodrigues, José Guedes,
+  Juliana Nogueira, Ricardo Miguel, Simão Marinho, Sónia Filipa, Virgínia
+  Delgado, Mara Fraguito, Majó, Luís Reboredo.
+- **Majó** — só o nome pelo qual é conhecida; falta o nome completo, se o
+  quiserem.
+- **Ordem dos PTs** — não foi dada; estão por ordem alfabética.
+- **Funções** — "Diretor técnico", "Diretor comercial", "Comercial",
+  "Personal trainer", "Professor(a) de dança" são as palavras do
+  Francisco; confirmar a grafia oficial da academia.
+
 ## Passeio virtual — `walkthrough.js` + `walkthrough.css`
 
 Uma fotografia de cada vez, com pontos clicáveis que levam a outras. Módulo
@@ -687,10 +762,11 @@ sem biblioteca.
 - **Horário** — Seg–Sex 07h–22h, Sáb 09h–13h, Dom encerrado. Inventado.
 - **Email** — `geral@ptacademy.pt`. Inventado.
 - **Política de privacidade** — `href="#"`, página por fazer.
-- As âncoras `#inicio`, `#sobre`, `#equipa`, `#inscricao` **ainda não
-  existem** no HTML (já era assim na nav). Só `#modalidades`, `#instalacoes`
-  e `#planos` têm `id`. O "Modalidades" do nav e do rodapé aponta agora para
-  `/modalidades.html`, não para a âncora.
+- As âncoras `#inicio`, `#sobre`, `#inscricao` **ainda não existem** no
+  HTML (já era assim na nav). Só `#modalidades`, `#instalacoes` e `#planos`
+  têm `id`. O "Modalidades" do nav e do rodapé aponta agora para
+  `/modalidades.html`, e o "Equipa" (nav, rodapé e o "Ver equipa" da
+  homepage) para `/equipa.html`, não para âncoras.
 
 Links das redes são reais (Instagram, Facebook, TikTok da PT Academy).
 

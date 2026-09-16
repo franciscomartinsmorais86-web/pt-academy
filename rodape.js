@@ -60,7 +60,7 @@ var RODAPE_HTML = `
       <p class="footer__title" id="footer-academia">A academia</p>
       <ul>
         <li><a href="/instalacoes.html">Instalações</a></li>
-        <li><a href="${RODAPE_BASE}#equipa">Equipa</a></li>
+        <li><a href="/equipa.html">Equipa</a></li>
         <li><a href="${RODAPE_BASE}#planos">Planos</a></li>
       </ul>
     </nav>
