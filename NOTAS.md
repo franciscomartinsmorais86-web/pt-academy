@@ -82,12 +82,11 @@ Nota de manutenção: `html, body` levam `overflow-x: clip` e **não** `hidden` 
 
 ### Nav ao scroll — `nav.js`
 
-**O nav e o menu em ecrã inteiro são injetados pelo `nav.js`**, tal como o
-rodapé pelo `rodape.js`. A página põe `<div data-nav></div>` no início do
-`<body>` e o `<script src="nav.js">` **logo a seguir** — não no fim, para
-a página nunca pintar sem nav. Os links estão todos em `NAV_ITENS`; as
-âncoras ganham `/` fora da homepage e o link para a página em que se está
-leva `aria-current="page"` (fica vermelho).
+**O nav e o menu em ecrã inteiro são gerados no build** (`nav()` em
+`moldes/comum.js`), já com o link da página em que se está marcado com
+`aria-current="page"` (fica vermelho). Até 23 set. 2026 eram injetados
+pelo `nav.js`; agora o `nav.js` só tem o comportamento. Os links estão
+em `NAV_ITENS`, no `comum.js`.
 
 O fundo preto, o padding e a troca do hamburger pela lista são todos
 **interpolados** ao longo do scroll através da custom property
@@ -717,13 +716,13 @@ voltarmos à ideia.
 
 ## Rodapé e faixa de fecho
 
-**O rodapé é injetado pelo `rodape.js`.** A página só tem um
-`<div data-rodape></div>` no sítio dele e carrega o script antes dos
-outros; o script troca o marcador pelo `<footer>` completo. Mexer no
-rodapé é mexer só nesse ficheiro, e fica igual em todas as páginas.
-Nas páginas que não sejam a homepage, as âncoras ganham um `/` à frente
-(`/#planos`) para voltarem à homepage. O ano do © é o ano corrente.
-Custo: sem JS a página fica sem rodapé.
+**O rodapé é gerado no build** (`rodape()` em `moldes/comum.js`), com
+os contactos, o horário e as redes vindos do `conteudo/`. Até 23 set.
+2026 era injetado pelo `rodape.js`, que foi retirado; o rodapé passou a
+existir também sem JS. Nas páginas que não sejam a homepage, as âncoras
+ganham um `/` à frente (`/#planos`) para voltarem à homepage. O ano do
+© é escrito no build e o `nav.js` corrige-o no browser se o site não
+tiver sido reconstruído depois da passagem de ano.
 
 O rodapé passou de três colunas anónimas de links para um grid de quatro
 blocos — marca (logo + tagline + redes), "Navegação", "A academia" e
@@ -854,8 +853,7 @@ Formspree (chave pública, feita para ser pública), ou Netlify Forms.
 Primeiro passo do gestor de conteúdos (23 set. 2026): todo o conteúdo
 editável das seis páginas passou para JSON em `conteudo/`, com esquemas
 em `conteudo/esquemas/` e a documentação em `conteudo/LEIAME.md`. O
-site ainda não lê estes ficheiros: isso é o `construir.js`, o passo
-seguinte.
+site passou a ser gerado a partir deles no passo seguinte (ver abaixo).
 
 Verificado por script: todos os textos, fotos e textos alternativos das
 páginas, do rodapé e das fotos no CSS estão nos JSON, com exceção do que
@@ -879,3 +877,46 @@ Mudanças que isto trouxe:
 - A página da campanha em `campanha.json` tem só abertura, planos e fecho,
   feitos com os textos que já existiam. O cliente completa-a no gestor.
 
+## Build — `construir.js` + `moldes/`
+
+Segundo passo do gestor de conteúdos (23 set. 2026). As seis páginas
+deixaram de existir como `.html` na raiz: são geradas pelo
+`node construir.js`, que junta o `conteudo/` com os moldes em `moldes/`
+e escreve o site em `dist/` (fora do git). Sem dependências.
+
+- **Moldes:** um módulo Node por página (`inicio`, `sobre`,
+  `modalidades`, `instalacoes`, `equipa`, `contactos`) e as peças
+  partilhadas no `comum.js`: cabeça, nav, rodapé, fecho, botões,
+  formulário e modal.
+- **Modal automático:** o `fim()` só põe o modal, o `formulario.js` e o
+  `modal.js` nas páginas que têm um botão com ação `modal`.
+- **Verificação:** antes de escrever, o build confirma as contagens fixas
+  (4 modalidades, 8 fotos na galeria, 3 valores…), as abas do horário,
+  um só plano em destaque, datas e horas bem escritas, ficheiros de
+  media que existem e o endereço da campanha. Se falhar, pára com a lista
+  de problemas e não escreve nada.
+- **Fotos de fundo:** o hero da homepage e o das Modalidades, as três
+  fotos do bloco "Sobre" e os quatro tiles passaram de `background-image`
+  no CSS para `<img>` dentro da mesma camada, com `object-fit: cover`
+  (regra nova no `styles.css`). As animações atuam na camada, por isso
+  não mudaram. A rua das Instalações ficou no CSS: é a primeira cena do
+  passeio.
+- **Equipa:** uma pessoa sem vídeo tem só a foto, sem botão, e o
+  `equipa.js` passou a ignorar esses cartões.
+- **Servidor local:** o `servidor.js` serve a `dist/` e responde a
+  endereços sem extensão com o `.html` do mesmo nome, como a Cloudflare.
+
+Verificado por script: as páginas geradas foram comparadas etiqueta a
+etiqueta com as antigas. As únicas diferenças são as previstas: as fotos
+em `<img>`, as descrições novas, "Um espaço familiar" em caixa normal, o
+horário do rodapé com a formatação de Contactos, o ano num `<span>`,
+as legendas das tabelas para leitores de ecrã ("Horário semanal: Cross
+Training") e o botão da faixa da campanha a apontar para a página dela.
+
+### Por fazer
+
+- A página da campanha e o link vermelho no nav. Até lá, o "Saber mais"
+  da faixa aponta para `/3-meses-gratis`, que ainda não existe.
+- A página 404.
+- As secções `perguntas` e `condicoes` da campanha, por desenhar.
+- Passar o formulário para uma Pages Function.

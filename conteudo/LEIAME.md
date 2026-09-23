@@ -4,10 +4,16 @@ Esta pasta guarda o que o cliente pode mudar no site: textos, preços,
 horários, equipa, contactos e campanha. O gestor de conteúdos só escreve
 aqui e em `assets/`. Nunca toca em HTML, CSS ou JS.
 
-> **Estado: em transição.** O `construir.js` ainda não existe. Até ele
-> existir, as páginas `.html` na raiz continuam a ser o que vai para o
-> ar. Uma mudança de texto feita agora tem de ser feita **nos dois
-> sítios**, aqui e no HTML.
+O site é gerado a partir daqui:
+
+```
+node construir.js
+```
+
+junta estes ficheiros com os moldes de `moldes/` e escreve o site em
+`dist/`. A Cloudflare Pages corre o mesmo comando a cada push. Se o
+conteúdo partir uma regra da estrutura (uma contagem fixa, um ficheiro
+que não existe, uma hora mal escrita), o build pára e diz o quê e onde.
 
 O inventário completo, com o porquê de cada decisão, está em
 `docs/PT_Academy_Inventario_Conteudo_Editavel.html`.
@@ -88,7 +94,7 @@ Não se escreve à mão, calcula-se a partir dos dados:
 - as numerações 01, 02… (capítulos, valores, espaços, passos);
 - o lado da foto em cada capítulo (alterna);
 - o título de cada página: `seo.titulo` + " · " + `geral.nome` (a homepage fica só com o nome);
-- o link vermelho no nav e a faixa, só quando `campanha.ativa` é `true`.
+- a faixa da campanha, só quando `campanha.ativa` é `true` (o link vermelho no nav e a página da campanha ainda estão por construir).
 
 ## O que não está aqui
 
@@ -106,5 +112,6 @@ Não se escreve à mão, calcula-se a partir dos dados:
 
 Uma página nova põe os seus textos aqui desde o primeiro dia: um bloco
 em `paginas.json` (ou um ficheiro novo, se for um tema com dados
-próprios) e o esquema correspondente. Nada de texto de conteúdo escrito
-diretamente no molde.
+próprios) e o esquema correspondente. O molde vai para `moldes/` e
+entra na lista `MOLDES` do `construir.js`. Nada de texto de conteúdo
+escrito diretamente no molde.

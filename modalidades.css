@@ -29,7 +29,6 @@ html {
 
 /* A foto aproxima e o conteúdo sobe e apaga-se enquanto o hero sai. */
 .hero__photo--box {
-  background-image: url('./assets/modalidades/hero-box.webp');
   transform: scale(calc(1 + var(--p, 0) * .12));
   will-change: transform;
 }

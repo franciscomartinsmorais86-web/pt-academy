@@ -22,13 +22,15 @@
     },
     "abas": {
       "type": "array",
-      "minItems": 1,
+      "minItems": 2,
+      "maxItems": 2,
+      "description": "Sempre duas, por esta ordem: 'cross' e 'grupo'. O modalidades.css está preso a estes ids. Muda-se o nome e as aulas, não o número de abas.",
       "items": {
         "type": "object",
         "required": ["id", "nome", "aulas"],
         "additionalProperties": false,
         "properties": {
-          "id": { "type": "string", "pattern": "^[a-z-]+$", "description": "Identificador interno. Não muda." },
+          "id": { "enum": ["cross", "grupo"], "description": "Identificador interno. Não muda." },
           "nome": { "type": "string", "maxLength": 24, "description": "Texto da aba." },
           "aulas": {
             "type": "array",

@@ -7,7 +7,11 @@
  * Sem dependências: o fetch global do Node 18+ chega para falar com a API
  * do Resend, portanto não há npm install neste projeto.
  *
- *   node servidor.js
+ *   node construir.js && node servidor.js
+ *
+ * Serve o site gerado em dist/ (ver construir.js), não a raiz: o que se
+ * vê aqui é o mesmo que a Cloudflare publica. Depois de mudar conteúdo,
+ * moldes, CSS ou JS, volta a correr o construir.js.
  *
  * Variáveis de ambiente (ver .env.exemplo):
  *   RESEND_API_KEY   obrigatória — a chave secreta, nunca no frontend
@@ -21,10 +25,11 @@ var fs = require('fs');
 var path = require('path');
 
 var PORTA = process.env.PORTA || 3000;
+var SITE = path.join(__dirname, 'dist');
 var RESEND_API_KEY = process.env.RESEND_API_KEY;
 /* TODO (confirmar com a academia): geral@ptacademy.pt é o endereço que
-   estamos a convencionar, ainda por confirmar. Aparece também no
-   contactos.html e no rodape.js. */
+   estamos a convencionar, ainda por confirmar. O email público do site
+   está à parte, em conteudo/contactos.json. */
 var EMAIL_DESTINO = process.env.EMAIL_DESTINO || 'geral@ptacademy.pt';
 var EMAIL_REMETENTE = process.env.EMAIL_REMETENTE || 'Site PT Academy <site@ptacademy.pt>';
 
@@ -260,11 +265,15 @@ function servirFicheiro(pedido, resposta) {
 
   /* path.normalize antes do join: sem isto, um ../../ no URL saía da
      pasta do site. */
-  var alvo = path.join(__dirname, path.normalize(caminho).replace(/^(\.\.[/\\])+/, ''));
-  if (!alvo.startsWith(__dirname)) {
+  var alvo = path.join(SITE, path.normalize(caminho).replace(/^(\.\.[/\\])+/, ''));
+  if (!alvo.startsWith(SITE)) {
     resposta.writeHead(403);
     return resposta.end('Proibido');
   }
+
+  /* Endereços sem extensão (a página da campanha, /3-meses-gratis)
+     servem o .html com o mesmo nome, como a Cloudflare Pages faz. */
+  if (!path.extname(alvo)) alvo += '.html';
 
   fs.readFile(alvo, function (erro, conteudo) {
     if (erro) {

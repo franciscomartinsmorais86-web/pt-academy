@@ -4,3 +4,6 @@ gallery/
 
 # Segredos do servidor (Resend). Ver .env.exemplo.
 .env
+
+# Site gerado pelo construir.js. A Cloudflare gera o seu a cada push.
+dist/

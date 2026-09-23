@@ -7,8 +7,12 @@ mostra partes da sala a ser usada.
 # PT Academy
 
 Site do ginásio PT Academy (conteúdo em PT-PT). A fonte da verdade da
-identidade visual é a homepage: `index.html` + `styles.css`. O histórico e o
-detalhe de cada animação estão no `NOTAS.md`.
+identidade visual é a homepage: `moldes/inicio.js` + `styles.css`. O
+histórico e o detalhe de cada animação estão no `NOTAS.md`.
+
+O site é gerado: `node construir.js` junta `conteudo/` com `moldes/` e
+escreve o site em `dist/` (fora do git). Não há páginas `.html` na raiz.
+Ver a secção "Conteúdo editável" mais abaixo.
 
 # Design system
 
@@ -145,11 +149,11 @@ checkbox com `accent-color: var(--color-red)`.
 **Marca-de-água**: `PT·ACADEMY` em contorno (`-webkit-text-stroke: 1px
 rgba(255,255,255,.07)`), nunca preenchida.
 
-**Nav e rodapé**: vivem no `nav.js` e no `rodape.js`, nunca copiados para
-o HTML. Uma página nova põe `<div data-nav></div>` no início do `<body>`
-com o `<script src="nav.js">` logo a seguir, e `<div data-rodape></div>`
-no fim com o `rodape.js` antes dos outros scripts. Links novos no nav
-entram em `NAV_ITENS`.
+**Nav e rodapé**: gerados no build por `nav()` e `rodape()` em
+`moldes/comum.js`, nunca copiados à mão. Um molde novo usa `c.nav(pagina)`
+no início do `<body>` e `c.fim(...)` no fim, que põe o rodapé, o modal
+(se a página tiver um botão `modal`) e os scripts. O `nav.js` só tem o
+comportamento. Links novos no nav entram em `NAV_ITENS`, no `comum.js`.
 
 **Ícones**: SVG inline, `currentColor`, cantos retos. Sem bibliotecas.
 
@@ -201,10 +205,17 @@ O gestor, que vive no site da NK e usa o design system da NK, só escreve
 em `conteudo/` e `assets/`. Formato, marcas de texto e o que é gerado:
 `conteudo/LEIAME.md`. Decisões: `docs/PT_Academy_Inventario_Conteudo_Editavel.html`.
 
-- **Em transição:** até o `construir.js` existir, o HTML é o que vai
-  para o ar. Mudar um texto = mudá-lo nos dois sítios.
+- **Build:** `node construir.js` lê `conteudo/`, verifica as regras que
+  partiriam a página (contagens fixas, ficheiros em falta, endereços) e
+  escreve `dist/`. A Cloudflare Pages corre o mesmo comando a cada push,
+  com `dist` como pasta de saída. Localmente, `node servidor.js` serve a
+  `dist/`.
+- **Moldes** (`moldes/`): um módulo por página, que devolve o HTML com
+  template literals. Tudo o que vem do conteúdo passa por `esc()` ou
+  `marcas()` do `comum.js`: o cliente nunca injeta HTML.
 - Texto de conteúdo nunca fica escrito à mão num molde: vai para
-  `conteudo/` e ganha campo no esquema, desde o primeiro dia.
+  `conteudo/` e ganha campo no esquema, desde o primeiro dia. Página
+  nova = molde novo em `moldes/` + entrada em `MOLDES` no `construir.js`.
 - Dados partilhados (telefone, horário, planos, modalidades) existem
   numa só chave; o build espalha-os.
 

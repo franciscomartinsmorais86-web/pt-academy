@@ -1,65 +1,22 @@
-/* Nav e menu em ecrã inteiro, partilhados por todas as páginas.
+/* Nav e menu em ecrã inteiro: o comportamento.
 
-   Markup: a página põe um <div data-nav></div> no início do <body> e
-   carrega este script LOGO A SEGUIR (não no fim, como os outros). O
-   script troca o marcador pelo nav + menu assim que é lido, portanto a
-   página nunca chega a pintar sem nav.
+   O markup é gerado pelo construir.js (moldes/comum.js, nav()), com a
+   página atual já marcada. Este script só lhe dá vida.
 
-   Comportamento: o fundo preto, o padding e a troca do hamburger pela
-   lista são todos interpolados ao longo do scroll, não disparados num
-   ponto. A transição corre entre estas duas frações da altura do ecrã,
-   ou seja termina mesmo à saída do hero. */
+   O fundo preto, o padding e a troca do hamburger pela lista são todos
+   interpolados ao longo do scroll, não disparados num ponto. A transição
+   corre entre estas duas frações da altura do ecrã, ou seja termina
+   mesmo à saída do hero. */
 var NAV_START = 0.55;
 var NAV_END = 1.05;
 
-var NAV_ITENS = [
-  { texto: 'Início',      href: '/' },
-  { texto: 'Sobre nós',   href: '/sobre.html' },
-  { texto: 'Modalidades', href: '/modalidades.html' },
-  { texto: 'Instalações', href: '/instalacoes.html' },
-  { texto: 'Equipa',      href: '/equipa.html' },
-  { texto: 'Contactos',   href: '/contactos.html' }
-];
-
-/* aria-current marca a página em que se está (fica a vermelho). A
-   homepage tanto pode vir como / ou como /index.html. */
-var NAV_PAGINA = location.pathname.replace(/\/index\.html$/, '/');
-
-function navItens(classeItem, classeLink) {
-  return NAV_ITENS.map(function (item) {
-    var atual = item.href === NAV_PAGINA ? ' aria-current="page"' : '';
-    return `<li${classeItem ? ` class="${classeItem}"` : ''}><a class="${classeLink}" href="${item.href}"${atual}>${item.texto}</a></li>`;
-  }).join('\n    ');
-}
-
-var NAV_HTML = `
-<nav class="nav">
-  <a href="/" class="nav__logo">PT<span class="nav__logo-dot">·</span>ACADEMY</a>
-
-  <ul class="nav__links">
-    ${navItens('', 'nav__link')}
-  </ul>
-
-  <button type="button" class="nav__toggle" id="nav-toggle"
-          aria-label="Abrir menu" aria-expanded="false" aria-controls="menu">
-    <span class="nav__toggle-bar"></span>
-    <span class="nav__toggle-bar"></span>
-    <span class="nav__toggle-bar"></span>
-  </button>
-</nav>
-
-<!-- Menu em ecrã inteiro -->
-<div class="menu" id="menu">
-  <ul class="menu__list">
-    ${navItens('menu__item', 'menu__link')}
-  </ul>
-</div>`;
-
-document.querySelectorAll('[data-nav]').forEach(function (lugar) {
-  lugar.outerHTML = NAV_HTML;
-});
-
 document.addEventListener('DOMContentLoaded', function () {
+  /* O ano do rodapé é escrito no build. Se o site não for reconstruído
+     depois da passagem de ano, o browser corrige-o. */
+  document.querySelectorAll('[data-ano]').forEach(function (el) {
+    el.textContent = new Date().getFullYear();
+  });
+
   var root = document.documentElement;
   var nav = document.querySelector('.nav');
   var toggle = document.getElementById('nav-toggle');

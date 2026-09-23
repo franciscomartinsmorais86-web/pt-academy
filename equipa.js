@@ -49,7 +49,12 @@ document.addEventListener('DOMContentLoaded', function () {
     }, EQUIPA_REBOBINAR);
   }
 
-  var cartoes = Array.prototype.map.call(document.querySelectorAll('.pessoa'), function (el) {
+  /* Só os cartões com vídeo: sem vídeo, o cartão é só a foto. */
+  var comVideo = Array.prototype.filter.call(document.querySelectorAll('.pessoa'), function (el) {
+    return el.querySelector('.pessoa__video');
+  });
+
+  var cartoes = comVideo.map(function (el) {
     var cartao = {
       el: el,
       botao: el.querySelector('.pessoa__media'),

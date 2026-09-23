@@ -152,12 +152,27 @@ a:hover {
   background: var(--color-black);
 }
 
+/* A foto vem do conteúdo como <img> dentro da camada (ver moldes/).
+   O background fica para as variantes que a fixam no CSS, como a rua
+   das Instalações. */
 .hero__photo {
   position: absolute;
   inset: 0;
-  background-image: url('./assets/pt-academy-25.webp');
   background-size: cover;
   background-position: center;
+}
+
+/* Fotografias de fundo vindas do conteúdo: enchem a camada que as
+   contém, que é quem anima (zoom, reveal, hover). */
+.hero__photo > img,
+.about__photo-img > img,
+.modality__photo > img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
 }
 
 .hero__scrim {
@@ -506,17 +521,13 @@ a:hover {
 
 /* A camada que realmente anima, dentro da moldura. */
 .about__photo-img {
+  position: relative;
   width: 100%;
   height: 100%;
-  background-size: cover;
-  background-position: center;
 }
 .about__photo--tall {
   grid-row: 1 / 3;
 }
-.about__photo--rowing { background-image: url('./assets/hyrox.webp'); }
-.about__photo--aulas  { background-image: url('./assets/pt-academy-aulas-pt-2.webp'); }
-.about__photo--pilates { background-image: url('./assets/pilates-12.webp'); }
 
 /* ---------- Modalities ---------- */
 
@@ -545,8 +556,6 @@ a:hover {
 .modality__photo {
   position: absolute;
   inset: 0;
-  background-size: cover;
-  background-position: center;
   transition: transform .5s ease;
 }
 .modality:hover .modality__photo {
@@ -571,11 +580,6 @@ a:hover {
   letter-spacing: .03em;
   text-transform: uppercase;
 }
-
-.modality--musculacao .modality__photo { background-image: url('./assets/pt-academy-musculacao.webp'); }
-.modality--crossfit .modality__photo   { background-image: url('./assets/pt-academy-crossfit.webp'); }
-.modality--fitness .modality__photo    { background-image: url('./assets/pt-academy-fitness.webp'); }
-.modality--danca .modality__photo      { background-image: url('./assets/pt-academy-danca.webp'); }
 
 /* ---------- Galeria pregada ---------- */
 
