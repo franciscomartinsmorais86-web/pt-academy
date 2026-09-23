@@ -1,0 +1,39 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "planos.json",
+  "title": "Planos",
+  "description": "Os cartões de preços da homepage. Também servem a secção 'planos' da página da campanha e a linha 'incluída nos planos' das modalidades.",
+  "type": "object",
+  "required": ["eyebrow", "titulo", "lead", "planos"],
+  "additionalProperties": false,
+  "properties": {
+    "eyebrow": { "$ref": "comum.json#/$defs/eyebrow" },
+    "titulo": { "$ref": "comum.json#/$defs/titulo" },
+    "lead": { "$ref": "comum.json#/$defs/lead" },
+    "planos": {
+      "type": "array",
+      "minItems": 1,
+      "description": "Até 4 por linha no computador; o quinto começa uma linha nova. Só um pode ter destaque.",
+      "items": {
+        "type": "object",
+        "required": ["nome", "preco", "periodo", "inclui", "botao"],
+        "additionalProperties": false,
+        "properties": {
+          "nome": { "type": "string", "maxLength": 20, "description": "Nome do plano. Tem de ser único: a campanha e as modalidades referem-no por este nome." },
+          "preco": { "type": "number", "minimum": 0, "description": "Só o número, sem €." },
+          "periodo": { "type": "string", "description": "O que vem depois do preço: '/mês'." },
+          "pitch": { "type": "string", "maxLength": 40, "description": "Opcional. Frase curta por baixo do preço." },
+          "destaque": { "type": "string", "maxLength": 20, "description": "Opcional. Se existir, o cartão fica em destaque (bordô, risca vermelha, botão vermelho) e este texto aparece no topo: 'Mais escolhido'." },
+          "inclui": {
+            "type": "array",
+            "minItems": 1,
+            "maxItems": 6,
+            "items": { "type": "string" },
+            "description": "O que o plano inclui, um ponto por item."
+          },
+          "botao": { "$ref": "comum.json#/$defs/botao" }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,244 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "paginas.json",
+  "title": "Páginas",
+  "description": "O que é próprio de cada página: SEO, heros, fechos e blocos que não se repetem noutro lado. Os dados partilhados (contactos, planos, modalidades, equipa, horário) estão nos outros ficheiros.",
+  "type": "object",
+  "required": ["inicio", "sobre", "modalidades", "instalacoes", "equipa", "contactos", "modal", "sucesso"],
+  "additionalProperties": false,
+  "properties": {
+    "inicio": {
+      "type": "object",
+      "description": "Homepage (index.html).",
+      "required": ["seo", "hero", "sobre", "galeria", "fecho"],
+      "additionalProperties": false,
+      "properties": {
+        "seo": { "$ref": "comum.json#/$defs/seo" },
+        "hero": {
+          "type": "object",
+          "required": ["eyebrow", "titulo", "foto", "botao"],
+          "additionalProperties": false,
+          "properties": {
+            "eyebrow": { "$ref": "comum.json#/$defs/eyebrow" },
+            "titulo": { "$ref": "comum.json#/$defs/tituloGrande" },
+            "foto": { "$ref": "comum.json#/$defs/ficheiro", "description": "Foto de fundo, decorativa." },
+            "botao": { "$ref": "comum.json#/$defs/botao" }
+          }
+        },
+        "sobre": {
+          "type": "object",
+          "required": ["eyebrow", "titulo", "texto", "botoes", "fotos"],
+          "additionalProperties": false,
+          "properties": {
+            "eyebrow": { "$ref": "comum.json#/$defs/eyebrow" },
+            "titulo": { "$ref": "comum.json#/$defs/titulo" },
+            "texto": { "type": "string" },
+            "botoes": { "$ref": "comum.json#/$defs/botoes" },
+            "fotos": {
+              "type": "array",
+              "minItems": 3,
+              "maxItems": 3,
+              "items": { "$ref": "comum.json#/$defs/ficheiro" },
+              "description": "Sempre três, decorativas. A primeira é a alta, à esquerda."
+            }
+          }
+        },
+        "galeria": {
+          "type": "object",
+          "description": "A galeria pregada. A coreografia é feita para exatamente oito fotos e dois textos: troca-se o conteúdo, não a quantidade.",
+          "required": ["fotos", "textos"],
+          "additionalProperties": false,
+          "properties": {
+            "fotos": { "type": "array", "minItems": 8, "maxItems": 8, "items": { "$ref": "comum.json#/$defs/foto" } },
+            "textos": {
+              "type": "array",
+              "minItems": 2,
+              "maxItems": 2,
+              "items": {
+                "type": "object",
+                "required": ["titulo", "texto"],
+                "additionalProperties": false,
+                "properties": {
+                  "titulo": { "$ref": "comum.json#/$defs/titulo" },
+                  "texto": { "type": "string", "maxLength": 200 }
+                }
+              }
+            }
+          }
+        },
+        "fecho": { "$ref": "comum.json#/$defs/fecho" }
+      }
+    },
+    "sobre": {
+      "type": "object",
+      "required": ["seo", "hero", "manifesto", "historia", "numeros", "letreiro", "valores", "fecho"],
+      "additionalProperties": false,
+      "properties": {
+        "seo": { "$ref": "comum.json#/$defs/seo" },
+        "hero": {
+          "type": "object",
+          "required": ["eyebrow", "titulo", "foto"],
+          "additionalProperties": false,
+          "properties": {
+            "eyebrow": { "$ref": "comum.json#/$defs/eyebrow" },
+            "titulo": { "$ref": "comum.json#/$defs/tituloGrande" },
+            "foto": { "$ref": "comum.json#/$defs/foto" }
+          }
+        },
+        "manifesto": {
+          "type": "object",
+          "required": ["eyebrow", "texto"],
+          "additionalProperties": false,
+          "properties": {
+            "eyebrow": { "$ref": "comum.json#/$defs/eyebrow" },
+            "texto": {
+              "type": "string",
+              "maxLength": 300,
+              "description": "Acende palavra a palavra com o scroll. Pensado para duas a três linhas. Uma palavra em *destaque*.",
+              "x-marcas": ["destaque"]
+            }
+          }
+        },
+        "historia": {
+          "type": "object",
+          "required": ["eyebrow", "titulo", "paragrafos", "fotos"],
+          "additionalProperties": false,
+          "properties": {
+            "eyebrow": { "$ref": "comum.json#/$defs/eyebrow" },
+            "titulo": { "$ref": "comum.json#/$defs/titulo" },
+            "paragrafos": { "type": "array", "minItems": 1, "maxItems": 3, "items": { "type": "string" } },
+            "fotos": {
+              "type": "array",
+              "minItems": 2,
+              "maxItems": 2,
+              "items": { "$ref": "comum.json#/$defs/foto" },
+              "description": "A primeira em retrato, a segunda em paisagem."
+            }
+          }
+        },
+        "numeros": {
+          "type": "object",
+          "description": "Só as legendas. Os números são calculados: anos desde a fundação (geral.json) e quantas modalidades há.",
+          "required": ["anos", "modalidades"],
+          "additionalProperties": false,
+          "properties": {
+            "anos": { "type": "string", "maxLength": 30 },
+            "modalidades": { "type": "string", "maxLength": 30 }
+          }
+        },
+        "letreiro": {
+          "type": "array",
+          "minItems": 2,
+          "maxItems": 5,
+          "items": { "type": "string", "maxLength": 20 },
+          "description": "Palavras da segunda linha do letreiro. A primeira linha são os nomes das modalidades."
+        },
+        "valores": {
+          "type": "object",
+          "required": ["eyebrow", "titulo", "lista"],
+          "additionalProperties": false,
+          "properties": {
+            "eyebrow": { "$ref": "comum.json#/$defs/eyebrow" },
+            "titulo": { "$ref": "comum.json#/$defs/titulo" },
+            "lista": {
+              "type": "array",
+              "minItems": 3,
+              "maxItems": 3,
+              "description": "Sempre três. A numeração é gerada.",
+              "items": {
+                "type": "object",
+                "required": ["nome", "texto"],
+                "additionalProperties": false,
+                "properties": {
+                  "nome": { "type": "string", "maxLength": 20 },
+                  "texto": { "type": "string", "maxLength": 160 }
+                }
+              }
+            }
+          }
+        },
+        "fecho": { "$ref": "comum.json#/$defs/fecho" }
+      }
+    },
+    "modalidades": {
+      "type": "object",
+      "required": ["seo", "hero"],
+      "additionalProperties": false,
+      "properties": {
+        "seo": { "$ref": "comum.json#/$defs/seo" },
+        "hero": {
+          "type": "object",
+          "required": ["eyebrow", "titulo", "foto"],
+          "additionalProperties": false,
+          "properties": {
+            "eyebrow": { "$ref": "comum.json#/$defs/eyebrow" },
+            "titulo": { "$ref": "comum.json#/$defs/tituloGrande" },
+            "foto": { "$ref": "comum.json#/$defs/ficheiro", "description": "Foto de fundo, decorativa." }
+          }
+        }
+      }
+    },
+    "instalacoes": {
+      "type": "object",
+      "required": ["seo", "hero", "fecho"],
+      "additionalProperties": false,
+      "properties": {
+        "seo": { "$ref": "comum.json#/$defs/seo" },
+        "hero": {
+          "type": "object",
+          "description": "A foto é a primeira cena do passeio virtual, por desenho.",
+          "required": ["eyebrow", "titulo"],
+          "additionalProperties": false,
+          "properties": {
+            "eyebrow": { "$ref": "comum.json#/$defs/eyebrow" },
+            "titulo": { "$ref": "comum.json#/$defs/tituloGrande" }
+          }
+        },
+        "fecho": { "$ref": "comum.json#/$defs/fecho" }
+      }
+    },
+    "equipa": {
+      "type": "object",
+      "description": "O resto da página está no equipa.json.",
+      "required": ["seo"],
+      "additionalProperties": false,
+      "properties": {
+        "seo": { "$ref": "comum.json#/$defs/seo" }
+      }
+    },
+    "contactos": {
+      "type": "object",
+      "description": "Telefone, email, morada e horário vêm do contactos.json.",
+      "required": ["seo", "eyebrow", "titulo", "lead", "formulario"],
+      "additionalProperties": false,
+      "properties": {
+        "seo": { "$ref": "comum.json#/$defs/seo" },
+        "eyebrow": { "$ref": "comum.json#/$defs/eyebrow" },
+        "titulo": { "$ref": "comum.json#/$defs/titulo" },
+        "lead": { "$ref": "comum.json#/$defs/lead" },
+        "formulario": { "type": "string", "maxLength": 40, "description": "Título da caixa do formulário." }
+      }
+    },
+    "modal": {
+      "type": "object",
+      "description": "Cabeça do modal 'Enviar questão'. Os campos do formulário são da NK.",
+      "required": ["eyebrow", "titulo", "lead"],
+      "additionalProperties": false,
+      "properties": {
+        "eyebrow": { "$ref": "comum.json#/$defs/eyebrow" },
+        "titulo": { "$ref": "comum.json#/$defs/titulo" },
+        "lead": { "$ref": "comum.json#/$defs/lead" }
+      }
+    },
+    "sucesso": {
+      "type": "object",
+      "description": "O que aparece depois de enviar uma questão, no modal e na página de Contactos.",
+      "required": ["titulo", "lead"],
+      "additionalProperties": false,
+      "properties": {
+        "titulo": { "type": "string", "maxLength": 30 },
+        "lead": { "type": "string", "maxLength": 120 }
+      }
+    }
+  }
+}

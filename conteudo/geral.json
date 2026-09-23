@@ -1,0 +1,12 @@
+{
+  "nome": "PT Academy",
+  "tagline": "Vila Real · desde 2010",
+  "fundacao": "2010-06",
+  "redes": [
+    { "rede": "instagram", "url": "https://www.instagram.com/pt.academy.dfcm/" },
+    { "rede": "facebook", "url": "https://www.facebook.com/ptacdm/?locale=pt_PT" },
+    { "rede": "tiktok", "url": "https://www.tiktok.com/@ptacademy.dfcm" }
+  ],
+  "privacidade": "#",
+  "livroReclamacoes": "https://www.livroreclamacoes.pt/inicio"
+}

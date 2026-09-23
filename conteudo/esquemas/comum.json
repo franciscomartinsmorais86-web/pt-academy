@@ -1,0 +1,120 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "comum.json",
+  "title": "Peças comuns",
+  "description": "Tipos partilhados pelos outros esquemas. A chave x-marcas diz que marcas de texto um campo aceita (ver conteudo/LEIAME.md): destaque = *palavra* a vermelho, quebra = | para mudar de linha, forte = **palavra** a negrito, telefone = {telefone} substituído pelo número com link.",
+  "$defs": {
+    "texto": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Texto simples, sem marcas.",
+      "x-marcas": []
+    },
+    "eyebrow": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 60,
+      "description": "Linha curta por cima do título. Sai em maiúsculas e a vermelho claro. Escreve em caixa normal.",
+      "x-marcas": []
+    },
+    "titulo": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 80,
+      "description": "Título. Sai em maiúsculas. Três a cinco palavras. No máximo uma palavra em *destaque*.",
+      "x-marcas": ["destaque"],
+      "not": { "pattern": "\\*[^*]+\\*.*\\*[^*]+\\*" }
+    },
+    "tituloGrande": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 80,
+      "description": "Título de hero ou de faixa. Como o título, mas aceita | para forçar uma mudança de linha.",
+      "x-marcas": ["destaque", "quebra"],
+      "not": { "pattern": "\\*[^*]+\\*.*\\*[^*]+\\*" }
+    },
+    "lead": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 400,
+      "description": "Texto de abertura por baixo de um título.",
+      "x-marcas": []
+    },
+    "ficheiro": {
+      "type": "string",
+      "pattern": "^[a-z0-9/_.-]+\\.(webp|jpg|jpeg|png|mp4)$",
+      "description": "Caminho de um ficheiro dentro de assets/, sem o assets/ à frente. Minúsculas e hífenes. Fotografias em .webp.",
+      "x-ficheiro": true
+    },
+    "foto": {
+      "type": "object",
+      "description": "Fotografia com texto alternativo.",
+      "required": ["ficheiro", "alt"],
+      "additionalProperties": false,
+      "properties": {
+        "ficheiro": { "$ref": "#/$defs/ficheiro" },
+        "alt": {
+          "type": "string",
+          "description": "O que a fotografia mostra, para quem não a vê. Vazio só quando a foto é decorativa."
+        }
+      }
+    },
+    "acao": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Para onde o botão leva. 'ligar' liga para o telefone dos contactos; 'modal' abre o formulário de questão; 'campanha' abre a página da campanha ativa; qualquer outra coisa é um endereço (/equipa.html, /#planos, https://…)."
+    },
+    "botao": {
+      "type": "object",
+      "required": ["texto", "acao"],
+      "additionalProperties": false,
+      "properties": {
+        "texto": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 30,
+          "description": "Texto do botão. Curto e imperativo: 'Marcar visita', 'Começar hoje'."
+        },
+        "acao": { "$ref": "#/$defs/acao" }
+      }
+    },
+    "botoes": {
+      "type": "array",
+      "description": "O primeiro botão sai a vermelho, o segundo em contorno.",
+      "minItems": 1,
+      "maxItems": 2,
+      "items": { "$ref": "#/$defs/botao" }
+    },
+    "seo": {
+      "type": "object",
+      "description": "Como a página aparece no separador do browser e no Google.",
+      "required": ["titulo", "descricao"],
+      "additionalProperties": false,
+      "properties": {
+        "titulo": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 50,
+          "description": "Nome da página. O build acrescenta ' · PT Academy'."
+        },
+        "descricao": {
+          "type": "string",
+          "minLength": 50,
+          "maxLength": 160,
+          "description": "Uma ou duas frases para o resultado do Google."
+        }
+      }
+    },
+    "fecho": {
+      "type": "object",
+      "description": "Faixa bordô no fim da página.",
+      "required": ["eyebrow", "titulo", "botoes"],
+      "additionalProperties": false,
+      "properties": {
+        "eyebrow": { "$ref": "#/$defs/eyebrow" },
+        "titulo": { "$ref": "#/$defs/tituloGrande" },
+        "botoes": { "$ref": "#/$defs/botoes" }
+      }
+    }
+  }
+}

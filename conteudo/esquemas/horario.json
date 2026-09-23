@@ -1,0 +1,50 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "horario.json",
+  "title": "Horário de aulas",
+  "description": "As aulas da semana, uma por linha. O build monta a tabela das Modalidades: uma aba por item de 'abas', horas nas linhas (por ordem), dias nas colunas. Aulas no mesmo dia e hora ficam empilhadas na mesma célula, pela ordem em que aparecem aqui.",
+  "type": "object",
+  "required": ["dias", "abas"],
+  "additionalProperties": false,
+  "properties": {
+    "dias": {
+      "type": "array",
+      "description": "As colunas da tabela, por ordem.",
+      "items": {
+        "type": "object",
+        "required": ["id", "nome"],
+        "additionalProperties": false,
+        "properties": {
+          "id": { "type": "string", "pattern": "^[a-z]{3}$" },
+          "nome": { "type": "string", "description": "Cabeçalho da coluna." }
+        }
+      }
+    },
+    "abas": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": ["id", "nome", "aulas"],
+        "additionalProperties": false,
+        "properties": {
+          "id": { "type": "string", "pattern": "^[a-z-]+$", "description": "Identificador interno. Não muda." },
+          "nome": { "type": "string", "maxLength": 24, "description": "Texto da aba." },
+          "aulas": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "required": ["nome", "dia", "hora"],
+              "additionalProperties": false,
+              "properties": {
+                "nome": { "type": "string", "maxLength": 24 },
+                "dia": { "type": "string", "description": "Um dos id de 'dias'." },
+                "hora": { "type": "string", "pattern": "^\\d{2}h\\d{2}$", "description": "Hora de início: '18h30'." }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

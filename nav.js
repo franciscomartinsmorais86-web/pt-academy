@@ -12,12 +12,8 @@
 var NAV_START = 0.55;
 var NAV_END = 1.05;
 
-/* Nas outras páginas as âncoras têm de apontar para a homepage. */
-var NAV_NA_HOMEPAGE = /\/(index\.html)?$/.test(location.pathname);
-var NAV_BASE = NAV_NA_HOMEPAGE ? '' : '/';
-
 var NAV_ITENS = [
-  { texto: 'Início',      href: NAV_BASE + '#inicio' },
+  { texto: 'Início',      href: '/' },
   { texto: 'Sobre nós',   href: '/sobre.html' },
   { texto: 'Modalidades', href: '/modalidades.html' },
   { texto: 'Instalações', href: '/instalacoes.html' },
@@ -25,11 +21,13 @@ var NAV_ITENS = [
   { texto: 'Contactos',   href: '/contactos.html' }
 ];
 
-/* aria-current só nos links para páginas — as âncoras nunca são "a
-   página em que se está". */
+/* aria-current marca a página em que se está (fica a vermelho). A
+   homepage tanto pode vir como / ou como /index.html. */
+var NAV_PAGINA = location.pathname.replace(/\/index\.html$/, '/');
+
 function navItens(classeItem, classeLink) {
   return NAV_ITENS.map(function (item) {
-    var atual = item.href === location.pathname ? ' aria-current="page"' : '';
+    var atual = item.href === NAV_PAGINA ? ' aria-current="page"' : '';
     return `<li${classeItem ? ` class="${classeItem}"` : ''}><a class="${classeLink}" href="${item.href}"${atual}>${item.texto}</a></li>`;
   }).join('\n    ');
 }

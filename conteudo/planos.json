@@ -1,0 +1,55 @@
+{
+  "eyebrow": "Planos",
+  "titulo": "Escolhe o teu ritmo",
+  "lead": "Sem fidelização e sem custos de inscrição. Mudas de plano ou cancelas quando quiseres — basta avisares até ao fim do mês.",
+  "planos": [
+    {
+      "nome": "Base",
+      "preco": 22,
+      "periodo": "/mês",
+      "inclui": [
+        "Sala de musculação e cardio",
+        "Livre trânsito, todo o horário",
+        "Plano de treino",
+        "Avaliação física inicial"
+      ],
+      "botao": { "texto": "Ligar", "acao": "ligar" }
+    },
+    {
+      "nome": "Power",
+      "preco": 28,
+      "periodo": "/mês",
+      "pitch": "Crossfit e aulas de grupo",
+      "destaque": "Mais escolhido",
+      "inclui": [
+        "Tudo o que o plano Base inclui",
+        "Inclui duas aulas de grupo por semana",
+        "Acesso à sala de cross training"
+      ],
+      "botao": { "texto": "Ligar", "acao": "ligar" }
+    },
+    {
+      "nome": "Premium",
+      "preco": 35,
+      "periodo": "/mês",
+      "pitch": "A melhor experiência",
+      "inclui": [
+        "Tudo o que o plano Power inclui",
+        "Acesso livre às salas de musculação e cross training",
+        "Acesso livre às aulas de grupo"
+      ],
+      "botao": { "texto": "Ligar", "acao": "ligar" }
+    },
+    {
+      "nome": "Estudante",
+      "preco": 23,
+      "periodo": "/mês",
+      "inclui": [
+        "Acesso livre a todas as salas de musculação e cardio",
+        "Aulas de grupo diárias até às 16:30",
+        "Destinado a estudantes matriculados na UTAD"
+      ],
+      "botao": { "texto": "Ligar", "acao": "ligar" }
+    }
+  ]
+}

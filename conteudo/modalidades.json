@@ -1,0 +1,101 @@
+{
+  "modalidades": [
+    {
+      "id": "musculacao",
+      "nome": "Musculação",
+      "eyebrow": "Sala de musculação e cardio",
+      "lead": "Máquinas modernas, peso livre e uma sala com vista para o Corgo. Entras com uma avaliação física e um plano de treino feito para ti e há sempre alguém na sala para corrigir uma pega ou subir a carga.",
+      "pontos": [
+        "Avaliação física à entrada",
+        "Plano de treino revisto contigo",
+        "Livre trânsito em todo o horário",
+        "Zona de cardio com passadeiras, remos e bicicletas"
+      ],
+      "etiquetasRotulo": "O que encontras",
+      "etiquetas": ["Peso livre", "Máquinas", "Cardio", "Plano de treino"],
+      "plano": "Incluída em **todos os planos**",
+      "foto": { "ficheiro": "modalidades/musculacao.webp", "alt": "Atleta a fazer remada com barra na sala de musculação da PT Academy" },
+      "detalhe": { "ficheiro": "modalidades/musculacao-detalhe.webp", "alt": "Treinador a acompanhar uma sócia numa máquina de puxada" },
+      "tile": "pt-academy-musculacao.webp"
+    },
+    {
+      "id": "crossfit",
+      "nome": "Crossfit",
+      "eyebrow": "PT Cross Academy",
+      "lead": "Uma box com pé-direito alto, rig, barras, kettlebells e relvado para o trenó. Cada treino é uma nova oportunidade de te superares.",
+      "pontos": [
+        "Aulas em grupo, sempre com coach",
+        "Escalável: do zero ao competitivo",
+        "Força, ginástica e condicionamento no mesmo treino"
+      ],
+      "etiquetasRotulo": "O que encontras",
+      "etiquetas": ["WOD", "Halterofilismo", "Ginástica", "Metcon", "HYROX"],
+      "plano": "Incluída nos planos **Power** e **Premium**",
+      "foto": { "ficheiro": "modalidades/crossfit.webp", "alt": "Atleta a fazer swing com kettlebell em frente ao letreiro da PT Cross Academy" },
+      "detalhe": { "ficheiro": "modalidades/crossfit-detalhe.webp", "alt": "Coach a acompanhar um agachamento no rig da box" },
+      "tile": "pt-academy-crossfit.webp"
+    },
+    {
+      "id": "fitness",
+      "nome": "Fitness",
+      "eyebrow": "PT Fitness Academy · aulas de grupo",
+      "lead": "Aulas de grupo em estúdio para todos os níveis e todas as idades. Escolhes o ritmo, do Pilates ao HIIT, com professores que conhecem o teu potencial e as tuas limitações.",
+      "pontos": [
+        "Onze aulas diferentes, em cinco estúdios",
+        "Turmas pequenas, correção individual",
+        "Horário fixo, de manhã à noite"
+      ],
+      "etiquetasRotulo": "Aulas",
+      "etiquetas": ["GAP", "Abdominais", "Pump", "Pilates", "Jump", "Cycling", "HIIT", "Cross-Training", "Zumba", "Step Latino", "Alongamentos"],
+      "plano": "**Duas aulas** por semana no Power · **livre** no Premium",
+      "foto": { "ficheiro": "modalidades/fitness.webp", "alt": "Turma numa aula de step latino na PT Fitness Academy" },
+      "detalhe": { "ficheiro": "modalidades/fitness-detalhe.webp", "alt": "Aula de Pilates com bolas de estabilidade" },
+      "tile": "pt-academy-fitness.webp"
+    },
+    {
+      "id": "danca",
+      "nome": "Dança",
+      "eyebrow": "PT Dance Academy · escola de dança",
+      "lead": "Uma escola de dança dentro do ginásio, com estúdios de barra e espelho. Contemporâneo, Hip Hop e Ballet, dos mais pequenos aos adultos, para quem nunca dançou e para quem não consegue parar.",
+      "pontos": [
+        "Turmas por idade e por nível",
+        "Professoras formadas em dança",
+        "Espetáculo de final de ano"
+      ],
+      "etiquetasRotulo": "Estilos",
+      "etiquetas": ["Contemporâneo", "Hip Hop", "Ballet"],
+      "plano": "Escola de dança · **inscrição própria**",
+      "foto": { "ficheiro": "modalidades/danca.webp", "alt": "Bailarina de contemporâneo em movimento no estúdio de dança" },
+      "detalhe": { "ficheiro": "modalidades/danca-detalhe.webp", "alt": "Bailarina ajoelhada, de braços abertos, no estúdio com a parede de floresta" },
+      "tile": "pt-academy-danca.webp"
+    }
+  ],
+
+  "botao": { "texto": "Ver planos", "acao": "/#planos" },
+
+  "horario": {
+    "eyebrow": "Horário",
+    "titulo": "Horário de Aulas *semanal*",
+    "lead": "A box e as aulas de grupo funcionam por horário fixo — escolhe a tua abaixo.",
+    "leadAbertura": "A sala de musculação é em livre trânsito, no horário de abertura:",
+    "leadFim": "O horário da escola de dança é publicado à parte.",
+    "nota": "Horário sujeito a alterações. Confirma na receção ou pelo {telefone}."
+  },
+
+  "extras": {
+    "eyebrow": "Também na PT Academy",
+    "titulo": "Para ir mais *longe*",
+    "lista": [
+      {
+        "nome": "Personal Trainer",
+        "texto": "Sessões individuais, na sala ou na box, com um treinador só para ti. Técnica, carga e objetivos revistos semana a semana.",
+        "botao": { "texto": "Pedir horário", "acao": "ligar" }
+      },
+      {
+        "nome": "Nutrição",
+        "texto": "Consultas para alinhar o prato com o treino: plano alimentar, acompanhamento e reavaliações ao longo do caminho.",
+        "botao": { "texto": "Marcar consulta", "acao": "ligar" }
+      }
+    ]
+  }
+}

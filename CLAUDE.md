@@ -193,6 +193,21 @@ PT-PT, tratamento por **tu** ("A tua jornada", "Escolhe o teu ritmo").
 Frases curtas e imperativas nos CTAs ("Começar hoje", "Marcar visita").
 Títulos com três a cinco palavras.
 
+# Conteúdo editável (gestor de conteúdos)
+
+O conteúdo que o cliente pode mudar vive em `conteudo/` (JSON, um
+ficheiro por tema) com um esquema por ficheiro em `conteudo/esquemas/`.
+O gestor, que vive no site da NK e usa o design system da NK, só escreve
+em `conteudo/` e `assets/`. Formato, marcas de texto e o que é gerado:
+`conteudo/LEIAME.md`. Decisões: `docs/PT_Academy_Inventario_Conteudo_Editavel.html`.
+
+- **Em transição:** até o `construir.js` existir, o HTML é o que vai
+  para o ar. Mudar um texto = mudá-lo nos dois sítios.
+- Texto de conteúdo nunca fica escrito à mão num molde: vai para
+  `conteudo/` e ganha campo no esquema, desde o primeiro dia.
+- Dados partilhados (telefone, horário, planos, modalidades) existem
+  numa só chave; o build espalha-os.
+
 # Media
 
 - `gallery/` é o arquivo em bruto completo (originais e RAW, fora do repo —

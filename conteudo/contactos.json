@@ -1,0 +1,11 @@
+{
+  "telefone": "259 322 108",
+  "email": "geral@ptacademy.pt",
+  "morada": ["Tv. da Rua Nova nº56", "5000-651 Vila Real"],
+  "mapa": "https://maps.google.com/?q=Travessa+da+Rua+Nova+56,+5000-651+Vila+Real",
+  "horario": [
+    { "dias": "Segunda a sexta", "curto": "Seg – Sex", "intervalos": [["07h", "22h"]] },
+    { "dias": "Sábado", "curto": "Sábado", "intervalos": [["09h", "13h"], ["15h", "19h"]] },
+    { "dias": "Domingo", "curto": "Domingo", "intervalos": [] }
+  ]
+}

@@ -848,3 +848,34 @@ Formspree (chave pública, feita para ser pública), ou Netlify Forms.
 - Se a API passar a viver noutra máquina que não a do site: pôr o URL
   completo no `ENDPOINT` do `formulario.js` e o `Access-Control-Allow-Origin` no
   `servidor.js` (com o domínio do site, nunca `*`).
+
+## Conteúdo editável — `conteudo/`
+
+Primeiro passo do gestor de conteúdos (23 set. 2026): todo o conteúdo
+editável das seis páginas passou para JSON em `conteudo/`, com esquemas
+em `conteudo/esquemas/` e a documentação em `conteudo/LEIAME.md`. O
+site ainda não lê estes ficheiros: isso é o `construir.js`, o passo
+seguinte.
+
+Verificado por script: todos os textos, fotos e textos alternativos das
+páginas, do rodapé e das fotos no CSS estão nos JSON, com exceção do que
+é gerado ou de estrutura (listado no LEIAME). O horário de aulas foi
+extraído das tabelas por script (72 aulas) e a frase do horário de
+abertura gerada a partir do `contactos.json` sai igual à atual.
+
+Mudanças que isto trouxe:
+- `assets/HYROX.webp` passou a `assets/hyrox.webp` (nomes em kebab-case).
+- O título "UM ESPAÇO FAMILIAR" ficou em caixa normal no JSON; o CSS já
+  põe em maiúsculas.
+- A homepage e o Sobre ganharam descrição para o Google no JSON.
+- O horário no rodapé vai passar a ter a mesma formatação que em
+  Contactos (hoje um usa "/" e "-", o outro "·" e "—").
+- Três links apontavam para âncoras que não existiam. "Começar hoje"
+  passou a ir para os planos, "Ver academia" para as Instalações e
+  "Início" (nav e rodapé) para `/`.
+
+### Por confirmar
+
+- A página da campanha em `campanha.json` tem só abertura, planos e fecho,
+  feitos com os textos que já existiam. O cliente completa-a no gestor.
+

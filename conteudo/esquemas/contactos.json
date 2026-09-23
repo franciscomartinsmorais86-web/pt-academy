@@ -1,0 +1,56 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "contactos.json",
+  "title": "Contactos e horário de abertura",
+  "description": "Um só sítio para o telefone, email, morada e horário. Aparecem no rodapé, na página de Contactos, nos botões 'ligar', na nota do horário de aulas e na frase do horário de abertura das Modalidades.",
+  "type": "object",
+  "required": ["telefone", "email", "morada", "mapa", "horario"],
+  "additionalProperties": false,
+  "properties": {
+    "telefone": {
+      "type": "string",
+      "pattern": "^[0-9 ]{9,15}$",
+      "description": "Como se lê: '259 322 108'. O link tel:+351… é gerado a partir daqui."
+    },
+    "email": {
+      "type": "string",
+      "format": "email",
+      "description": "Email público. Não é para onde vão as mensagens do formulário: esse endereço está na configuração da Cloudflare."
+    },
+    "morada": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 3,
+      "items": { "type": "string" },
+      "description": "Uma linha por item."
+    },
+    "mapa": {
+      "type": "string",
+      "format": "uri",
+      "description": "Link do Google Maps que a morada abre."
+    },
+    "horario": {
+      "type": "array",
+      "description": "Horário de abertura, por esta ordem.",
+      "items": {
+        "type": "object",
+        "required": ["dias", "curto", "intervalos"],
+        "additionalProperties": false,
+        "properties": {
+          "dias": { "type": "string", "description": "Por extenso, com maiúscula: 'Segunda a sexta'. Na frase das Modalidades sai em minúsculas." },
+          "curto": { "type": "string", "maxLength": 12, "description": "Versão curta para o rodapé: 'Seg – Sex'." },
+          "intervalos": {
+            "type": "array",
+            "description": "Pares [abre, fecha] como '07h'. Vazio = encerrado.",
+            "items": {
+              "type": "array",
+              "minItems": 2,
+              "maxItems": 2,
+              "items": { "type": "string", "pattern": "^\\d{2}h(\\d{2})?$" }
+            }
+          }
+        }
+      }
+    }
+  }
+}

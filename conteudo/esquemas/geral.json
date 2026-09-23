@@ -1,0 +1,47 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "geral.json",
+  "title": "Dados gerais",
+  "description": "O que identifica a academia em todo o site: rodapé, títulos das páginas, contador de anos no Sobre.",
+  "type": "object",
+  "required": ["nome", "tagline", "fundacao", "redes", "privacidade", "livroReclamacoes"],
+  "additionalProperties": false,
+  "properties": {
+    "nome": {
+      "type": "string",
+      "description": "Nome da academia, usado no fim do título de cada página."
+    },
+    "tagline": {
+      "type": "string",
+      "maxLength": 40,
+      "description": "Linha por baixo do logo no rodapé."
+    },
+    "fundacao": {
+      "type": "string",
+      "pattern": "^\\d{4}(-\\d{2}(-\\d{2})?)?$",
+      "description": "Data de abertura (AAAA, AAAA-MM ou AAAA-MM-DD). O Sobre calcula a partir dela os anos em Vila Real."
+    },
+    "redes": {
+      "type": "array",
+      "description": "Ícones das redes sociais no rodapé, por esta ordem.",
+      "items": {
+        "type": "object",
+        "required": ["rede", "url"],
+        "additionalProperties": false,
+        "properties": {
+          "rede": { "enum": ["instagram", "facebook", "tiktok"], "description": "Decide o ícone." },
+          "url": { "type": "string", "format": "uri" }
+        }
+      }
+    },
+    "privacidade": {
+      "type": "string",
+      "description": "Endereço da política de privacidade. '#' enquanto não existir."
+    },
+    "livroReclamacoes": {
+      "type": "string",
+      "format": "uri",
+      "description": "Endereço do Livro de Reclamações eletrónico."
+    }
+  }
+}

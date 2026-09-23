@@ -1,0 +1,41 @@
+{
+  "passeio": {
+    "eyebrow": "Passeio virtual",
+    "titulo": "Percorre o ginásio *daqui*"
+  },
+  "espacos": {
+    "eyebrow": "O que vais encontrar",
+    "titulo": "Nove espaços, uma casa",
+    "lista": [
+      { "nome": "Átrio e receção", "nota": "À entrada", "fotos": [] },
+      {
+        "nome": "Sala de musculação",
+        "nota": "Máquinas, polias e racks",
+        "fotos": [
+          "walkthrough/musculacao.webp",
+          "walkthrough/musculacao2.webp",
+          "walkthrough/musculacao3.webp",
+          "walkthrough/polias.webp",
+          "walkthrough/smith.webp",
+          "walkthrough/halteres.webp"
+        ]
+      },
+      {
+        "nome": "Box de cross training",
+        "nota": "Pé-direito alto",
+        "fotos": [
+          "walkthrough/cross.webp",
+          "walkthrough/cross2.webp",
+          "walkthrough/cross3.webp",
+          "walkthrough/cross4.webp"
+        ]
+      },
+      { "nome": "Zona de cardio", "nota": "Passadeiras, remos e bicicletas", "fotos": ["walkthrough/cardio.webp"] },
+      { "nome": "Sala Laranja", "nota": "Estúdio · junto ao átrio", "fotos": ["walkthrough/sala-laranja.webp"] },
+      { "nome": "Sala Cinza", "nota": "Estúdio · junto ao átrio", "fotos": ["walkthrough/sala-cinza.webp"] },
+      { "nome": "Sala Verde", "nota": "Estúdio · piso de cima", "fotos": ["walkthrough/sala-verde.webp"] },
+      { "nome": "Sala Amarela", "nota": "Estúdio · piso de cima", "fotos": ["walkthrough/sala-amarela.webp"] },
+      { "nome": "Sala Roxa", "nota": "Estúdio · piso de cima", "fotos": ["walkthrough/sala-roxa.webp", "walkthrough/sala-roxa2.webp"] }
+    ]
+  }
+}

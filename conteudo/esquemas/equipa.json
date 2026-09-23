@@ -1,0 +1,41 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "equipa.json",
+  "title": "Equipa",
+  "description": "A página Equipa: grupos de cartões, pela ordem daqui. A contagem 'N pessoas' de cada grupo é gerada.",
+  "type": "object",
+  "required": ["titulo", "grupos"],
+  "additionalProperties": false,
+  "properties": {
+    "titulo": { "$ref": "comum.json#/$defs/titulo" },
+    "grupos": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": ["id", "nome", "pessoas"],
+        "additionalProperties": false,
+        "properties": {
+          "id": { "type": "string", "pattern": "^[a-z-]+$", "description": "Identificador interno." },
+          "nome": { "type": "string", "maxLength": 30 },
+          "pessoas": {
+            "type": "array",
+            "minItems": 1,
+            "items": {
+              "type": "object",
+              "required": ["nome", "funcao", "foto"],
+              "additionalProperties": false,
+              "properties": {
+                "nome": { "type": "string" },
+                "funcao": { "type": "string" },
+                "foto": { "$ref": "comum.json#/$defs/ficheiro", "description": "Retrato 3:4 (1200×1600) em assets/pessoal/." },
+                "video": { "$ref": "comum.json#/$defs/ficheiro", "description": "Opcional. Vídeo curto 3:4 em .mp4, sem som. Sem vídeo, o cartão fica só com a foto." },
+                "destaque": { "type": "boolean", "description": "Opcional. Cartão em bordô." }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

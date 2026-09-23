@@ -1,0 +1,47 @@
+{
+  "titulo": "As *caras* da casa",
+  "grupos": [
+    {
+      "id": "direcao",
+      "nome": "Direção",
+      "pessoas": [
+        { "nome": "Patrícia Teles", "funcao": "Proprietária", "foto": "pessoal/patricia-teles.webp", "video": "pessoal/patricia-teles.mp4", "destaque": true },
+        { "nome": "Tiago Figueira", "funcao": "Diretor técnico", "foto": "pessoal/tiago-figueira.webp", "video": "pessoal/tiago-figueira.mp4" },
+        { "nome": "Ruben Souza", "funcao": "Diretor comercial", "foto": "pessoal/ruben-souza.webp", "video": "pessoal/ruben-souza.mp4" }
+      ]
+    },
+    {
+      "id": "comercial",
+      "nome": "Comercial",
+      "pessoas": [
+        { "nome": "Bárbara Maltez", "funcao": "Comercial", "foto": "pessoal/barbara-maltez.webp", "video": "pessoal/barbara-maltez.mp4" },
+        { "nome": "Vanessa Ribeiro", "funcao": "Comercial", "foto": "pessoal/vanessa-ribeiro.webp", "video": "pessoal/vanessa-ribeiro.mp4" }
+      ]
+    },
+    {
+      "id": "personal-trainers",
+      "nome": "Personal Trainers",
+      "pessoas": [
+        { "nome": "Alexandra Santos", "funcao": "Personal trainer", "foto": "pessoal/alexandra-santos.webp", "video": "pessoal/alexandra-santos.mp4" },
+        { "nome": "Fernando Campeã", "funcao": "Personal trainer", "foto": "pessoal/fernando-campea.webp", "video": "pessoal/fernando-campea.mp4" },
+        { "nome": "Filipe Sousa", "funcao": "Personal trainer", "foto": "pessoal/filipe-sousa.webp", "video": "pessoal/filipe-sousa.mp4" },
+        { "nome": "João Rodrigues", "funcao": "Personal trainer", "foto": "pessoal/joao-rodrigues.webp", "video": "pessoal/joao-rodrigues.mp4" },
+        { "nome": "José Guedes", "funcao": "Personal trainer", "foto": "pessoal/jose-guedes.webp", "video": "pessoal/jose-guedes.mp4" },
+        { "nome": "Juliana Nogueira", "funcao": "Personal trainer", "foto": "pessoal/juliana-nogueira.webp", "video": "pessoal/juliana-nogueira.mp4" },
+        { "nome": "Ricardo Miguel", "funcao": "Personal trainer", "foto": "pessoal/ricardo-miguel.webp", "video": "pessoal/ricardo-miguel.mp4" },
+        { "nome": "Simão Marinho", "funcao": "Personal trainer", "foto": "pessoal/simao-marinho.webp", "video": "pessoal/simao-marinho.mp4" },
+        { "nome": "Sónia Filipa", "funcao": "Personal trainer", "foto": "pessoal/sonia-filipa.webp", "video": "pessoal/sonia-filipa.mp4" },
+        { "nome": "Virgínia Delgado", "funcao": "Personal trainer", "foto": "pessoal/virginia-delgado.webp", "video": "pessoal/virginia-delgado.mp4" }
+      ]
+    },
+    {
+      "id": "danca",
+      "nome": "Dança",
+      "pessoas": [
+        { "nome": "Mara Fraguito", "funcao": "Professora de dança", "foto": "pessoal/mara-fraguito.webp", "video": "pessoal/mara-fraguito.mp4" },
+        { "nome": "Majó", "funcao": "Professora de dança", "foto": "pessoal/majo.webp", "video": "pessoal/majo.mp4" },
+        { "nome": "Luís Reboredo", "funcao": "Professor de dança", "foto": "pessoal/luis-reboredo.webp", "video": "pessoal/luis-reboredo.mp4" }
+      ]
+    }
+  ]
+}

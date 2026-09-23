@@ -1,0 +1,95 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "modalidades.json",
+  "title": "Modalidades",
+  "description": "Os quatro capítulos da página Modalidades, os tiles da homepage, o índice do hero, o letreiro e o contador do Sobre saem daqui. Os textos à volta do horário de aulas e os extras também.",
+  "type": "object",
+  "required": ["modalidades", "botao", "horario", "extras"],
+  "additionalProperties": false,
+  "properties": {
+    "modalidades": {
+      "type": "array",
+      "minItems": 4,
+      "maxItems": 4,
+      "description": "Sempre quatro, por esta ordem: a coreografia dos capítulos e a grelha dos tiles são feitas para quatro. O lado da foto alterna sozinho.",
+      "items": {
+        "type": "object",
+        "required": ["id", "nome", "eyebrow", "lead", "pontos", "etiquetasRotulo", "etiquetas", "plano", "foto", "detalhe", "tile"],
+        "additionalProperties": false,
+        "properties": {
+          "id": { "type": "string", "pattern": "^[a-z-]+$", "description": "Âncora do capítulo (/modalidades.html#crossfit). Não muda: há links para ela." },
+          "nome": { "type": "string", "maxLength": 20, "description": "Título do capítulo, do tile e do índice." },
+          "eyebrow": { "$ref": "comum.json#/$defs/eyebrow" },
+          "lead": { "$ref": "comum.json#/$defs/lead" },
+          "pontos": {
+            "type": "array",
+            "minItems": 2,
+            "maxItems": 4,
+            "items": { "type": "string" },
+            "description": "Lista com traço."
+          },
+          "etiquetasRotulo": { "type": "string", "description": "O que as etiquetas são, para leitores de ecrã: 'Aulas', 'Estilos'…" },
+          "etiquetas": {
+            "type": "array",
+            "maxItems": 12,
+            "items": { "type": "string", "maxLength": 20 }
+          },
+          "plano": {
+            "type": "string",
+            "description": "Em que planos está incluída. Os nomes dos planos vão a **negrito**.",
+            "x-marcas": ["forte"]
+          },
+          "foto": { "$ref": "comum.json#/$defs/foto", "description": "Foto grande do capítulo." },
+          "detalhe": { "$ref": "comum.json#/$defs/foto", "description": "Foto pequena sobreposta." },
+          "tile": { "$ref": "comum.json#/$defs/ficheiro", "description": "Foto do quadrado desta modalidade na homepage." }
+        }
+      }
+    },
+    "botao": {
+      "$ref": "comum.json#/$defs/botao",
+      "description": "Botão no fim de cada capítulo."
+    },
+    "horario": {
+      "type": "object",
+      "required": ["eyebrow", "titulo", "lead", "leadAbertura", "leadFim", "nota"],
+      "additionalProperties": false,
+      "description": "Textos à volta da tabela. As aulas estão no horario.json.",
+      "properties": {
+        "eyebrow": { "$ref": "comum.json#/$defs/eyebrow" },
+        "titulo": { "$ref": "comum.json#/$defs/titulo" },
+        "lead": { "type": "string", "description": "Primeira frase do texto de abertura." },
+        "leadAbertura": { "type": "string", "description": "Frase que antecede o horário de abertura. O build junta-lhe o horário do contactos.json: 'segunda a sexta das 07h às 22h, …'." },
+        "leadFim": { "type": "string", "description": "Frase final do texto de abertura." },
+        "nota": {
+          "type": "string",
+          "description": "Nota por baixo da tabela.",
+          "x-marcas": ["telefone"]
+        }
+      }
+    },
+    "extras": {
+      "type": "object",
+      "required": ["eyebrow", "titulo", "lista"],
+      "additionalProperties": false,
+      "properties": {
+        "eyebrow": { "$ref": "comum.json#/$defs/eyebrow" },
+        "titulo": { "$ref": "comum.json#/$defs/titulo" },
+        "lista": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 3,
+          "items": {
+            "type": "object",
+            "required": ["nome", "texto", "botao"],
+            "additionalProperties": false,
+            "properties": {
+              "nome": { "type": "string", "maxLength": 30 },
+              "texto": { "type": "string" },
+              "botao": { "$ref": "comum.json#/$defs/botao" }
+            }
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,42 @@
+{
+  "ativa": true,
+  "nav": "3 meses grátis",
+  "endereco": "3-meses-gratis",
+
+  "faixa": {
+    "eyebrow": "Inscreve-te agora e aproveita",
+    "titulo": "Novas inscrições 3 meses grátis",
+    "botao": { "texto": "Saber mais", "acao": "campanha" }
+  },
+
+  "pagina": {
+    "seo": {
+      "titulo": "3 meses grátis",
+      "descricao": "Novas inscrições na PT Academy, em Vila Real, com 3 meses grátis."
+    },
+    "seccoes": [
+      {
+        "tipo": "abertura",
+        "eyebrow": "Inscreve-te agora e aproveita",
+        "titulo": "Novas inscrições | 3 meses *grátis*",
+        "foto": { "ficheiro": "pt-academy-25.webp", "alt": "" },
+        "botao": { "texto": "Quero aderir", "acao": "ligar" }
+      },
+      {
+        "tipo": "planos",
+        "eyebrow": "Planos",
+        "titulo": "Escolhe o teu ritmo",
+        "planos": ["Base", "Power", "Premium", "Estudante"]
+      },
+      {
+        "tipo": "fecho",
+        "eyebrow": "Do que continuas à espera?",
+        "titulo": "Chega de desculpas | começa hoje.",
+        "botoes": [
+          { "texto": "Marcar visita", "acao": "ligar" },
+          { "texto": "Enviar questão", "acao": "modal" }
+        ]
+      }
+    ]
+  }
+}

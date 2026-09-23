@@ -514,7 +514,7 @@ a:hover {
 .about__photo--tall {
   grid-row: 1 / 3;
 }
-.about__photo--rowing { background-image: url('./assets/HYROX.webp'); }
+.about__photo--rowing { background-image: url('./assets/hyrox.webp'); }
 .about__photo--aulas  { background-image: url('./assets/pt-academy-aulas-pt-2.webp'); }
 .about__photo--pilates { background-image: url('./assets/pilates-12.webp'); }
 

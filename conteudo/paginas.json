@@ -1,0 +1,164 @@
+{
+  "inicio": {
+    "seo": {
+      "titulo": "PT Academy",
+      "descricao": "Ginásio em Vila Real desde 2010: musculação, crossfit, aulas de grupo e escola de dança. Planos sem fidelização."
+    },
+    "hero": {
+      "eyebrow": "Vila Real · desde 2010",
+      "titulo": "A tua jornada | começa *aqui*",
+      "foto": "pt-academy-25.webp",
+      "botao": { "texto": "Começar hoje", "acao": "/#planos" }
+    },
+    "sobre": {
+      "eyebrow": "Sobre a academia",
+      "titulo": "Um espaço familiar",
+      "texto": "Além da Musculação, do Crossfit, da Dança e das modalidades de Fitness que oferecemos, temos orgulho no sentimento de familiaridade que a PT Academy consegue proporcionar a cada sócio.",
+      "botoes": [
+        { "texto": "Ver academia", "acao": "/instalacoes.html" },
+        { "texto": "Ver equipa", "acao": "/equipa.html" }
+      ],
+      "fotos": ["hyrox.webp", "pt-academy-aulas-pt-2.webp", "pilates-12.webp"]
+    },
+    "galeria": {
+      "fotos": [
+        { "ficheiro": "galeria/galeria-turma.webp", "alt": "Turma de aulas de grupo na PT Academy" },
+        { "ficheiro": "galeria/galeria-peso-morto.webp", "alt": "Atleta a pegar na barra para peso morto" },
+        { "ficheiro": "galeria/galeria-discos-azafit.webp", "alt": "Discos carregados numa barra olímpica" },
+        { "ficheiro": "galeria/galeria-disco-10.webp", "alt": "Disco de 10 kg numa máquina de musculação" },
+        { "ficheiro": "galeria/galeria-sala-cardio.webp", "alt": "Sala de cardio e musculação da PT Academy" },
+        { "ficheiro": "galeria/galeria-cross-academy.webp", "alt": "Parede da box PT Cross Academy" },
+        { "ficheiro": "galeria/galeria-sala-fitness.webp", "alt": "Sala de aulas da PT Fitness Academy" },
+        { "ficheiro": "galeria/galeria-estudio.webp", "alt": "Estúdio de dança com espelhos" }
+      ],
+      "textos": [
+        {
+          "titulo": "Onde a *magia* acontece",
+          "texto": "Da sala de musculação à box de crossfit, cada espaço está equipado com equipamentos modernos para assegurar a melhor experiência de treino possível."
+        },
+        {
+          "titulo": "Não fiques *pasmado*",
+          "texto": "Vem ver com os teus olhos."
+        }
+      ]
+    },
+    "fecho": {
+      "eyebrow": "Do que continuas à espera?",
+      "titulo": "Chega de desculpas | começa hoje.",
+      "botoes": [
+        { "texto": "Marcar visita", "acao": "ligar" },
+        { "texto": "Enviar questão", "acao": "modal" }
+      ]
+    }
+  },
+
+  "sobre": {
+    "seo": {
+      "titulo": "Sobre nós",
+      "descricao": "A PT Academy é o ginásio de Vila Real desde 2010: um espaço familiar, com acompanhamento de perto e treino para todos os níveis."
+    },
+    "hero": {
+      "eyebrow": "Sobre nós",
+      "titulo": "Mais do que um *ginásio*",
+      "foto": { "ficheiro": "sobre-hero-ginasio.webp", "alt": "Sala de musculação e cardio da PT Academy" }
+    },
+    "manifesto": {
+      "eyebrow": "Quem somos",
+      "texto": "Desde 2010 que a PT Academy é o sítio onde os Vila Realenses escolhem treinar. Aqui garantimos apoio profissional à medida dos teus objetivos, conhecemos-te pelo *nome* e ajudamos quando mais precisas."
+    },
+    "historia": {
+      "eyebrow": "A nossa história",
+      "titulo": "Uma casa que foi crescendo",
+      "paragrafos": [
+        "Abrimos portas em 2010, em Vila Real. Hoje a casa tem sala de musculação e cardio, box de crossfit, sala de fitness e estúdio de dança, e uma equipa que acompanha cada sócio de perto.",
+        "O essencial nunca mudou: um espaço familiar, onde quem entra pela primeira vez é recebido como quem cá treina há anos."
+      ],
+      "fotos": [
+        { "ficheiro": "sobre-historia-equipa.webp", "alt": "Barra e disco de musculação em cima do tapete" },
+        { "ficheiro": "sobre-historia-treino-acompanhado.webp", "alt": "Personal trainer a acompanhar uma sócia num agachamento" }
+      ]
+    },
+    "numeros": {
+      "anos": "Anos em Vila Real",
+      "modalidades": "Modalidades"
+    },
+    "letreiro": ["Família", "Acompanhamento", "Todos os níveis"],
+    "valores": {
+      "eyebrow": "O que nos move",
+      "titulo": "Três coisas que não negociamos",
+      "lista": [
+        { "nome": "Família", "texto": "Aqui ninguém treina sozinho. Há sempre alguém que te conhece pelo nome e que repara quando faltas." },
+        { "nome": "Acompanhamento", "texto": "Avaliação física à entrada e um plano de treino revisto contigo, em vez de esquecido numa gaveta." },
+        { "nome": "Inclusão", "texto": "Do primeiro dia ao décimo ano de treino, cada exercício escala para o ponto em que estás." }
+      ]
+    },
+    "fecho": {
+      "eyebrow": "Vem conhecer-nos",
+      "titulo": "A porta está aberta",
+      "botoes": [
+        { "texto": "Marcar visita", "acao": "ligar" },
+        { "texto": "Ver planos", "acao": "/#planos" }
+      ]
+    }
+  },
+
+  "modalidades": {
+    "seo": {
+      "titulo": "Modalidades",
+      "descricao": "Musculação, Crossfit, aulas de Fitness e escola de Dança na PT Academy, em Vila Real. Quatro modalidades, todos os níveis, todas as idades."
+    },
+    "hero": {
+      "eyebrow": "Modalidades",
+      "titulo": "Treina à tua *maneira*",
+      "foto": "modalidades/hero-box.webp"
+    }
+  },
+
+  "instalacoes": {
+    "seo": {
+      "titulo": "Instalações",
+      "descricao": "Percorre as instalações da PT Academy em Vila Real sala a sala, num passeio virtual: musculação, cross training, cardio e estúdios de aulas."
+    },
+    "hero": {
+      "eyebrow": "Instalações",
+      "titulo": "Conhece a casa *toda*"
+    },
+    "fecho": {
+      "eyebrow": "Vê ao vivo",
+      "titulo": "Vê-se melhor de perto",
+      "botoes": [
+        { "texto": "Marcar visita", "acao": "ligar" },
+        { "texto": "Ver planos", "acao": "/#planos" }
+      ]
+    }
+  },
+
+  "equipa": {
+    "seo": {
+      "titulo": "Equipa",
+      "descricao": "A equipa da PT Academy, em Vila Real: direção, comerciais, personal trainers e professores de dança. Conhece as caras da casa."
+    }
+  },
+
+  "contactos": {
+    "seo": {
+      "titulo": "Contactos",
+      "descricao": "Fala com a PT Academy em Vila Real: telefone, email, morada, horário e formulário de contacto."
+    },
+    "eyebrow": "Contactos",
+    "titulo": "Fala *connosco*",
+    "lead": "Respondemos em menos de 24h, dias úteis. Se for urgente, liga.",
+    "formulario": "Ou deixa a tua questão"
+  },
+
+  "modal": {
+    "eyebrow": "Fala connosco",
+    "titulo": "Tens dúvidas?",
+    "lead": "Respondemos em menos de 24h, dias úteis."
+  },
+
+  "sucesso": {
+    "titulo": "Recebemos",
+    "lead": "Damos notícias em breve pelo meio que escolheste."
+  }
+}
