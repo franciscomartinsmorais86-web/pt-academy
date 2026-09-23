@@ -1,0 +1,652 @@
+<!DOCTYPE html>
+<html lang="pt-PT">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Inventário do conteúdo editável — PT Academy</title>
+<style>
+  :root {
+    --bg: #fbfaf7;
+    --fg: #1d1d1b;
+    --muted: #6b6a66;
+    --line: #e2dfd8;
+    --accent: #c11d26;
+    --accent-soft: #fbeaea;
+    --amber-bg: #fff4d6;
+    --amber-fg: #7a5200;
+    --quote-bg: #f1efe9;
+    --card: #ffffff;
+    --ok: #2f7d4f;
+    --ok-soft: #e3f3e8;
+    --warn: #a86400;
+    --warn-soft: #fff1d6;
+    --no: #8a2a2a;
+    --no-soft: #f8e4e4;
+    --code-bg: #f1efe9;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #151514;
+      --fg: #ebe8e1;
+      --muted: #a09d96;
+      --line: #2e2d2a;
+      --accent: #ff7b74;
+      --accent-soft: #2c1a1a;
+      --amber-bg: #2c2410;
+      --amber-fg: #f2cf7a;
+      --quote-bg: #1f1e1b;
+      --card: #1c1c1a;
+      --ok: #7fd39e;
+      --ok-soft: #14291c;
+      --warn: #f2b85a;
+      --warn-soft: #2c2210;
+      --no: #f08a8a;
+      --no-soft: #2c1616;
+      --code-bg: #1f1e1b;
+    }
+  }
+  * { box-sizing: border-box; }
+  html { background: var(--bg); }
+  body {
+    margin: 0;
+    color: var(--fg);
+    font-family: "Iowan Old Style", Palatino, Georgia, serif;
+    font-size: 17px;
+    line-height: 1.65;
+  }
+  .page { max-width: 860px; margin: 0 auto; padding: 48px 24px 64px; }
+  .masthead { border-bottom: 2px solid var(--fg); padding-bottom: 20px; margin-bottom: 36px; }
+  .masthead h1 { font-size: 34px; line-height: 1.15; margin: 0 0 10px; }
+  .masthead p { margin: 0; color: var(--muted); font-family: ui-sans-serif, -apple-system, "Segoe UI", Roboto, sans-serif; font-size: 14px; }
+  h2 { font-size: 26px; line-height: 1.2; margin: 52px 0 14px; padding-top: 10px; border-top: 1px solid var(--line); }
+  h3 { font-size: 20px; margin: 32px 0 8px; }
+  h4 { font-size: 16px; margin: 22px 0 6px; font-family: ui-sans-serif, -apple-system, "Segoe UI", Roboto, sans-serif; text-transform: uppercase; letter-spacing: .08em; color: var(--muted); }
+  p { margin: 0 0 14px; }
+  a { color: var(--accent); }
+  code, pre {
+    font-family: ui-monospace, "Cascadia Mono", Consolas, Menlo, monospace;
+    font-size: 14px;
+  }
+  code { background: var(--code-bg); padding: 1px 5px; }
+  pre {
+    background: var(--code-bg);
+    padding: 14px 16px;
+    overflow-x: auto;
+    line-height: 1.5;
+    margin: 0 0 18px;
+    border-left: 3px solid var(--line);
+  }
+  ul, ol { padding-left: 22px; margin: 0 0 14px; }
+  li { margin-bottom: 4px; }
+
+  .toc { background: var(--card); border: 1px solid var(--line); padding: 18px 22px; margin-bottom: 30px; font-family: ui-sans-serif, -apple-system, "Segoe UI", Roboto, sans-serif; font-size: 15px; }
+  .toc p { margin: 0 0 8px; font-weight: 600; text-transform: uppercase; letter-spacing: .08em; font-size: 12px; color: var(--muted); }
+  .toc ol { margin: 0; padding-left: 20px; }
+  .toc li { margin-bottom: 2px; }
+
+  .table-wrap { overflow-x: auto; margin: 0 0 20px; }
+  table { border-collapse: collapse; width: 100%; font-family: ui-sans-serif, -apple-system, "Segoe UI", Roboto, sans-serif; font-size: 14px; }
+  th, td { text-align: left; vertical-align: top; padding: 8px 10px; border-bottom: 1px solid var(--line); }
+  th { font-weight: 600; font-size: 12px; text-transform: uppercase; letter-spacing: .06em; color: var(--muted); }
+  td code { font-size: 13px; }
+
+  .tag { display: inline-block; font-family: ui-sans-serif, -apple-system, "Segoe UI", Roboto, sans-serif; font-size: 11px; font-weight: 600; letter-spacing: .06em; text-transform: uppercase; padding: 2px 7px; white-space: nowrap; }
+  .tag--a { background: var(--ok-soft); color: var(--ok); }
+  .tag--b { background: var(--warn-soft); color: var(--warn); }
+  .tag--c { background: var(--no-soft); color: var(--no); }
+
+  blockquote { margin: 0 0 18px; padding: 12px 18px; background: var(--quote-bg); border-left: 4px solid var(--accent); }
+  blockquote p:last-child { margin: 0; }
+
+  .action { background: var(--amber-bg); color: var(--amber-fg); padding: 14px 18px; margin: 0 0 18px; border-left: 4px solid var(--amber-fg); }
+  .action::before { content: "Decisão tua"; display: block; font-family: ui-sans-serif, -apple-system, "Segoe UI", Roboto, sans-serif; font-size: 11px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; margin-bottom: 4px; }
+  .action p:last-child { margin: 0; }
+
+  .svc { background: var(--card); border: 1px solid var(--line); padding: 16px 20px; margin: 0 0 14px; }
+  .svc h3 { margin: 0 0 6px; font-size: 18px; }
+  .svc .meta { font-family: ui-sans-serif, -apple-system, "Segoe UI", Roboto, sans-serif; font-size: 13px; color: var(--muted); margin-bottom: 8px; }
+
+  ol.steps { list-style: none; padding-left: 0; counter-reset: passo; }
+  ol.steps li { counter-increment: passo; position: relative; padding-left: 40px; margin-bottom: 10px; }
+  ol.steps li::before { content: counter(passo); position: absolute; left: 0; top: 2px; width: 26px; height: 26px; border-radius: 50%; background: var(--fg); color: var(--bg); font-family: ui-sans-serif, -apple-system, "Segoe UI", Roboto, sans-serif; font-size: 13px; font-weight: 700; display: flex; align-items: center; justify-content: center; }
+
+  ul.check { list-style: none; padding-left: 0; }
+  ul.check li { position: relative; padding-left: 30px; margin-bottom: 8px; }
+  ul.check li::before { content: ""; position: absolute; left: 0; top: 5px; width: 16px; height: 16px; border: 2px solid var(--fg); }
+
+  .kv { display: grid; grid-template-columns: 180px 1fr; gap: 4px 16px; font-family: ui-sans-serif, -apple-system, "Segoe UI", Roboto, sans-serif; font-size: 14px; margin: 0 0 18px; }
+  .kv dt { color: var(--muted); }
+  .kv dd { margin: 0; }
+
+  footer.end { margin-top: 64px; padding-top: 16px; border-top: 1px solid var(--line); font-family: ui-sans-serif, -apple-system, "Segoe UI", Roboto, sans-serif; font-size: 13px; color: var(--muted); }
+
+  @media (max-width: 620px) {
+    body { font-size: 16px; }
+    .page { padding: 28px 16px 48px; }
+    .masthead h1 { font-size: 26px; }
+    h2 { font-size: 22px; }
+    .kv { grid-template-columns: 1fr; }
+    .kv dt { margin-top: 6px; }
+  }
+  @media print {
+    .toc { display: none; }
+    body { font-size: 12pt; }
+    h2, h3, h4 { page-break-after: avoid; }
+    table, .svc, .action, blockquote, pre { page-break-inside: avoid; }
+    a { color: inherit; text-decoration: none; }
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+<header class="masthead">
+  <h1>Inventário do conteúdo editável do site da PT Academy</h1>
+  <p>Para o Francisco · base para o gestor de conteúdos · 17 de setembro de 2026</p>
+</header>
+
+<nav class="toc">
+  <p>Índice</p>
+  <ol>
+    <li><a href="#principio">O princípio: três níveis de edição</a></li>
+    <li><a href="#partilhado">Conteúdo partilhado por todo o site</a></li>
+    <li><a href="#paginas">Inventário página a página</a></li>
+    <li><a href="#convencoes">Convenções de texto</a></li>
+    <li><a href="#nao">O que fica fora do alcance do cliente</a></li>
+    <li><a href="#ficheiros">Proposta de ficheiros em <code>conteudo/</code></a></li>
+    <li><a href="#campanha">Página da campanha</a></li>
+    <li><a href="#decisoes">Decisões tomadas</a></li>
+    <li><a href="#passos">Próximos passos</a></li>
+  </ol>
+</nav>
+
+<!-- ============================================================ -->
+<h2 id="principio">1. O princípio: três níveis de edição</h2>
+
+<p>Li as seis páginas, o nav, o rodapé e as folhas de estilo. Cada pedaço de conteúdo cai num de três níveis. O nível decide se vai para <code>conteudo/</code> e o que o gestor mostra ao cliente.</p>
+
+<div class="table-wrap">
+<table>
+  <tr><th>Nível</th><th>O que é</th><th>Quem mexe</th><th>Exemplos</th></tr>
+  <tr><td><span class="tag tag--a">A · Livre</span></td><td>Texto, números e media que o cliente muda sem partir nada.</td><td>Cliente, pelo gestor.</td><td>Preços, horário de aulas, equipa, campanha, contactos, parágrafos.</td></tr>
+  <tr><td><span class="tag tag--b">B · Com regras</span></td><td>Editável, mas com uma restrição que o gestor tem de impor (contagem fixa, tamanho, convenção).</td><td>Cliente, com o gestor a validar.</td><td>Os 4 capítulos das modalidades, as 8 fotos da galeria, títulos com palavra a vermelho.</td></tr>
+  <tr><td><span class="tag tag--c">C · Estrutura</span></td><td>Faz parte do desenho ou da mecânica. Fica no HTML, CSS e JS.</td><td>Só a NK.</td><td>Layout, animações, formulário, nav, pontos do passeio virtual.</td></tr>
+</table>
+</div>
+
+<blockquote><p>A regra de ouro: o gestor só escreve em <code>conteudo/</code> e em <code>assets/</code>. Nunca toca em HTML, CSS ou JS. Tudo o que está no nível C não tem representação nos JSON.</p></blockquote>
+
+<!-- ============================================================ -->
+<h2 id="partilhado">2. Conteúdo partilhado por todo o site</h2>
+
+<p>Isto é o que mais justifica a mudança. Hoje os mesmos dados estão copiados à mão em vários sítios. Com um só ficheiro, o cliente muda uma vez e o build espalha.</p>
+
+<div class="table-wrap">
+<table>
+  <tr><th>Dado</th><th>Valor atual</th><th>Onde aparece hoje</th><th>Vezes</th></tr>
+  <tr><td>Telefone</td><td>259 322 108</td><td>Homepage (4 CTAs dos planos + fecho), Sobre (fecho), Instalações (fecho), Modalidades (nota do horário + 2 extras), Contactos, rodapé</td><td>11</td></tr>
+  <tr><td>Email</td><td>geral@ptacademy.pt <em>(por confirmar)</em></td><td>Contactos, rodapé, servidor (destino do formulário)</td><td>3</td></tr>
+  <tr><td>Morada</td><td>Tv. da Rua Nova nº56, 5000-651 Vila Real</td><td>Contactos, rodapé (com o mesmo link do Google Maps)</td><td>2</td></tr>
+  <tr><td>Horário de abertura</td><td>Seg–Sex 07h–22h · Sáb 09h–13h, 15h–19h · Dom encerrado</td><td>Contactos, rodapé, e <strong>embebido numa frase</strong> do lead do horário nas Modalidades</td><td>3</td></tr>
+  <tr><td>Tagline</td><td>Vila Real · desde 2010</td><td>Eyebrow do hero da homepage, rodapé</td><td>2</td></tr>
+  <tr><td>Ano de fundação</td><td>2010-06</td><td>Contador "16 anos" no Sobre (calculado a partir da data), tagline, texto da história</td><td>3</td></tr>
+  <tr><td>Redes sociais</td><td>Instagram, Facebook, TikTok</td><td>Rodapé</td><td>1</td></tr>
+  <tr><td>Nomes das modalidades</td><td>Musculação · Crossfit · Fitness · Dança</td><td>Tiles da homepage, índice do hero das Modalidades, títulos dos capítulos, letreiro do Sobre, contador "4 modalidades"</td><td>5</td></tr>
+  <tr><td>Nomes dos planos</td><td>Base · Power · Premium · Estudante</td><td>Cartões da homepage, linha "incluída nos planos…" de cada modalidade</td><td>2</td></tr>
+</table>
+</div>
+
+<p>Nota sobre o horário de abertura: nas Modalidades a frase diz "segunda a sexta das 07h às 22h, sábado das 09h às 13h e das 15h às 19h" no meio de um parágrafo. Se o cliente mudar o horário no ficheiro de contactos, essa frase fica desatualizada. Proposta: partir o lead em duas partes, o texto livre e uma linha gerada a partir do horário. Ver a decisão 4.</p>
+
+<!-- ============================================================ -->
+<h2 id="paginas">3. Inventário página a página</h2>
+
+<h3>Homepage (<code>index.html</code>)</h3>
+
+<div class="table-wrap">
+<table>
+  <tr><th>Bloco</th><th>Campos</th><th>Nível</th><th>Notas</th></tr>
+  <tr><td>SEO</td><td>título da página, descrição</td><td><span class="tag tag--a">A</span></td><td>Hoje a homepage não tem <code>meta description</code>. Fica resolvido.</td></tr>
+  <tr><td>Hero</td><td>eyebrow, título, texto do botão, foto de fundo</td><td><span class="tag tag--b">B</span></td><td>Título com quebra de linha e palavra a vermelho ("começa <em>aqui</em>"). A foto está no CSS (<code>pt-academy-25.webp</code>).</td></tr>
+  <tr><td>Campanha</td><td>eyebrow, título, texto do botão, destino, ligada/desligada</td><td><span class="tag tag--a">A</span></td><td>É a faixa vermelha, a coisa que mais vai mudar. Um interruptor esconde-a. Quando está ativa, há também uma página dedicada e um link vermelho no nav. Ver a secção 7.</td></tr>
+  <tr><td>Sobre</td><td>eyebrow, título, parágrafo, 2 botões (texto + destino), 3 fotos</td><td><span class="tag tag--b">B</span></td><td>As 3 fotos estão no CSS e têm formatos diferentes (uma alta, duas normais). Contagem fixa.</td></tr>
+  <tr><td>Tiles de modalidades</td><td>nome e foto de cada uma</td><td><span class="tag tag--b">B</span></td><td>Derivados do ficheiro das modalidades. Sempre 4. Fotos no CSS.</td></tr>
+  <tr><td>Galeria pregada</td><td>8 fotos com alt, 2 blocos de texto (título + parágrafo)</td><td><span class="tag tag--b">B</span></td><td>A coreografia no <code>galeria.js</code> é feita para exatamente 8 peças e 2 textos, identificadas por <code>data-peca</code>. O cliente troca fotos, não muda a contagem.</td></tr>
+  <tr><td>Planos</td><td>eyebrow, título, lead; por plano: nome, preço, período, pitch (opcional), flag de destaque, lista de características, texto do botão</td><td><span class="tag tag--a">A</span></td><td>Número livre, até 4 por linha no computador. O botão liga para o telefone partilhado. Só um em destaque.</td></tr>
+  <tr><td>Fecho</td><td>eyebrow, título, 2 botões</td><td><span class="tag tag--a">A</span></td><td>O segundo botão abre o modal. O tipo de botão (ligar, modal, link) tem de ser um campo.</td></tr>
+  <tr><td>Modal de contacto</td><td>eyebrow, título, lead, título e texto do ecrã de sucesso</td><td><span class="tag tag--a">A</span></td><td>Os campos do formulário, etiquetas, erros e placeholders ficam no nível C, porque estão acoplados à validação.</td></tr>
+</table>
+</div>
+
+<h3>Sobre nós (<code>sobre.html</code>)</h3>
+
+<div class="table-wrap">
+<table>
+  <tr><th>Bloco</th><th>Campos</th><th>Nível</th><th>Notas</th></tr>
+  <tr><td>SEO</td><td>título, descrição</td><td><span class="tag tag--a">A</span></td><td>Falta a descrição.</td></tr>
+  <tr><td>Hero</td><td>eyebrow, título, foto + alt</td><td><span class="tag tag--b">B</span></td><td>Palavra a vermelho no título.</td></tr>
+  <tr><td>Manifesto</td><td>eyebrow, parágrafo</td><td><span class="tag tag--b">B</span></td><td>Acende palavra a palavra com o scroll, com uma palavra a vermelho. Funciona com qualquer tamanho, mas o efeito foi afinado para 2–3 linhas.</td></tr>
+  <tr><td>História</td><td>eyebrow, título, 2 parágrafos, 2 fotos + alt</td><td><span class="tag tag--a">A</span></td><td>Uma foto é retrato, outra paisagem. Os parágrafos podem ser 1 a 3.</td></tr>
+  <tr><td>Números</td><td>legenda de cada número</td><td><span class="tag tag--b">B</span></td><td>O primeiro conta os anos desde a data de fundação; o segundo é a contagem de modalidades. Ambos derivados, não escritos à mão.</td></tr>
+  <tr><td>Letreiro</td><td>2 linhas, cada uma uma lista de palavras</td><td><span class="tag tag--a">A</span></td><td>A primeira linha pode derivar das modalidades. A segunda é texto livre ("Família · Acompanhamento · Todos os níveis").</td></tr>
+  <tr><td>Valores</td><td>eyebrow, título; por valor: nome, texto</td><td><span class="tag tag--b">B</span></td><td>A grelha aguenta 3 ou 4. O título diz "Três coisas", por isso se o número mudar o título também tem de mudar. Ver decisão 6.</td></tr>
+  <tr><td>Fecho</td><td>eyebrow, título, 2 botões</td><td><span class="tag tag--a">A</span></td><td></td></tr>
+</table>
+</div>
+
+<h3>Modalidades (<code>modalidades.html</code>)</h3>
+
+<div class="table-wrap">
+<table>
+  <tr><th>Bloco</th><th>Campos</th><th>Nível</th><th>Notas</th></tr>
+  <tr><td>SEO</td><td>título, descrição</td><td><span class="tag tag--a">A</span></td><td></td></tr>
+  <tr><td>Hero</td><td>eyebrow, título, foto de fundo</td><td><span class="tag tag--b">B</span></td><td>O índice de 4 links deriva dos capítulos.</td></tr>
+  <tr><td>Capítulos</td><td>por modalidade: id, eyebrow, nome, lead, lista de pontos (3–4), etiquetas, linha do plano, foto grande + alt, foto de detalhe + alt</td><td><span class="tag tag--b">B</span></td><td>Sempre 4, pela ordem que está. A alternância esquerda/direita é automática (ímpar/par). A linha do plano tem negritos ("Incluída nos planos <strong>Power</strong> e <strong>Premium</strong>").</td></tr>
+  <tr><td>Horário: cabeça</td><td>eyebrow, título, lead, nota de rodapé</td><td><span class="tag tag--b">B</span></td><td>O lead embebe o horário de abertura. Ver decisão 4.</td></tr>
+  <tr><td>Horário: agendas</td><td>2 abas (nome); por aula: nome, dia, hora</td><td><span class="tag tag--a">A</span></td><td>Hoje são 200 linhas de tabela à mão. É a edição mais frequente depois da campanha. O build agrupa por hora e por dia. Suporta várias aulas na mesma célula.</td></tr>
+  <tr><td>Extras</td><td>eyebrow, título; por extra: nome, texto, texto do link</td><td><span class="tag tag--a">A</span></td><td>Personal Trainer e Nutrição. Podem ser 1 a 3. Marcados "por confirmar" no HTML.</td></tr>
+</table>
+</div>
+
+<h3>Instalações (<code>instalacoes.html</code>)</h3>
+
+<div class="table-wrap">
+<table>
+  <tr><th>Bloco</th><th>Campos</th><th>Nível</th><th>Notas</th></tr>
+  <tr><td>SEO</td><td>título, descrição</td><td><span class="tag tag--a">A</span></td><td></td></tr>
+  <tr><td>Hero</td><td>eyebrow, título</td><td><span class="tag tag--b">B</span></td><td>A foto é a primeira cena do passeio, por desenho. Não é campo.</td></tr>
+  <tr><td>Passeio: cabeça</td><td>eyebrow, título</td><td><span class="tag tag--a">A</span></td><td></td></tr>
+  <tr><td>Passeio: cenas</td><td>título de cada cena, texto de cada ponto</td><td><span class="tag tag--c">C</span></td><td>As coordenadas dos pontos precisam de uma ferramenta visual. Fica na NK por agora. Ver decisão 7.</td></tr>
+  <tr><td>Quadro de espaços</td><td>eyebrow, título; por espaço: nome, nota, lista de fotos</td><td><span class="tag tag--a">A</span></td><td>9 espaços hoje, mas a lista aguenta qualquer número. As fotos são as do passeio.</td></tr>
+  <tr><td>Fecho</td><td>eyebrow, título, 2 botões</td><td><span class="tag tag--a">A</span></td><td></td></tr>
+</table>
+</div>
+
+<h3>Equipa (<code>equipa.html</code>)</h3>
+
+<div class="table-wrap">
+<table>
+  <tr><th>Bloco</th><th>Campos</th><th>Nível</th><th>Notas</th></tr>
+  <tr><td>SEO</td><td>título, descrição</td><td><span class="tag tag--a">A</span></td><td></td></tr>
+  <tr><td>Título</td><td>título da página</td><td><span class="tag tag--b">B</span></td><td>Palavra a vermelho.</td></tr>
+  <tr><td>Grupos</td><td>por grupo: nome; por pessoa: nome, função, foto, vídeo (opcional), destaque</td><td><span class="tag tag--a">A</span></td><td>4 grupos e 18 pessoas hoje. A contagem "N pessoas" é gerada. Fotos 3:4 em <code>assets/pessoal/</code>. Uma pessoa sem vídeo fica só com a foto, o cartão já aguenta.</td></tr>
+</table>
+</div>
+
+<h3>Contactos (<code>contactos.html</code>)</h3>
+
+<div class="table-wrap">
+<table>
+  <tr><th>Bloco</th><th>Campos</th><th>Nível</th><th>Notas</th></tr>
+  <tr><td>SEO</td><td>título, descrição</td><td><span class="tag tag--a">A</span></td><td></td></tr>
+  <tr><td>Cabeça</td><td>eyebrow, título, lead</td><td><span class="tag tag--b">B</span></td><td></td></tr>
+  <tr><td>Dados</td><td>telefone, email, morada, horário</td><td><span class="tag tag--a">A</span></td><td>Tudo do ficheiro partilhado. Nada específico da página.</td></tr>
+  <tr><td>Caixa do formulário</td><td>título da caixa</td><td><span class="tag tag--a">A</span></td><td>O formulário em si é nível C.</td></tr>
+</table>
+</div>
+
+<h3>Nav e rodapé (<code>nav.js</code>, <code>rodape.js</code>)</h3>
+
+<div class="table-wrap">
+<table>
+  <tr><th>Bloco</th><th>Campos</th><th>Nível</th><th>Notas</th></tr>
+  <tr><td>Itens do nav</td><td>texto e destino de cada link</td><td><span class="tag tag--c">C</span></td><td>Uma página nova é trabalho da NK. Não faz sentido o cliente mexer.</td></tr>
+  <tr><td>Rodapé: marca</td><td>tagline, redes sociais</td><td><span class="tag tag--a">A</span></td><td>Do ficheiro partilhado.</td></tr>
+  <tr><td>Rodapé: colunas de links</td><td>títulos e links</td><td><span class="tag tag--c">C</span></td><td>Seguem o nav.</td></tr>
+  <tr><td>Rodapé: contactos e horário</td><td>morada, telefone, email, horário</td><td><span class="tag tag--a">A</span></td><td>Do ficheiro partilhado. O horário está com formatação diferente da página de Contactos ("Seg – Sex" vs "Segunda a sexta"). Passa a ser o mesmo dado, formatado pelo molde.</td></tr>
+  <tr><td>Rodapé: legal</td><td>link da política de privacidade</td><td><span class="tag tag--b">B</span></td><td>Hoje aponta para <code>#</code>. Fica um campo.</td></tr>
+</table>
+</div>
+
+<!-- ============================================================ -->
+<h2 id="convencoes">4. Convenções de texto</h2>
+
+<p>O cliente nunca escreve HTML. Três marcas simples chegam para tudo o que os moldes precisam, e o gestor pode mostrá-las como botões.</p>
+
+<div class="table-wrap">
+<table>
+  <tr><th>Escreve</th><th>Sai</th><th>Onde é permitido</th></tr>
+  <tr><td><code>começa *aqui*</code></td><td>começa <em style="color:var(--accent);font-style:normal">aqui</em></td><td>Títulos, manifesto. No máximo uma por título, por regra do design system. O gestor avisa se houver duas.</td></tr>
+  <tr><td><code>A tua jornada | começa *aqui*</code></td><td>quebra de linha forçada</td><td>Só em títulos de hero e de faixa.</td></tr>
+  <tr><td><code>nos planos **Power** e **Premium**</code></td><td>nos planos <strong>Power</strong> e <strong>Premium</strong></td><td>Linha do plano nas modalidades, e pouco mais.</td></tr>
+</table>
+</div>
+
+<p>Tudo o resto é texto simples. Parágrafos múltiplos são uma lista de strings, não um texto com quebras. O build escapa o HTML, por isso um <code>&lt;</code> no texto do cliente nunca vira uma tag.</p>
+
+<p>O esquema de cada ficheiro diz que campos aceitam que marcas. Por exemplo, um campo <code>titulo</code> aceita <code>*</code> e <code>|</code>; um campo <code>lead</code> não aceita nada; um campo <code>plano</code> aceita <code>**</code>.</p>
+
+<!-- ============================================================ -->
+<h2 id="nao">5. O que fica fora do alcance do cliente</h2>
+
+<p>Para não haver dúvidas quando se documentar isto para o cliente, a lista explícita do nível C e o porquê de cada item.</p>
+
+<ul>
+  <li><strong>Layout, cores, tipografia, espaçamentos.</strong> É o design system. Vive no CSS.</li>
+  <li><strong>Animações e coreografias.</strong> Galeria pregada, capítulos pregados, manifesto, contadores, cartões em vídeo. O cliente muda o que está dentro, não como se move.</li>
+  <li><strong>Contagens fixas por desenho.</strong> 8 peças na galeria, 4 modalidades, 3 fotos no Sobre da homepage. Mudar a contagem é redesenhar.</li>
+  <li><strong>Formulário de contacto.</strong> Campos, etiquetas, mensagens de erro, placeholders, consentimento. Estão acoplados à validação no <code>formulario.js</code> e à Function que envia o email.</li>
+  <li><strong>Nav e colunas de links do rodapé.</strong> Mudam quando há páginas novas, que são trabalho da NK.</li>
+  <li><strong>Pontos do passeio virtual.</strong> Coordenadas em percentagem de uma caixa 4:3. Precisam de ferramenta visual.</li>
+  <li><strong>Textos de sistema.</strong> "O passeio não abriu", estados do formulário, aria-labels, a assinatura da NK.</li>
+  <li><strong>Destino do email do formulário.</strong> É configuração do servidor, vai para as variáveis de ambiente da Cloudflare, não para o conteúdo.</li>
+</ul>
+
+<!-- ============================================================ -->
+<h2 id="ficheiros">6. Proposta de ficheiros em <code>conteudo/</code></h2>
+
+<p>Um ficheiro por tema, não por página. As páginas são moldes que puxam de vários ficheiros. Os nomes em português, como o resto do projeto.</p>
+
+<pre>conteudo/
+  geral.json          nome, tagline, fundação, redes sociais, política de privacidade
+  contactos.json      telefone, email, morada, horário de abertura
+  campanha.json       a faixa vermelha, o link do nav e a página da campanha
+  planos.json         os cartões de preços
+  modalidades.json    os 4 capítulos, os extras, os textos do horário
+  horario.json        as aulas da semana, por aba
+  equipa.json         grupos e pessoas
+  instalacoes.json    quadro de espaços e textos da página
+  paginas.json        SEO, heros, fechos e textos soltos de cada página
+  esquemas/           um JSON Schema por ficheiro (a documentação executável)</pre>
+
+<p>O passeio virtual continua em <code>assets/walkthrough/walkthrough.json</code>, no formato que já tem. Não se mexe.</p>
+
+<h3>Amostras do formato</h3>
+
+<h4>contactos.json</h4>
+<pre>{
+  "telefone": "259 322 108",
+  "email": "geral@ptacademy.pt",
+  "morada": ["Tv. da Rua Nova nº56", "5000-651 Vila Real"],
+  "mapa": "https://maps.google.com/?q=Travessa+da+Rua+Nova+56,+5000-651+Vila+Real",
+  "horario": [
+    { "dias": "Segunda a sexta", "curto": "Seg – Sex", "horas": "07h – 22h" },
+    { "dias": "Sábado",          "curto": "Sábado",    "horas": "09h – 13h · 15h – 19h" },
+    { "dias": "Domingo",         "curto": "Domingo",   "horas": "Encerrado", "fechado": true }
+  ]
+}</pre>
+<p>O build deriva o <code>tel:+351259322108</code> do número, tirando os espaços.</p>
+
+<h4>campanha.json</h4>
+<p>Resumido. O formato completo das secções está na secção 7.</p>
+<pre>{
+  "ativa": true,
+  "nav": "3 meses grátis",
+  "faixa": {
+    "eyebrow": "Inscreve-te agora e aproveita",
+    "titulo": "Novas inscrições 3 meses grátis",
+    "botao": { "texto": "Saber mais", "acao": "campanha" }
+  },
+  "pagina": {
+    "seo": { "titulo": "3 meses grátis", "descricao": "…" },
+    "seccoes": [
+      { "tipo": "abertura", "…": "…" },
+      { "tipo": "lista", "…": "…" },
+      { "tipo": "fecho", "…": "…" }
+    ]
+  }
+}</pre>
+<p>O campo <code>acao</code> de qualquer botão aceita <code>ligar</code> (telefone partilhado), <code>modal</code> (abre o formulário), <code>campanha</code> (a página da campanha), ou um URL.</p>
+
+<h4>planos.json</h4>
+<pre>{
+  "eyebrow": "Planos",
+  "titulo": "Escolhe o teu ritmo",
+  "lead": "Sem fidelização e sem custos de inscrição. Mudas de plano ou cancelas quando quiseres — basta avisares até ao fim do mês.",
+  "planos": [
+    {
+      "nome": "Power",
+      "preco": 28,
+      "periodo": "/mês",
+      "pitch": "Crossfit e aulas de grupo",
+      "destaque": "Mais escolhido",
+      "inclui": [
+        "Tudo o que o plano Base inclui",
+        "Inclui duas aulas de grupo por semana",
+        "Acesso à sala de cross training"
+      ],
+      "botao": { "texto": "Ligar", "acao": "ligar" }
+    }
+  ]
+}</pre>
+
+<h4>horario.json</h4>
+<p>Uma lista de aulas, não uma grelha. Adicionar uma aula é adicionar uma linha; o build monta a tabela, agrupa por hora e empilha o que calha na mesma célula. É muito mais fácil de editar num formulário do que uma matriz de 6 por 9.</p>
+<pre>{
+  "dias": ["seg", "ter", "qua", "qui", "sex", "sab"],
+  "abas": [
+    {
+      "id": "cross",
+      "nome": "Cross Training",
+      "aulas": [
+        { "nome": "Cross Training",  "dia": "seg", "hora": "07h00" },
+        { "nome": "Cross Training",  "dia": "seg", "hora": "18h30" },
+        { "nome": "Hybrid Training", "dia": "seg", "hora": "18h30" }
+      ]
+    },
+    {
+      "id": "grupo",
+      "nome": "Aulas de Grupo",
+      "aulas": [
+        { "nome": "Pilates", "dia": "ter", "hora": "17h30" }
+      ]
+    }
+  ]
+}</pre>
+
+<h4>equipa.json</h4>
+<pre>{
+  "titulo": "As *caras* da casa",
+  "grupos": [
+    {
+      "nome": "Direção",
+      "pessoas": [
+        {
+          "nome": "Patrícia Teles",
+          "funcao": "Proprietária",
+          "foto": "pessoal/patricia-teles.webp",
+          "video": "pessoal/patricia-teles.mp4",
+          "destaque": true
+        }
+      ]
+    }
+  ]
+}</pre>
+<p>Caminhos de media são relativos a <code>assets/</code>. O gestor faz upload para lá e escreve o caminho.</p>
+
+<h4>modalidades.json (um capítulo)</h4>
+<pre>{
+  "id": "crossfit",
+  "eyebrow": "PT Cross Academy",
+  "nome": "Crossfit",
+  "lead": "Uma box com pé-direito alto, rig, barras, kettlebells e relvado para o trenó. Cada treino é uma nova oportunidade de te superares.",
+  "pontos": [
+    "Aulas em grupo, sempre com coach",
+    "Escalável: do zero ao competitivo",
+    "Força, ginástica e condicionamento no mesmo treino"
+  ],
+  "etiquetas": ["WOD", "Halterofilismo", "Ginástica", "Metcon", "HYROX"],
+  "plano": "Incluída nos planos **Power** e **Premium**",
+  "foto": { "ficheiro": "modalidades/crossfit.webp", "alt": "Atleta a fazer swing com kettlebell…" },
+  "detalhe": { "ficheiro": "modalidades/crossfit-detalhe.webp", "alt": "Coach a acompanhar um agachamento no rig" },
+  "tile": "pt-academy-crossfit.webp"
+}</pre>
+<p>O campo <code>tile</code> é a foto do quadrado na homepage. Ver decisão 3 sobre como sai do CSS.</p>
+
+<!-- ============================================================ -->
+<h2 id="campanha">7. Página da campanha</h2>
+
+<p>Quando a campanha está ativa, o site ganha uma página dedicada a ela. O link vermelho do nav leva a essa página, não à faixa. O cliente monta a página no gestor, empilhando secções de um catálogo fixo. Cada secção é um molde pré-construído com o design do site. O cliente escolhe o tipo, preenche os campos e muda a ordem, mas não mexe no aspeto.</p>
+
+<h3>Regras da página</h3>
+<ul>
+  <li><strong>Começa sempre com uma abertura e acaba sempre com um fecho.</strong> O gestor não deixa apagar nem mover estas duas.</li>
+  <li><strong>O meio é livre.</strong> Qualquer secção do catálogo, em qualquer ordem, repetida se for preciso, até 8 no total.</li>
+  <li><strong>Sem faixa vermelha na página.</strong> A faixa <code>.campaign</code> fica só na homepage. Na página da campanha o vermelho aparece nos CTAs e nas palavras-chave, como no resto do site.</li>
+  <li><strong>As convenções de texto são as mesmas</strong> do resto do site.</li>
+</ul>
+
+<h3>Catálogo de secções</h3>
+<p>Todas saem de componentes que o site já tem, menos duas, que são novas e precisam de desenho.</p>
+
+<div class="table-wrap">
+<table>
+  <tr><th>Tipo</th><th>Campos</th><th>Vem de</th></tr>
+  <tr><td><code>abertura</code></td><td>eyebrow, título, lead opcional, foto + alt, botão</td><td>Hero das páginas interiores</td></tr>
+  <tr><td><code>texto</code></td><td>eyebrow, título, 1 a 3 parágrafos, botão opcional</td><td>Cabeça da História no Sobre</td></tr>
+  <tr><td><code>texto-foto</code></td><td>o mesmo que <code>texto</code>, mais foto + alt e lado (esquerda ou direita)</td><td>História no Sobre</td></tr>
+  <tr><td><code>lista</code></td><td>eyebrow, título, lista de pontos</td><td>Lista com traço</td></tr>
+  <tr><td><code>passos</code></td><td>eyebrow, título, 2 a 4 passos com nome e texto, numerados sozinhos</td><td>Valores do Sobre</td></tr>
+  <tr><td><code>numeros</code></td><td>2 a 3 números grandes com legenda</td><td>Números do Sobre</td></tr>
+  <tr><td><code>planos</code></td><td>eyebrow, título, lead, escolha de planos do <code>planos.json</code></td><td>Planos da homepage</td></tr>
+  <tr><td><code>fotos</code></td><td>2 a 4 fotos com alt</td><td>Fotos do Sobre na homepage</td></tr>
+  <tr><td><code>perguntas</code></td><td>título, lista de pergunta e resposta</td><td><span class="tag tag--b">Novo</span> Precisa de desenho: abre e fecha, cantos retos, traço a vermelho</td></tr>
+  <tr><td><code>condicoes</code></td><td>título, texto em letra pequena</td><td><span class="tag tag--b">Novo</span> Texto de apoio em <code>#666</code>, sem destaque</td></tr>
+  <tr><td><code>fecho</code></td><td>eyebrow, título, 2 botões</td><td>Faixa de fecho bordô</td></tr>
+</table>
+</div>
+
+<h4>Exemplo de secções</h4>
+<pre>"seccoes": [
+  {
+    "tipo": "abertura",
+    "eyebrow": "Só até 31 de outubro",
+    "titulo": "3 meses *grátis*",
+    "foto": { "ficheiro": "campanha/abertura.webp", "alt": "…" },
+    "botao": { "texto": "Quero aderir", "acao": "ligar" }
+  },
+  {
+    "tipo": "passos",
+    "eyebrow": "Como funciona",
+    "titulo": "Três passos e estás dentro",
+    "passos": [
+      { "nome": "Liga ou passa cá", "texto": "…" },
+      { "nome": "Escolhe o plano", "texto": "…" },
+      { "nome": "Começa a treinar", "texto": "…" }
+    ]
+  },
+  { "tipo": "planos", "titulo": "Escolhe o teu *plano*", "planos": ["Power", "Premium"] },
+  { "tipo": "condicoes", "titulo": "Condições", "texto": "…" },
+  {
+    "tipo": "fecho",
+    "eyebrow": "Não deixes passar",
+    "titulo": "Começa hoje",
+    "botoes": [
+      { "texto": "Ligar", "acao": "ligar" },
+      { "texto": "Enviar questão", "acao": "modal" }
+    ]
+  }
+]</pre>
+
+<h3>Decidido na página da campanha</h3>
+<p>Fechado com o Francisco a 23 de setembro de 2026.</p>
+
+<div class="svc">
+<h3>A. Endereço com o nome da campanha</h3>
+<p>A página vive na raiz, com um endereço tirado da campanha, por exemplo <code>/3-meses-gratis</code>. Serve só para o link ficar mais bonito. As campanhas antigas não ficam arquivadas.</p>
+<p>O gestor gera o endereço a partir do texto do link do nav, e o cliente pode corrigi-lo ao criar a campanha. O gestor recusa endereços que já pertencem a páginas do site, como <code>/equipa</code>.</p>
+<p>Depois de a campanha ser criada, o endereço fica bloqueado. O gestor mostra um aviso a explicar que não se muda o endereço de uma campanha em curso, porque os links que já circulam deixariam de funcionar.</p>
+</div>
+
+<div class="svc">
+<h3>B. A faixa leva à página</h3>
+<p>O botão da faixa na homepage leva à página da campanha.</p>
+</div>
+
+<div class="svc">
+<h3>C. Campanha terminada: página 404 universal</h3>
+<p>Não há reencaminhamentos. O site ganha uma página <code>404.html</code>, que a Cloudflare Pages serve sozinha para qualquer endereço que não exista. O texto é genérico, algo como "A página que tentaste abrir foi removida ou já não existe", com um botão para a homepage.</p>
+<p>Serve para campanhas terminadas e para qualquer outro link partido, por isso não é preciso guardar a lista de endereços antigos. O texto é fixo, escrito pela NK, e segue o design system da PT Academy.</p>
+</div>
+
+<div class="svc">
+<h3>D. Desliga-se à mão</h3>
+<p>Não há build agendado, para não gastar os limites da Cloudflare quando houver mais clientes. A data de fim pode aparecer escrita na página, mas não desliga nada.</p>
+</div>
+
+<div class="svc">
+<h3>E. Catálogo fechado em onze secções</h3>
+<p>As onze secções da tabela chegam por agora. As secções <code>perguntas</code> e <code>condicoes</code> precisam de ser desenhadas antes de se construírem. O preço riscado fica de fora.</p>
+</div>
+
+<!-- ============================================================ -->
+<h2 id="decisoes">8. Decisões tomadas</h2>
+
+<p>Fechadas com o Francisco a 23 de setembro de 2026.</p>
+
+<div class="svc">
+<h3>1. Campanha desligável, com link no nav</h3>
+<p>Com <code>ativa: false</code>, a faixa vermelha desaparece da homepage.</p>
+<p>Com <code>ativa: true</code>, o nav ganha um link extra, à esquerda dos outros e a vermelho. O link leva à página dedicada da campanha, descrita na secção 7. No menu do telemóvel fica também em primeiro lugar.</p>
+<p>O texto do link é um campo curto próprio, <code>nav</code>, porque o título da faixa é longo demais para caber no nav. É feito junto com o resto do gestor, no build. Como o nav passa a ser gerado no build, o link e a página só existem quando a campanha está ativa.</p>
+</div>
+
+<div class="svc">
+<h3>2. Planos em linhas de 4</h3>
+<p>No computador cabem até 4 cartões por linha. O quinto começa uma linha nova, e assim sucessivamente. O número de planos é livre. Nos ecrãs mais pequenos mantêm-se os pontos de quebra que já existem: 2 colunas abaixo de 1150px e 1 abaixo de 620px.</p>
+</div>
+
+<div class="svc">
+<h3>3. Fotos saem do CSS</h3>
+<p>O hero da homepage, as 3 fotos do Sobre, os 4 tiles e o hero das Modalidades passam a <code>&lt;img&gt;</code> dentro da camada. É o que já fazem as páginas Sobre e Modalidades.</p>
+</div>
+
+<div class="svc">
+<h3>4. Horário de abertura gerado</h3>
+<p>O lead do horário nas Modalidades é partido em duas partes. Uma é texto livre e a outra é gerada a partir do horário em <code>contactos.json</code>.</p>
+</div>
+
+<div class="svc">
+<h3>5. Galeria fixa em 8 fotos</h3>
+<p>O cliente troca o ficheiro e o texto alternativo de cada foto. Não pode mudar quantas são.</p>
+</div>
+
+<div class="svc">
+<h3>6. Valores do Sobre fixos em 3</h3>
+<p>O cliente edita o nome e o texto de cada valor. Não pode mudar quantos são.</p>
+</div>
+
+<div class="svc">
+<h3>7. Passeio virtual fica na NK</h3>
+<p>Não aparece no gestor. Um editor visual dos pontos fica para outro projeto.</p>
+</div>
+
+<div class="svc">
+<h3>8. Horário de aulas: lista no ficheiro, calendário no site</h3>
+<p>No <code>horario.json</code>, cada aula é uma linha com dia, hora e nome. No site, o build tem obrigatoriamente de mostrar as aulas como estão hoje: as duas abas e a tabela da semana, com as horas nas linhas, os dias nas colunas e as aulas da mesma hora empilhadas na célula. Ninguém que visite o site vê diferença.</p>
+<p>O ecrã do gestor para editar o horário ainda está por decidir, quando se desenhar o gestor.</p>
+</div>
+
+<!-- ============================================================ -->
+<h2 id="passos">9. Próximos passos</h2>
+
+<ol class="steps">
+    <li><strong>Criar <code>conteudo/</code> com os JSON</strong> a partir do que está hoje no HTML, sem perder nada. Verificar programaticamente que cada texto que estava nas páginas aparece no build.</li>
+  <li><strong>Escrever os esquemas</strong> em <code>conteudo/esquemas/</code>. São a documentação: cada campo com descrição, tipo, marcas permitidas, e limites de contagem.</li>
+  <li><strong>Escrever o <code>construir.js</code></strong> sem dependências, com os moldes em <code>moldes/</code>. Gera <code>dist/</code>. O nav e o rodapé deixam de ser injetados por JS e passam a ser gerados no build, o que também tira dois scripts síncronos do carregamento. É aqui que entra o link da campanha no nav.</li>
+  <li><strong>Construir a página da campanha:</strong> o molde da página, um molde por tipo de secção, e a página <code>404.html</code>. As secções <code>perguntas</code> e <code>condicoes</code> precisam de desenho primeiro.</li>
+  <li><strong>Passar o <code>servidor.js</code> para <code>functions/api/contacto.js</code>.</strong> Mesma lógica, sem o servidor estático, travão por IP no painel da Cloudflare.</li>
+  <li><strong>Ligar a Cloudflare Pages</strong> ao repo, com <code>node construir.js</code> como comando e <code>dist/</code> como saída. Ramo <code>rascunho</code> para pré-visualizações.</li>
+  <li><strong>Documentar</strong> no <code>CLAUDE.md</code> e no <code>NOTAS.md</code>: o que é conteúdo, o que é estrutura, e a regra de que uma página nova põe os textos em <code>conteudo/</code> desde o primeiro dia.</li>
+</ol>
+
+<p>O gestor em si, a página logável no site da NK, vem depois de tudo isto. A interface do gestor segue o design system da NK, não o da PT Academy. O que o gestor produz, as páginas e as secções da campanha, continua com o design da PT Academy. Nessa altura só precisa de ler os esquemas para desenhar os formulários, e de escrever em <code>conteudo/</code> e <code>assets/</code> pela API do GitHub.</p>
+
+<h3>Por confirmar com a academia</h3>
+<p>Estes pontos já estavam marcados no HTML como suposições. Com o gestor, deixam de ser um problema teu: o cliente corrige-os diretamente.</p>
+<ul class="check">
+  <li>O email geral@ptacademy.pt.</li>
+  <li>Dança: turmas por idade, professoras formadas, espetáculo de fim de ano, estilos Hip Hop e Ballet, inscrição própria.</li>
+  <li>Personal Trainer e Nutrição: existem e nestes termos?</li>
+  <li>Que modalidade vive em cada estúdio das Instalações.</li>
+  <li>Horário da escola de dança, ainda sem cartaz.</li>
+  <li>Link da política de privacidade.</li>
+</ul>
+
+<footer class="end">
+  NK Web Design · Francisco Morais · nkwebdesign.pt · 17 de setembro de 2026
+</footer>
+
+</div>
+</body>
+</html>
