@@ -769,7 +769,7 @@ sem biblioteca.
 
 Links das redes são reais (Instagram, Facebook, TikTok da PT Academy).
 
-## Formulário de contacto — `formulario.js` + `servidor.js`
+## Formulário de contacto — `formulario.js` + `functions/api/contacto.js`
 
 A validação e o envio vivem no `formulario.js` e são partilhados pelos dois
 sítios onde o formulário aparece: dentro do modal da homepage e aberto na
@@ -811,42 +811,68 @@ inputs só com borda em baixo que acende a vermelho no foco.
 - O envio está isolado em `enviarQuestao()`, no fim do `formulario.js`. Trocar de
   serviço é mexer só nessa função.
 
-### Servidor
+### Pages Function — `functions/api/contacto.js`
 
-`servidor.js` serve os ficheiros estáticos **e** expõe `POST /api/contacto`,
-que fala com o Resend. **Sem dependências** — o `fetch` global do Node 18+
-chega, portanto não há `npm install` neste projeto.
+Desde 24 set. 2026 o envio vive numa **Pages Function** da Cloudflare:
+um ficheiro em `functions/api/` que responde em `/api/contacto` e só corre
+quando alguém envia o formulário. Não há servidor ligado. Até aí vivia no
+`servidor.js`.
+
+A função valida tudo outra vez (a validação do browser é conforto, esta é
+a que conta), recusa corpos acima de 16 KB, ignora o pote de mel com um
+200 falso, escapa o conteúdo antes de o meter no HTML do email e põe o
+`reply_to` com o email do sócio quando ele o deu. Testada com o Resend
+simulado: onze casos, do JSON partido ao Resend a recusar.
+
+**Travão por IP:** o antigo (5 envios por 10 minutos, em memória) não
+passou, porque uma função não guarda memória entre pedidos. Fica uma
+regra de rate limiting na Cloudflare, que no plano gratuito só conta em
+janelas de 10 segundos e só existe com o domínio na Cloudflare (não no
+`pages.dev`). Se o spam aparecer, o passo seguinte é o Turnstile (o
+captcha gratuito da Cloudflare) ou um contador em KV.
+
+**Localmente**, o `servidor.js` serve a `dist/` e entrega o
+`POST /api/contacto` à **mesma** função, convertendo o pedido do Node num
+`Request`:
 
 ```
+node construir.js
 node --env-file=.env servidor.js
 ```
-
-A validação está repetida no servidor de propósito: a do cliente é conforto,
-a do servidor é a que conta — o pedido pode vir de qualquer lado. Tem também
-travão por IP (5 envios / 10 min, em memória), limite de 16 KB no corpo, e
-escapa o conteúdo antes de o meter no HTML do email. O `reply_to` vai com o
-email do sócio, quando ele o deu.
 
 **Porque não no frontend:** a chave do Resend é secreta — no JavaScript,
 está no código-fonte da página, e com ela manda-se email em nome do domínio
 da academia. O Resend nem sequer aceita chamadas do browser (bloqueia por
-CORS). Alternativas sem servidor, se algum dia fizer sentido: Web3Forms ou
-Formspree (chave pública, feita para ser pública), ou Netlify Forms.
+CORS).
+
+### Cloudflare Pages — configuração
+
+No painel da Cloudflare: **Workers & Pages** → **Create application** →
+**Pages** → **Connect to Git** → repositório `pt-academy`.
+
+| Campo | Valor |
+|---|---|
+| Production branch | `master` |
+| Framework preset | nenhum |
+| Build command | `node construir.js` |
+| Build output directory | `dist` |
+| Root directory | vazio |
+
+Variáveis (em **Settings → Variables and Secrets**, para Production e
+Preview): `RESEND_API_KEY` como **Secret**, `EMAIL_DESTINO` e
+`EMAIL_REMETENTE` como texto. A pasta `functions/` é apanhada sozinha a
+partir da raiz do repositório.
 
 ### Por fazer
 
-- **`RESEND_API_KEY`** — copiar `.env.exemplo` para `.env` e pôr a chave
-  real. O `.env` está no `.gitignore`.
 - **Verificar o domínio no Resend** para poder enviar de `@ptacademy.pt`.
-  Sem isso, só `onboarding@resend.dev`, que entrega apenas na conta do
-  Resend.
-- **`EMAIL_DESTINO`** — está `geral@ptacademy.pt`, que é o mesmo placeholder
-  do rodapé e da página de contactos. **Confirmar o email real da academia** —
-  está marcado com um TODO no `contactos.html`, no `rodape.js` e no
-  `servidor.js`.
-- Se a API passar a viver noutra máquina que não a do site: pôr o URL
-  completo no `ENDPOINT` do `formulario.js` e o `Access-Control-Allow-Origin` no
-  `servidor.js` (com o domínio do site, nunca `*`).
+  Sem isso, `EMAIL_REMETENTE` tem de ser `onboarding@resend.dev`, que só
+  entrega na conta do Resend.
+- **`EMAIL_DESTINO`** — está `geral@ptacademy.pt`, que é também o email
+  público em `conteudo/contactos.json`. **Confirmar o email real da
+  academia.**
+- **Domínio próprio** no projeto Pages, e a regra de rate limiting em
+  `/api/contacto` quando o domínio estiver na Cloudflare.
 
 ## Conteúdo editável — `conteudo/`
 
@@ -912,10 +938,6 @@ em `<img>`, as descrições novas, "Um espaço familiar" em caixa normal, o
 horário do rodapé com a formatação de Contactos, o ano num `<span>`,
 as legendas das tabelas para leitores de ecrã ("Horário semanal: Cross
 Training") e o botão da faixa da campanha a apontar para a página dela.
-
-### Por fazer
-
-- Passar o formulário para uma Pages Function.
 
 ## Página da campanha — `moldes/campanha.js` + `campanha.css`
 

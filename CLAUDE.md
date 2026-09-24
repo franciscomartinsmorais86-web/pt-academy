@@ -14,6 +14,10 @@ O site é gerado: `node construir.js` junta `conteudo/` com `moldes/` e
 escreve o site em `dist/` (fora do git). Não há páginas `.html` na raiz.
 Ver a secção "Conteúdo editável" mais abaixo.
 
+Alojamento: Cloudflare Pages. O único código de servidor é o envio do
+formulário, em `functions/api/contacto.js` (Pages Function). O
+`servidor.js` é só para testar no computador e usa essa mesma função.
+
 # Design system
 
 Páginas novas reutilizam o `styles.css` e estas regras; nada de estilos inline.
