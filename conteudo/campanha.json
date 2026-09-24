@@ -19,7 +19,7 @@
         "tipo": "abertura",
         "eyebrow": "Inscreve-te agora e aproveita",
         "titulo": "Novas inscrições | 3 meses *grátis*",
-        "foto": { "ficheiro": "pt-academy-25.webp", "alt": "" },
+        "foto": { "ficheiro": "sobre-hero-ginasio.webp", "alt": "Sala de musculação e cardio da PT Academy" },
         "botao": { "texto": "Quero aderir", "acao": "ligar" }
       },
       {

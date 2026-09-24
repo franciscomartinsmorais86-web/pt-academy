@@ -276,9 +276,12 @@ function servirFicheiro(pedido, resposta) {
   if (!path.extname(alvo)) alvo += '.html';
 
   fs.readFile(alvo, function (erro, conteudo) {
+    /* Como a Cloudflare: o que não existe recebe a 404.html do site. */
     if (erro) {
-      resposta.writeHead(404, { 'Content-Type': 'text/plain; charset=utf-8' });
-      return resposta.end('Não encontrado');
+      return fs.readFile(path.join(SITE, '404.html'), function (erro404, pagina) {
+        resposta.writeHead(404, { 'Content-Type': 'text/html; charset=utf-8' });
+        resposta.end(erro404 ? 'Não encontrado' : pagina);
+      });
     }
     resposta.writeHead(200, {
       'Content-Type': TIPOS[path.extname(alvo).toLowerCase()] || 'application/octet-stream'

@@ -55,8 +55,10 @@ function botoes(lista, d, indent) {
     .join('\n' + (indent || ''));
 }
 
+/* Caminhos absolutos em todo o site: a página 404 é servida em qualquer
+   endereço (/a/b/c), e um caminho relativo partia-lhe o CSS e as fotos. */
 function src(ficheiro) {
-  return 'assets/' + ficheiro;
+  return '/assets/' + ficheiro;
 }
 
 /* 01, 02… */
@@ -81,7 +83,7 @@ function cabeca(o, d) {
 <title>${esc(titulo)}</title>
 <meta name="description" content="${esc(o.seo.descricao)}">
 <link href="${FONTES}" rel="stylesheet">
-${css.map(function (f) { return `<link rel="stylesheet" href="${f}">`; }).join('\n')}
+${css.map(function (f) { return `<link rel="stylesheet" href="/${f}">`; }).join('\n')}
 ${o.extraCabeca ? o.extraCabeca + '\n' : ''}<script>document.documentElement.classList.add('js');</script>
 </head>`;
 }
@@ -97,22 +99,30 @@ var NAV_ITENS = [
   { texto: 'Contactos',   href: '/contactos.html' }
 ];
 
-function navItens(pagina, classeItem, classeLink) {
-  return NAV_ITENS.map(function (item) {
+/* Com a campanha ativa, o link dela entra em primeiro lugar, a vermelho
+   (--campanha). A página em que se está leva aria-current e fica
+   sublinhada (styles.css). */
+function navItens(pagina, d, classeItem, classeLink) {
+  var itens = NAV_ITENS.slice();
+  if (d.campanha.ativa) {
+    itens.unshift({ texto: d.campanha.nav, href: '/' + d.campanha.endereco, campanha: true });
+  }
+  return itens.map(function (item) {
     var atual = item.href === pagina ? ' aria-current="page"' : '';
     var li = classeItem ? ` class="${classeItem}"` : '';
-    return `<li${li}><a class="${classeLink}" href="${item.href}"${atual}>${item.texto}</a></li>`;
+    var classe = item.campanha ? `${classeLink} ${classeLink}--campanha` : classeLink;
+    return `<li${li}><a class="${classe}" href="${esc(item.href)}"${atual}>${esc(item.texto)}</a></li>`;
   }).join('\n    ');
 }
 
 /* O comportamento (scroll, hamburger) continua no nav.js. */
-function nav(pagina) {
+function nav(pagina, d) {
   return `<!-- Nav e menu: gerados pelo construir.js; o comportamento está no nav.js -->
 <nav class="nav">
   <a href="/" class="nav__logo">PT<span class="nav__logo-dot">·</span>ACADEMY</a>
 
   <ul class="nav__links">
-    ${navItens(pagina, '', 'nav__link')}
+    ${navItens(pagina, d, '', 'nav__link')}
   </ul>
 
   <button type="button" class="nav__toggle" id="nav-toggle"
@@ -126,10 +136,10 @@ function nav(pagina) {
 <!-- Menu em ecrã inteiro -->
 <div class="menu" id="menu">
   <ul class="menu__list">
-    ${navItens(pagina, 'menu__item', 'menu__link')}
+    ${navItens(pagina, d, 'menu__item', 'menu__link')}
   </ul>
 </div>
-<script src="nav.js"></script>`;
+<script src="/nav.js"></script>`;
 }
 
 /* ---------- Rodapé ---------- */
@@ -375,7 +385,7 @@ function fim(pagina, corpo, scripts, d) {
   }
   return `${rodape(pagina, d)}
 ${comModal ? modal(d) + '\n' : ''}
-${lista.map(function (s) { return `<script src="${s}"></script>`; }).join('\n')}
+${lista.map(function (s) { return `<script src="/${s}"></script>`; }).join('\n')}
 `;
 }
 

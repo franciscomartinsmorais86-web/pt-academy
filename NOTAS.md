@@ -915,8 +915,56 @@ Training") e o botão da faixa da campanha a apontar para a página dela.
 
 ### Por fazer
 
-- A página da campanha e o link vermelho no nav. Até lá, o "Saber mais"
-  da faixa aponta para `/3-meses-gratis`, que ainda não existe.
-- A página 404.
-- As secções `perguntas` e `condicoes` da campanha, por desenhar.
 - Passar o formulário para uma Pages Function.
+
+## Página da campanha — `moldes/campanha.js` + `campanha.css`
+
+Feita a 24 set. 2026, com as respostas do Francisco às perguntas:
+
+- **Link no nav:** texto vermelho, em primeiro lugar, só com a campanha
+  ativa. No telemóvel é o primeiro item do menu. No hover passa a branco.
+- **Página atual no nav:** deixou de ser vermelha. Fica branca com uma
+  risca fina por baixo (1px no nav, 2px no menu), para o vermelho ficar
+  só para a campanha.
+- **Abertura:** hero de ecrã inteiro, como a homepage, com lead opcional.
+- **Secções:** abertura, texto, texto com foto (meio-meio, foto à
+  esquerda ou à direita), lista com traço (2 colunas), passos (cartões
+  numerados, como os valores do Sobre), números (parados, porque podem
+  ser texto como "0 €"), planos (os cartões do `planos.json`, escolhidos
+  pelo nome), fotos (2 a 4 lado a lado), perguntas, condições e fecho.
+- **Perguntas:** `<details>` nativo, uma linha por pergunta com riscas
+  finas; o + (duas riscas retas) vira − ao abrir. Sem JS.
+- **Condições:** letra pequena a `#666`, sempre à vista, numa faixa com
+  risca por cima.
+- **Movimento:** as entradas de sempre (`reveal--slide` nos textos,
+  `reveal--rise` nos cartões, `reveal` nas fotos).
+- **Verificação no build:** abertura em primeiro, fecho em último, 2 a 8
+  secções, tipos que existem, planos que existem, fotos que existem. Com
+  a campanha desligada, nenhum botão pode ter a ação `campanha`.
+
+Testado com uma página de cada tipo de secção numa cópia do projeto:
+etiquetas bem fechadas e texto do cliente escapado. Com `ativa: false`
+desaparecem a faixa, o link e a página.
+
+### Por confirmar
+
+- O conteúdo da página ficou só com o que já existia: abertura (foto da
+  sala de musculação), planos e fecho. O resto entra pelo gestor.
+
+## Página 404 — `moldes/erro404.js` + `erro.js`
+
+Hero de ecrã inteiro com a foto da sala de cardio, "Erro 404", o título
+"Esta página *saiu* do treino", a frase "A página que tentaste abrir foi
+removida ou já não existe." e dois botões: "Início" (vermelho) e
+"Voltar" (contorno). O "Voltar" volta à página anterior pelo histórico;
+sem página anterior, segue o `href`, que é a homepage. Tem
+`noindex`. O texto é fixo, da NK, fora do `conteudo/`.
+
+A Cloudflare Pages serve a `404.html` sozinha em qualquer endereço que
+não exista, e o `servidor.js` faz o mesmo localmente. Por isso todos os
+caminhos do site passaram a absolutos (`/styles.css`, `/assets/…`).
+
+### Por confirmar
+
+- A resposta sobre o texto não disse qual dos dois títulos; ficou o
+  primeiro, "Esta página *saiu* do treino".

@@ -19,8 +19,22 @@ var RAIZ = __dirname;
 var CONTEUDO = path.join(RAIZ, 'conteudo');
 var SAIDA = path.join(RAIZ, 'dist');
 
+/* Páginas fixas. A da campanha só entra com campanha.ativa, e a 404
+   entra sempre (a Cloudflare serve-a em qualquer endereço que não exista). */
 var MOLDES = ['inicio', 'sobre', 'modalidades', 'instalacoes', 'equipa', 'contactos']
   .map(function (nome) { return require('./moldes/' + nome); });
+var CAMPANHA = require('./moldes/campanha');
+var ERRO = require('./moldes/erro404');
+
+function paginas(d) {
+  return MOLDES
+    .concat(d.campanha.ativa ? [CAMPANHA] : [])
+    .concat([ERRO]);
+}
+
+function saida(molde, d) {
+  return typeof molde.saida === 'function' ? molde.saida(d) : molde.saida;
+}
 
 /* Ficheiros da raiz que não vão para o site. */
 var FORA = ['construir.js', 'servidor.js'];
@@ -36,7 +50,8 @@ function ler() {
     if (!f.endsWith('.json')) return;
     var nome = f.slice(0, -5);
     try {
-      d[nome] = JSON.parse(fs.readFileSync(path.join(CONTEUDO, f), 'utf8'));
+      /* Sem o BOM que alguns editores de Windows põem no início. */
+      d[nome] = JSON.parse(fs.readFileSync(path.join(CONTEUDO, f), 'utf8').replace(/^﻿/, ''));
     } catch (erro) {
       throw new Error(`conteudo/${f} não é JSON válido: ${erro.message}`);
     }
@@ -151,6 +166,8 @@ function verificar(d) {
   exige(/^[a-z0-9]+(-[a-z0-9]+)*$/.test(d.campanha.endereco), 'campanha.json: o endereço só pode ter minúsculas, números e hífenes.');
   exige(reservados.indexOf(d.campanha.endereco) === -1, `campanha.json: o endereço "${d.campanha.endereco}" já pertence ao site.`);
 
+  verificarCampanha(d, exige, existe, titulo);
+
   [
     [d.planos.titulo, 'planos.json (título)'],
     [d.equipa.titulo, 'equipa.json (título)'],
@@ -164,6 +181,41 @@ function verificar(d) {
 
   if (erros.length) {
     throw new Error('O conteúdo tem problemas:\n  - ' + erros.join('\n  - '));
+  }
+}
+
+/* A página da campanha: a ordem das secções, os tipos que existem, os
+   planos e as fotos que referem. Com a campanha desligada, nenhum botão
+   do site pode apontar para ela. */
+function verificarCampanha(d, exige, existe, titulo) {
+  var camp = d.campanha;
+  var seccoes = camp.pagina.seccoes;
+  var tipos = Object.keys(CAMPANHA.SECCOES);
+  var nomes = d.planos.planos.map(function (p) { return p.nome; });
+
+  exige(seccoes.length >= 2 && seccoes.length <= 8, `campanha.json: a página tem de ter entre 2 e 8 secções (há ${seccoes.length}).`);
+  exige(seccoes.length && seccoes[0].tipo === 'abertura', 'campanha.json: a primeira secção da página tem de ser a abertura.');
+  exige(seccoes.length && seccoes[seccoes.length - 1].tipo === 'fecho', 'campanha.json: a última secção da página tem de ser o fecho.');
+
+  seccoes.forEach(function (s, i) {
+    var onde = `campanha.json (secção ${i + 1}, ${s.tipo})`;
+    exige(tipos.indexOf(s.tipo) !== -1, `${onde}: tipo de secção desconhecido.`);
+    exige(s.tipo !== 'abertura' || i === 0, `${onde}: só pode haver uma abertura, no início.`);
+    exige(s.tipo !== 'fecho' || i === seccoes.length - 1, `${onde}: só pode haver um fecho, no fim.`);
+    if (s.titulo) titulo(s.titulo, onde);
+    if (s.foto) existe(s.foto.ficheiro, onde);
+    (s.fotos || []).forEach(function (f) { existe(f.ficheiro, onde); });
+    (s.tipo === 'planos' ? s.planos : []).forEach(function (nome) {
+      exige(nomes.indexOf(nome) !== -1, `${onde}: o plano "${nome}" não existe no planos.json.`);
+    });
+  });
+
+  if (!camp.ativa) {
+    var ficheiros = ['paginas', 'planos', 'modalidades'];
+    ficheiros.forEach(function (f) {
+      exige(JSON.stringify(d[f]).indexOf('"acao":"campanha"') === -1,
+        `${f}.json: há um botão que leva à campanha, mas a campanha está desligada.`);
+    });
   }
 }
 
@@ -187,8 +239,9 @@ function construir() {
   fs.rmSync(SAIDA, { recursive: true, force: true });
   fs.mkdirSync(SAIDA);
 
-  MOLDES.forEach(function (molde) {
-    fs.writeFileSync(path.join(SAIDA, molde.saida), molde.gerar(d));
+  var lista = paginas(d);
+  lista.forEach(function (molde) {
+    fs.writeFileSync(path.join(SAIDA, saida(molde, d)), molde.gerar(d));
   });
 
   fs.readdirSync(RAIZ).forEach(function (f) {
@@ -198,7 +251,8 @@ function construir() {
   });
   copiar(path.join(RAIZ, 'assets'), path.join(SAIDA, 'assets'), function (nome) { return MEDIA.test(nome); });
 
-  console.log(`Site gerado em dist/ (${MOLDES.length} páginas, ${Date.now() - inicio} ms).`);
+  console.log(`Site gerado em dist/ (${lista.length} páginas, ${Date.now() - inicio} ms).`);
+  console.log(lista.map(function (m) { return '  ' + saida(m, d); }).join('\n'));
 }
 
 try {

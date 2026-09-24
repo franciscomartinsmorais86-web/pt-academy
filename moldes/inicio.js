@@ -61,7 +61,7 @@ module.exports = {
   <span class="intro__logo" id="intro-logo">PT<span class="nav__logo-dot">·</span>ACADEMY</span>
 </div>
 
-${c.nav('/')}
+${c.nav('/', d)}
 
 <!-- Hero -->
 <header class="hero">

@@ -49,7 +49,7 @@ ${g.pessoas.map(function (pe) { return pessoa(pe, i >= GRUPOS_SEM_LAZY); }).join
     }).join('\n\n');
 
     var corpo = `
-${c.nav('/equipa.html')}
+${c.nav('/equipa.html', d)}
 
 <!-- Sem hero: o título sozinho dá entrada à página, por baixo do nav, e
      a seguir vêm os grupos de cartões 3:4, pela ordem do equipa.json.

@@ -7,7 +7,7 @@ var c = require('./comum');
 var PRELOAD = `<!-- A rua é a primeira coisa que se vê (fundo do hero e primeira cena do
      passeio), mas vive num background-image: sem isto o browser só a
      descobre depois de ler o CSS todo. -->
-<link rel="preload" as="image" href="assets/walkthrough/rua.webp" fetchpriority="high">`;
+<link rel="preload" as="image" href="/assets/walkthrough/rua.webp" fetchpriority="high">`;
 
 function espaco(e, i) {
   var comFotos = e.fotos.length > 0;
@@ -29,7 +29,7 @@ module.exports = {
     var t = d.instalacoes;
 
     var corpo = `
-${c.nav('/instalacoes.html')}
+${c.nav('/instalacoes.html', d)}
 
 <!-- Hero curto de propósito: a página começa à porta da rua e entrega o
      ecrã ao passeio virtual logo a seguir. A foto é a primeira cena do
@@ -60,7 +60,7 @@ ${c.nav('/instalacoes.html')}
     <div class="passeio__tela">
       <div class="passeio__palco" id="passeio" aria-label="Passeio virtual pelas instalações">
         <noscript>
-          <img class="passeio__sem-js" src="assets/walkthrough/rua.webp"
+          <img class="passeio__sem-js" src="/assets/walkthrough/rua.webp"
                alt="Entrada da PT Academy vista da rua">
         </noscript>
       </div>
@@ -95,14 +95,14 @@ ${c.fecho(p.fecho, d)}
     var passeio = `<!-- Passeio virtual. O wt fica em window para se poder saltar entre cenas
      a partir da consola: wt.ir("sala_roxa"). -->
 <script type="module">
-import { montarWalkthrough } from './walkthrough.js';
+import { montarWalkthrough } from '/walkthrough.js';
 
 const palco = document.getElementById('passeio');
 try {
-  const resposta = await fetch('assets/walkthrough/walkthrough.json');
+  const resposta = await fetch('/assets/walkthrough/walkthrough.json');
   if (!resposta.ok) throw new Error(resposta.status);
   window.wt = montarWalkthrough(palco, await resposta.json(), {
-    base: 'assets/walkthrough/'
+    base: '/assets/walkthrough/'
   });
 } catch (erro) {
   palco.innerHTML = '<p class="passeio__erro">O passeio não abriu. Recarrega a página para tentar outra vez.</p>';

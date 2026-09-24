@@ -190,7 +190,7 @@
     },
     "perguntas": {
       "title": "Perguntas frequentes",
-      "description": "Componente novo, ainda por desenhar.",
+      "description": "Uma linha por pergunta, com um + que vira − ao abrir. As respostas começam fechadas.",
       "type": "object",
       "required": ["tipo", "titulo", "perguntas"],
       "additionalProperties": false,
@@ -216,7 +216,7 @@
     },
     "condicoes": {
       "title": "Condições",
-      "description": "Letra pequena. Componente novo, ainda por desenhar.",
+      "description": "Letra pequena a cinzento, sempre à vista, numa faixa antes do fecho.",
       "type": "object",
       "required": ["tipo", "titulo", "paragrafos"],
       "additionalProperties": false,

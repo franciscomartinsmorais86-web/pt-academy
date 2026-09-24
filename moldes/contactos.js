@@ -18,7 +18,7 @@ module.exports = {
     }).join('\n');
 
     var corpo = `
-${c.nav('/contactos.html')}
+${c.nav('/contactos.html', d)}
 
 <!-- Uma secção só: cabeçalho, dados à esquerda, formulário à direita.
      Página curta de propósito — quem vem aqui quer o número de telefone,

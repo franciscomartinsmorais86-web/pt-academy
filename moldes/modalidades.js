@@ -89,7 +89,7 @@ module.exports = {
       .map(c.esc).join(' ');
 
     var corpo = `
-${c.nav('/modalidades.html')}
+${c.nav('/modalidades.html', d)}
 
 <!-- Hero curto, como nas Instalações: apresenta a página e entrega o ecrã
      ao primeiro capítulo. O índice salta para cada modalidade. -->

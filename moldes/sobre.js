@@ -20,7 +20,7 @@ module.exports = {
     var FOTOS = ['foto foto--retrato foto--lenta', 'foto foto--paisagem foto--rapida'];
 
     var corpo = `
-${c.nav('/sobre.html')}
+${c.nav('/sobre.html', d)}
 
 <!-- Hero: a foto aproxima e o título sobe e apaga-se à saída -->
 <header class="hero hero--sobre" data-scroll="saida">

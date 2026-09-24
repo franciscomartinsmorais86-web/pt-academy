@@ -236,10 +236,28 @@ a:hover {
   text-transform: uppercase;
 }
 
-/* Página em que se está. */
+/* Página em que se está: fica branca, com uma risca fina por baixo. O
+   vermelho no nav é só da campanha. */
 .nav__link[aria-current="page"],
 .menu__link[aria-current="page"] {
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: .6em;
+}
+.menu__link[aria-current="page"] {
+  text-decoration-thickness: 2px;
+  text-underline-offset: .18em;
+}
+
+/* Link da campanha: só existe com a campanha ativa, sempre em primeiro
+   (moldes/comum.js). No hover troca para branco, ao contrário dos outros. */
+.nav__link--campanha,
+.menu__link--campanha {
   color: var(--color-red);
+}
+.nav__link--campanha:hover,
+.menu__link--campanha:hover {
+  color: #fff;
 }
 
 .nav__toggle {
@@ -375,6 +393,20 @@ a:hover {
 .hero__title em {
   color: var(--color-red);
   font-style: normal;
+}
+
+/* Lead e grupo de botões no hero: a página da campanha e a 404. */
+.hero__lead {
+  max-width: 520px;
+  margin: 0;
+  color: #ccc;
+  font: 400 17px/1.6 var(--font-body);
+}
+.hero__acoes {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 16px;
 }
 
 /* border: 0 e cursor para os <button> ficarem iguais aos <a>. */

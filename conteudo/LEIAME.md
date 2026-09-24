@@ -94,7 +94,7 @@ Não se escreve à mão, calcula-se a partir dos dados:
 - as numerações 01, 02… (capítulos, valores, espaços, passos);
 - o lado da foto em cada capítulo (alterna);
 - o título de cada página: `seo.titulo` + " · " + `geral.nome` (a homepage fica só com o nome);
-- a faixa da campanha, só quando `campanha.ativa` é `true` (o link vermelho no nav e a página da campanha ainda estão por construir).
+- a faixa da campanha, o link vermelho no nav (em primeiro lugar) e a página da campanha em `/<endereco>`, só quando `campanha.ativa` é `true`. Com a campanha desligada, o build recusa botões com a ação `campanha`.
 
 ## O que não está aqui
 
@@ -105,7 +105,7 @@ Não se escreve à mão, calcula-se a partir dos dados:
 - os itens do nav e as colunas de links do rodapé;
 - o passeio virtual (`assets/walkthrough/walkthrough.json`);
 - textos de sistema: "Fechar", "Voltar ao início", "O passeio não abriu…", legendas para leitores de ecrã, a assinatura da NK;
-- o texto da página 404;
+- a página 404 (texto e foto, no `moldes/erro404.js`);
 - o email para onde vão as mensagens do formulário (variável de ambiente na Cloudflare).
 
 ## Página nova

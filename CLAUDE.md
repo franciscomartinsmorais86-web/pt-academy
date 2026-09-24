@@ -154,6 +154,12 @@ rgba(255,255,255,.07)`), nunca preenchida.
 no início do `<body>` e `c.fim(...)` no fim, que põe o rodapé, o modal
 (se a página tiver um botão `modal`) e os scripts. O `nav.js` só tem o
 comportamento. Links novos no nav entram em `NAV_ITENS`, no `comum.js`.
+A página em que se está fica branca e sublinhada; o vermelho no nav é só
+do link da campanha, que entra em primeiro lugar quando ela está ativa.
+
+**Caminhos absolutos**: todos os `href`/`src` gerados começam por `/`
+(`/styles.css`, `/assets/…`). A 404 é servida em qualquer endereço e um
+caminho relativo partia-lhe o CSS.
 
 **Ícones**: SVG inline, `currentColor`, cantos retos. Sem bibliotecas.
 
