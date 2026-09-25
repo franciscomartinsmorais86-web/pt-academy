@@ -1,14 +1,15 @@
-/* POST /api/contacto — Pages Function da Cloudflare.
+/* POST /api/contacto — o envio do formulário.
 
    Recebe o formulário de questão (modal da homepage e página de
    Contactos, ver formulario.js), valida-o e manda-o por email através
    do Resend. É o único código do site que corre num servidor: a chave do
    Resend não pode ir para o browser.
 
-   Na Cloudflare, esta função responde sozinha em /api/contacto. No teu
+   Na Cloudflare, o worker.js chama-a em POST /api/contacto. No teu
    computador, o servidor.js importa-a e chama-a da mesma maneira.
 
-   Variáveis de ambiente (painel da Cloudflare, ou .env localmente):
+   Variáveis de ambiente (painel da Cloudflare em Settings > Variables
+   and Secrets, ou .env localmente):
      RESEND_API_KEY   obrigatória — a chave secreta
      EMAIL_DESTINO    para onde vão as questões
      EMAIL_REMETENTE  remetente verificado no Resend
@@ -190,5 +191,5 @@ export async function onRequestPost({ request, env }) {
   return json(200, { ok: true });
 }
 
-/* Só existe o onRequestPost: um GET a /api/contacto não encontra função,
-   passa para os ficheiros estáticos e acaba na página 404. */
+/* Só existe o onRequestPost: um GET a /api/contacto passa para os
+   ficheiros estáticos (worker.js) e acaba na página 404. */

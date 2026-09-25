@@ -6,7 +6,7 @@
 
      node construir.js
 
-   É o comando de build da Cloudflare Pages (pasta de saída: dist).
+   É o Build command no painel da Cloudflare (a dist/ vem do wrangler.jsonc).
    Se o conteúdo partir uma regra da estrutura (ver verificar()), o build
    pára com uma mensagem a dizer o quê e onde, e nada é publicado.
 
@@ -37,7 +37,7 @@ function saida(molde, d) {
 }
 
 /* Ficheiros da raiz que não vão para o site. */
-var FORA = ['construir.js', 'servidor.js'];
+var FORA = ['construir.js', 'servidor.js', 'worker.js'];
 
 /* O que se copia do assets/: só media e dados que o browser pede. */
 var MEDIA = /\.(webp|jpe?g|png|svg|mp4|webm|json|woff2?)$/i;

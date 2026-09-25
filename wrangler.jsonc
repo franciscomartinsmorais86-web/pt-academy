@@ -1,0 +1,23 @@
+// Configuração do site na Cloudflare (Workers com ficheiros estáticos).
+// Ver a secção "Cloudflare — configuração" no NOTAS.md.
+{
+  // Tem de ser igual ao nome do projeto criado no painel da Cloudflare.
+  "name": "pt-academy",
+  "compatibility_date": "2026-09-01",
+
+  // Só corre para o que não é ficheiro: o POST /api/contacto (worker.js).
+  "main": "./worker.js",
+
+  "assets": {
+    // O site gerado pelo "node construir.js" (o Build command no painel).
+    "directory": "./dist",
+    "binding": "ASSETS",
+    // Endereços que não existem recebem a dist/404.html, com estado 404.
+    "not_found_handling": "404-page"
+  },
+
+  // As variáveis de texto (EMAIL_DESTINO, EMAIL_REMETENTE) vivem no
+  // painel, em Settings > Variables and Secrets. Sem isto, cada deploy
+  // apagava-as. A RESEND_API_KEY é um Secret e nunca é apagada.
+  "keep_vars": true
+}

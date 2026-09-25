@@ -1,6 +1,6 @@
 /* Servidor local do site da PT Academy — só para testar no computador.
  *
- * Faz o que a Cloudflare Pages faz em produção:
+ * Faz o que a Cloudflare faz em produção:
  *   - serve o site gerado em dist/ (ver construir.js);
  *   - responde a endereços sem extensão (/3-meses-gratis) com o .html do
  *     mesmo nome, e ao que não existe com a 404.html;
@@ -88,7 +88,7 @@ function servirFicheiro(pedido, resposta) {
   }
 
   /* Endereços sem extensão (a página da campanha, /3-meses-gratis)
-     servem o .html com o mesmo nome, como a Cloudflare Pages faz. */
+     servem o .html com o mesmo nome, como a Cloudflare faz. */
   if (!path.extname(alvo)) alvo += '.html';
 
   fs.readFile(alvo, function (erro, conteudo) {

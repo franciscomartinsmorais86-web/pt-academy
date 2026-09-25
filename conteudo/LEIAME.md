@@ -11,7 +11,7 @@ node construir.js
 ```
 
 junta estes ficheiros com os moldes de `moldes/` e escreve o site em
-`dist/`. A Cloudflare Pages corre o mesmo comando a cada push. Se o
+`dist/`. A Cloudflare corre o mesmo comando a cada push. Se o
 conteúdo partir uma regra da estrutura (uma contagem fixa, um ficheiro
 que não existe, uma hora mal escrita), o build pára e diz o quê e onde.
 

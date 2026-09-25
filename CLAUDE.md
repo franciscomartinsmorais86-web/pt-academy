@@ -14,9 +14,11 @@ O site é gerado: `node construir.js` junta `conteudo/` com `moldes/` e
 escreve o site em `dist/` (fora do git). Não há páginas `.html` na raiz.
 Ver a secção "Conteúdo editável" mais abaixo.
 
-Alojamento: Cloudflare Pages. O único código de servidor é o envio do
-formulário, em `functions/api/contacto.js` (Pages Function). O
-`servidor.js` é só para testar no computador e usa essa mesma função.
+Alojamento: Cloudflare Workers com ficheiros estáticos (`wrangler.jsonc`:
+o site vem da `dist/`). O único código de servidor é o envio do
+formulário, em `functions/api/contacto.js`, que o `worker.js` chama em
+`POST /api/contacto`. O `servidor.js` é só para testar no computador e
+usa essa mesma função. Configuração do painel: `NOTAS.md`.
 
 # Design system
 
@@ -217,7 +219,7 @@ em `conteudo/` e `assets/`. Formato, marcas de texto e o que é gerado:
 
 - **Build:** `node construir.js` lê `conteudo/`, verifica as regras que
   partiriam a página (contagens fixas, ficheiros em falta, endereços) e
-  escreve `dist/`. A Cloudflare Pages corre o mesmo comando a cada push,
+  escreve `dist/`. A Cloudflare corre o mesmo comando a cada push,
   com `dist` como pasta de saída. Localmente, `node servidor.js` serve a
   `dist/`.
 - **Moldes** (`moldes/`): um módulo por página, que devolve o HTML com

@@ -845,23 +845,36 @@ está no código-fonte da página, e com ela manda-se email em nome do domínio
 da academia. O Resend nem sequer aceita chamadas do browser (bloqueia por
 CORS).
 
-### Cloudflare Pages — configuração
+### Cloudflare — configuração (Workers com ficheiros estáticos)
 
-No painel da Cloudflare: **Workers & Pages** → **Create application** →
-**Pages** → **Connect to Git** → repositório `pt-academy`.
+A 25 set. 2026 o painel da Cloudflare já não oferece o fluxo de Pages ao
+criar um projeto: o "Create application" leva a **Workers**, que não
+tem campo para a pasta de saída nem Pages Functions. O projeto passou a
+esse modelo, com dois ficheiros na raiz:
+
+- `wrangler.jsonc` — o site vem da `dist/`, a 404 é a `dist/404.html`
+  (`not_found_handling`), e `keep_vars` impede que cada deploy apague as
+  variáveis de texto postas no painel.
+- `worker.js` — só corre para o que não é ficheiro. Entrega o
+  `POST /api/contacto` à função do formulário e o resto aos ficheiros
+  estáticos. A função continua em `functions/api/contacto.js`, a mesma
+  que o `servidor.js` usa no computador.
+
+No painel: **Workers & Pages** → **Create application** → importar o
+repositório `pt-academy` do GitHub.
 
 | Campo | Valor |
 |---|---|
-| Production branch | `master` |
-| Framework preset | nenhum |
+| Nome do projeto | `pt-academy` (igual ao `name` do `wrangler.jsonc`) |
 | Build command | `node construir.js` |
-| Build output directory | `dist` |
+| Deploy command | `npx wrangler deploy` (o que vem por omissão) |
 | Root directory | vazio |
 
-Variáveis (em **Settings → Variables and Secrets**, para Production e
-Preview): `RESEND_API_KEY` como **Secret**, `EMAIL_DESTINO` e
-`EMAIL_REMETENTE` como texto. A pasta `functions/` é apanhada sozinha a
-partir da raiz do repositório.
+Depois, no projeto: **Settings** → **Variables and Secrets** → **Add**:
+`RESEND_API_KEY` como **Secret**, `EMAIL_DESTINO` e `EMAIL_REMETENTE`
+como texto. Entram no deploy seguinte. As definições de build ficam em
+**Settings** → **Build**. O domínio próprio entra em **Settings** →
+**Domains & Routes**.
 
 ### Por fazer
 
@@ -871,7 +884,7 @@ partir da raiz do repositório.
 - **`EMAIL_DESTINO`** — está `geral@ptacademy.pt`, que é também o email
   público em `conteudo/contactos.json`. **Confirmar o email real da
   academia.**
-- **Domínio próprio** no projeto Pages, e a regra de rate limiting em
+- **Domínio próprio** no projeto, e a regra de rate limiting em
   `/api/contacto` quando o domínio estiver na Cloudflare.
 
 ## Conteúdo editável — `conteudo/`
