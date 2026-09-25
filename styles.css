@@ -1387,6 +1387,15 @@ a:hover {
   margin-top: 8px;
 }
 
+/* No modal, depois do envio, o cabeçalho do formulário sai e a caixa
+   fica só com a confirmação. */
+.modal__caixa:has(.sucesso:not([hidden])) > :is(.modal__eyebrow, .modal__titulo, .modal__lead) {
+  display: none;
+}
+.modal__caixa .sucesso {
+  margin-top: 0;
+}
+
 /* ---------- Responsive ---------- */
 
 @media (max-width: 1150px) {
