@@ -5,6 +5,15 @@
    o .closer; o resto vive aqui. Todas as secções partilham a mesma
    margem e o mesmo ritmo vertical, para qualquer ordem ficar bem. */
 
+/* ---------- Planos ---------- */
+
+/* Na homepage o .plans sobe 100dvh por cima da galeria pregada
+   (styles.css). Aqui não há galeria: sem isto, os planos tapavam a
+   abertura. */
+.plans {
+  margin-top: 0;
+}
+
 /* ---------- Secção genérica ---------- */
 
 .seccao {

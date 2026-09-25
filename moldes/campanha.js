@@ -157,11 +157,11 @@ ${s.paragrafos.map(function (t) { return `  <p class="condicoes__texto">${c.esc(
 
 module.exports = {
   saida: function (d) { return d.campanha.endereco + '.html'; },
-  pagina: function (d) { return '/' + d.campanha.endereco; },
+  pagina: function (d) { return c.enderecoCampanha(d); },
   SECCOES: SECCOES,
   gerar: function (d) {
     var pg = d.campanha.pagina;
-    var pagina = '/' + d.campanha.endereco;
+    var pagina = c.enderecoCampanha(d);
 
     var corpo = `
 ${c.nav(pagina, d)}

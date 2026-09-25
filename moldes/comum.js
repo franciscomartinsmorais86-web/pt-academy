@@ -31,10 +31,17 @@ function marcas(texto, d) {
 
 /* ---------- Links e botões ---------- */
 
+/* O endereço da página da campanha. Com .html, como os outros links do
+   site: a Cloudflare serve-o também sem a extensão, mas um servidor
+   estático simples não. */
+function enderecoCampanha(d) {
+  return '/' + d.campanha.endereco + '.html';
+}
+
 /* O endereço de uma ação (ver comum.json#/$defs/acao). */
 function destino(acao, d) {
   if (acao === 'ligar') return d.tel;
-  if (acao === 'campanha') return '/' + d.campanha.endereco;
+  if (acao === 'campanha') return enderecoCampanha(d);
   return acao;
 }
 
@@ -105,7 +112,7 @@ var NAV_ITENS = [
 function navItens(pagina, d, classeItem, classeLink) {
   var itens = NAV_ITENS.slice();
   if (d.campanha.ativa) {
-    itens.unshift({ texto: d.campanha.nav, href: '/' + d.campanha.endereco, campanha: true });
+    itens.unshift({ texto: d.campanha.nav, href: enderecoCampanha(d), campanha: true });
   }
   return itens.map(function (item) {
     var atual = item.href === pagina ? ' aria-current="page"' : '';
@@ -390,6 +397,6 @@ ${lista.map(function (s) { return `<script src="/${s}"></script>`; }).join('\n')
 }
 
 module.exports = {
-  esc, marcas, destino, botao, botoes, src, dois,
+  esc, marcas, destino, enderecoCampanha, botao, botoes, src, dois,
   cabeca, nav, rodape, fecho, formulario, VISTO, fim
 };
