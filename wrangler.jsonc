@@ -5,7 +5,8 @@
   "name": "pt-academy",
   "compatibility_date": "2026-09-01",
 
-  // Só corre para o que não é ficheiro: o POST /api/contacto (worker.js).
+  // Recebe todos os pedidos (run_worker_first): trata o POST /api/contacto
+  // e o noindex das pré-visualizações, e passa o resto aos ficheiros.
   "main": "./worker.js",
 
   "assets": {
@@ -13,8 +14,19 @@
     "directory": "./dist",
     "binding": "ASSETS",
     // Endereços que não existem recebem a dist/404.html, com estado 404.
-    "not_found_handling": "404-page"
+    "not_found_handling": "404-page",
+    // Todos os pedidos passam primeiro pelo worker.js, para ele poder pôr
+    // "noindex" nas cópias em *.workers.dev (ver worker.js). Custa uma
+    // invocação por pedido, dentro das 100 000/dia do plano gratuito.
+    "run_worker_first": true
   },
+
+  // Endereço *.workers.dev e links de pré-visualização por ramo. O gestor de
+  // conteúdos guarda no ramo cms-rascunho e mostra ao cliente a
+  // pré-visualização em https://cms-rascunho-pt-academy.<conta>.workers.dev
+  // antes de publicar. Ver "Gestor de conteúdos" no NOTAS.md.
+  "workers_dev": true,
+  "preview_urls": true,
 
   // As variáveis de texto (EMAIL_DESTINO, EMAIL_REMETENTE) vivem no
   // painel, em Settings > Variables and Secrets. Sem isto, cada deploy

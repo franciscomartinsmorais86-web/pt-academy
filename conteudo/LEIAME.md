@@ -43,6 +43,10 @@ Chaves próprias nos esquemas, que o gestor lê:
 - `x-ficheiro`: o campo é um caminho dentro de `assets/`, e o gestor mostra um carregador de ficheiros.
 - `x-bloqueado-apos-criar`: o campo só se edita ao criar; depois fica bloqueado com um aviso.
 - `x-ultima`: tipo obrigatório na última posição de uma lista (a campanha acaba sempre com um fecho).
+- `x-slug-de`: o campo é um endereço gerado a partir de outro campo do mesmo objeto (o `endereco` da campanha segue o `nav`) até a pessoa lhe mexer à mão.
+
+O gestor é genérico e lê estas chaves de qualquer site. O contrato completo
+está em `NK-api/docs/CMS.md`.
 
 ## Marcas de texto
 

@@ -14,7 +14,8 @@
       "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$",
       "not": { "enum": ["index", "sobre", "modalidades", "instalacoes", "equipa", "contactos", "404", "assets", "conteudo", "functions", "api"] },
       "description": "Parte do link da página: /3-meses-gratis. O gestor gera-o a partir do 'nav' e bloqueia-o depois de a campanha ser criada, porque os links já partilhados deixariam de funcionar.",
-      "x-bloqueado-apos-criar": true
+      "x-bloqueado-apos-criar": true,
+      "x-slug-de": "nav"
     },
     "faixa": {
       "type": "object",

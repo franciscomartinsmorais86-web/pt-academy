@@ -876,6 +876,38 @@ como texto. Entram no deploy seguinte. As definições de build ficam em
 **Settings** → **Build**. O domínio próprio entra em **Settings** →
 **Domains & Routes**.
 
+### Gestor de conteúdos — pré-visualizações
+
+O gestor vive no portal da NK (repositórios `NK-api` e `NK-Dashboard`;
+referência completa em `NK-api/docs/CMS.md`). Escreve neste repositório
+pela GitHub App da NK:
+
+1. **Guardar** faz commit no ramo `cms-rascunho` (criado a partir do
+   `master` na primeira vez).
+2. A Cloudflare constrói esse ramo e publica-o num link de
+   pré-visualização. O gestor mostra o estado da build, que a Cloudflare
+   reporta ao GitHub.
+3. **Publicar** leva o `cms-rascunho` para o `master` e apaga o ramo.
+   A Cloudflare faz o deploy normal. Se a build do rascunho falhar (por
+   exemplo, uma regra do `construir.js`), não se publica.
+
+O `wrangler.jsonc` tem `workers_dev` e `preview_urls` ligados, e
+`run_worker_first` para o `worker.js` pôr `X-Robots-Tag: noindex` em
+tudo o que é servido em `*.workers.dev`. Assim nem as pré-visualizações nem a
+cópia em `pt-academy.<conta>.workers.dev` são indexadas. O custo é uma
+invocação do worker por pedido, dentro do plano gratuito.
+
+No painel, uma vez só: no worker `pt-academy`, **Settings** → **Build** →
+**Branch control** → ligar as builds de ramos que não são de produção,
+com o deploy command `npx wrangler versions upload`. O link do rascunho
+fica `https://cms-rascunho-pt-academy.<subdomínio da conta>.workers.dev`
+e vai para a configuração do site no dashboard de admin da NK.
+
+**Se mexeres à mão no repositório** enquanto há um rascunho aberto, não
+há problema: ao publicar, o gestor faz merge. Só se ambos mudarem o mesmo
+ficheiro de conteúdo é que a publicação é recusada e tens de resolver o
+conflito no git.
+
 ### Por fazer
 
 - **Verificar o domínio no Resend** para poder enviar de `@ptacademy.pt`.

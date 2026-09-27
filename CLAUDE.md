@@ -17,8 +17,10 @@ Ver a secção "Conteúdo editável" mais abaixo.
 Alojamento: Cloudflare Workers com ficheiros estáticos (`wrangler.jsonc`:
 o site vem da `dist/`). O único código de servidor é o envio do
 formulário, em `functions/api/contacto.js`, que o `worker.js` chama em
-`POST /api/contacto`. O `servidor.js` é só para testar no computador e
-usa essa mesma função. Configuração do painel: `NOTAS.md`.
+`POST /api/contacto`. O `worker.js` também põe `noindex` em tudo o que sai
+em `*.workers.dev` (as pré-visualizações do gestor, ramo `cms-rascunho`).
+O `servidor.js` é só para testar no computador e usa essa mesma função.
+Configuração do painel: `NOTAS.md`.
 
 # Design system
 
