@@ -1,14 +1,15 @@
 {
-  "ativa": true,
+  "ativa": false,
   "nav": "3 meses grátis",
   "endereco": "3-meses-gratis",
-
   "faixa": {
     "eyebrow": "Inscreve-te agora e aproveita",
     "titulo": "Novas inscrições 3 meses grátis",
-    "botao": { "texto": "Saber mais", "acao": "campanha" }
+    "botao": {
+      "texto": "Saber mais",
+      "acao": "campanha"
+    }
   },
-
   "pagina": {
     "seo": {
       "titulo": "3 meses grátis",
@@ -19,22 +20,39 @@
         "tipo": "abertura",
         "eyebrow": "Inscreve-te agora e aproveita",
         "titulo": "Novas inscrições | 3 meses *grátis*",
-        "foto": { "ficheiro": "sobre-hero-ginasio.webp", "alt": "Sala de musculação e cardio da PT Academy" },
-        "botao": { "texto": "Quero aderir", "acao": "ligar" }
+        "foto": {
+          "ficheiro": "sobre-hero-ginasio.webp",
+          "alt": "Sala de musculação e cardio da PT Academy"
+        },
+        "botao": {
+          "texto": "Quero aderir",
+          "acao": "ligar"
+        }
       },
       {
         "tipo": "planos",
         "eyebrow": "Planos",
         "titulo": "Escolhe o teu ritmo",
-        "planos": ["Base", "Power", "Premium", "Estudante"]
+        "planos": [
+          "Base",
+          "Power",
+          "Premium",
+          "Estudante"
+        ]
       },
       {
         "tipo": "fecho",
         "eyebrow": "Do que continuas à espera?",
         "titulo": "Chega de desculpas | começa hoje.",
         "botoes": [
-          { "texto": "Marcar visita", "acao": "ligar" },
-          { "texto": "Enviar questão", "acao": "modal" }
+          {
+            "texto": "Marcar visita",
+            "acao": "ligar"
+          },
+          {
+            "texto": "Enviar questão",
+            "acao": "modal"
+          }
         ]
       }
     ]
